@@ -4800,7 +4800,7 @@
         data-notes="Good morning. My thesis is titled Towards Visually Faithful Document Reconstruction. The one-line version: turn documents into HTML that looks exactly like the original, not just reads like it. Three contributions, in thesis order: represent — a format, FID-HTML, that can carry what a page looks like; measure — a benchmark, VFDR-Bench, and metrics that can score it; and generate — an agentic framework, REPLICA, that produces it. [1:00]">
         <div class="venue-chip">M.S. Thesis Defense <span class="oral">23 October 2026</span></div>
         <div class="affil" style="margin:-18px 0 26px;">IIIT Hyderabad &nbsp;·&nbsp; CVIT</div>
-        <h1 class="thesis">Towards Visually Faithful<br>Document Reconstruction</h1>
+        <h1 class="thesis">Towards Visually Faithful <br>Document Reconstruction</h1>
         <div class="subtitle">Turning scanned pages and PDFs into HTML that doesn't just read like the original — it looks like it.</div>
         <div class="roadmap">
           <span class="rm"><b>Represent</b>FID-HTML</span>
@@ -7038,7 +7038,8 @@
 
       /* ---------- overview ---------- */
       slides.forEach((s, i) => {
-        const t = s.querySelector("h1,h2");
+        // embed slides have no heading of their own; fall back to the kicker, then the eyebrow
+        const t = s.querySelector("h1,h2") || s.querySelector(".kicker") || { textContent: s.dataset.eyebrow || "" };
         const d = document.createElement("div");
         d.className = "oi";
         d.innerHTML = '<div class="on-n">' + slideLabel(i) + '</div><div class="on-t">' + (t ? t.textContent.trim() : "") + '</div>';
