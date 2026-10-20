@@ -4148,6 +4148,106 @@
       border-left: 1px solid var(--line);
     }
 
+    /* ---- metrics formally / human agreement ---- */
+    .fcards .card {
+      padding: 26px 30px;
+    }
+
+    .fcards .card h3 {
+      font-size: 30px;
+      margin-bottom: 14px;
+    }
+
+    .fcards .math {
+      font-size: 25px;
+    }
+
+    .fcards .mathnote {
+      font-size: 19px;
+      margin-top: 12px;
+    }
+
+    .fcards .math b {
+      font-style: normal;
+    }
+
+    .rtab.humantab td,
+    .rtab.humantab th {
+      font-size: 23px;
+      padding: 9px 14px;
+    }
+
+    .rtab.humantab tr.hd2 th {
+      font-size: 16px;
+    }
+
+    #humanSlide .stat .v {
+      font-size: 92px;
+    }
+
+    #humanSlide .stat .k {
+      font-size: 18px;
+    }
+
+    .rtab.humantab .avg {
+      border-left: 2px solid var(--line);
+      font-weight: 800;
+    }
+
+    /* ---- VFDR-Bench carousel: where the pages come from (thesis p.30–32) ---- */
+    .srcline {
+      flex: none;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 14.5px;
+      letter-spacing: .03em;
+      color: var(--ink-3);
+      margin: 2px 0 6px;
+    }
+
+    /* ---- future directions ---- */
+    .futgrid .card {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      padding: 42px 34px;
+      min-height: 480px;
+    }
+
+    .futgrid .card h3 {
+      font-size: 36px;
+      margin: 0;
+    }
+
+    .futgrid .card p {
+      font-size: 26px;
+    }
+
+    .futgrid .num-badge {
+      width: 54px;
+      height: 54px;
+      font-size: 22px;
+    }
+
+    #concSlide .grid3 .card h3 {
+      font-size: 38px;
+    }
+
+    #concSlide .h3sub {
+      font-size: 27px;
+      color: var(--navy-soft);
+    }
+
+    .sesscard .sessicdar {
+      height: 22px;
+      width: auto;
+      vertical-align: -4px;
+      margin-right: 8px;
+      background: #fff;
+      border-radius: 3px;
+      padding: 1px 3px;
+    }
+
     /* the chapter-06 board starts as the chapter-04 board; REPLICA arrives on beat 1 */
     .rtab tr.ours.hide {
       display: none;
@@ -4806,6 +4906,8 @@
               <div class="k">expert human annotated</div>
             </div>
           </div>
+          <div class="srcline">Sourced from IndicDLP · RVL-CDIP · PubLayNet · DocLayNet · M6Doc · IDL · PRImA · D4LA · SROIE ·
+            FUNSD · OJ4OCRMT · CCpdf + web-scraped pages &nbsp;·&nbsp; 20+ layout categories</div>
           <div class="carowrap">
             <div class="carotabs" id="caroTabs"></div>
             <div class="carostage" id="caroStage"></div>
@@ -4891,6 +4993,83 @@
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- ═══════════ 18 · THE METRICS, FORMALLY (thesis §4.4) ═══════════ -->
+      <section class="slide vcenter" data-eyebrow="04 · VFDR-Bench &amp; Metrics" data-frags="4" id="metricsSlide"
+        data-notes="The same four axes, now as formulas — thesis section 4.4. [CLICK] Position. GPS is the fraction of the ground-truth block area that the predicted block covers — intersection over the ground-truth box. Boxes come from layout models run on the source and on the rendered HTML, manually refined. LPS is the same idea at line level, with Hi-SAM line boxes. PS is their mean. Averaged over all boxes, so a missed region and a hallucinated region both cost you. [CLICK] Logical structure. Normalised tree edit distance between standardised DOM trees, plus TEDS for tables, CDM for formulae and a penalty on list structure. Where the trees cannot be normalised we fall back to LSS, a VLM judge that sees the DOM tree and the source image. [CLICK] Visual fidelity. VFS: Gemini 2.5 Pro compares the two renders on layout consistency, font attributes, styling, image placement and overall appearance. [CLICK] Text is the mean of character and word recognition rates, clipped per sample so a single OCR blow-up cannot dominate a multilingual average; and the overall score is the plain mean of the four axes. [1:30]">
+        <div class="kicker">Thesis §4.4 · four axes, four scores</div>
+        <h2>The metrics, <em>formally</em></h2>
+        <div class="slide-body">
+          <div class="grid2 fcards">
+            <div class="card frag" data-frag="1"><span class="tag">Physical structure · PS</span>
+              <h3>Position</h3>
+              <div class="mathrow">
+                <span class="math">GPS(B<sub>gt</sub>, B<sub>pred</sub>) = |B<sub>gt</sub> ∩ B<sub>pred</sub>| / |B<sub>gt</sub>|</span>
+                <span class="math">LPS: the same, at <b>line</b> level (Hi-SAM boxes) &nbsp;·&nbsp; PS = (GPS + LPS) / 2</span>
+              </div>
+              <div class="mathnote">Block boxes from layout models on source vs rendered HTML, manually refined. <b>Averaged over
+                  all boxes</b> — penalises missed and hallucinated regions alike.</div>
+            </div>
+            <div class="card frag" data-frag="2"><span class="tag">Logical structure · LS</span>
+              <h3>Hierarchy</h3>
+              <div class="mathrow">
+                <span class="math">NTED = 1 − TED(T<sub>gt</sub>, T<sub>pred</sub>) / max(|T<sub>gt</sub>|, |T<sub>pred</sub>|)</span>
+                <span class="math">+ TEDS (tables) &nbsp;·&nbsp; CDM (formulae) &nbsp;·&nbsp; list penalty (&lt;li&gt;)</span>
+              </div>
+              <div class="mathnote">Between standardised DOM trees. <b>LSS</b> — a VLM judge on DOM tree + source image — where
+                normalisation is impossible.</div>
+            </div>
+            <div class="card frag" data-frag="3"><span class="tag">Visual fidelity · VF</span>
+              <h3>Appearance</h3>
+              <div class="mathrow">
+                <span class="math">VFS = Judge<sub>Gemini 2.5 Pro</sub>(render(I), render(H))</span>
+              </div>
+              <div class="mathnote">Paired renders scored on <b>layout consistency, font attributes, styling, image placement,
+                  overall appearance</b>.</div>
+            </div>
+            <div class="card accent frag" data-frag="4"><span class="tag">Text &amp; overall</span>
+              <h3>Text, and the one number</h3>
+              <div class="mathrow">
+                <span class="math">TE = (CRR + WRR) / 2</span>
+                <span class="math">OS = (TE + LS + PS + VF) / 4</span>
+              </div>
+              <div class="mathnote">CRR / WRR clipped per sample, so OCR blow-ups don't dominate multilingual aggregates.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════ 19 · HUMAN AGREEMENT (thesis Table 4.3) ═══════════ -->
+      <section class="slide vcenter" data-eyebrow="04 · VFDR-Bench &amp; Metrics" data-frags="2" id="humanSlide"
+        data-notes="New metrics need one more check: do they agree with people? Seven expert annotators — backgrounds in document design, typography and layout analysis — ranked reconstructions of a hundred documents from five systems. We correlate their rankings with each metric. [CLICK] Pearson correlation: 0.87 for VFS, 0.82 for GPS, 0.85 for LPS, and 0.89 for the overall score. [CLICK] And it is not one friendly annotator carrying the average: per annotator, every proposed metric is above 0.8 for every one of the seven, and the overall score aligns best. [1:00]">
+        <div class="kicker">Thesis Table 4.3 · metric–human alignment</div>
+        <h2>Do these metrics match <em>human perception</em>?</h2>
+        <div class="slide-body">
+          <p class="lede">Seven expert annotators (document design, typography, layout analysis) ranked reconstructions of
+            <b>100 documents</b> from <b>five systems</b>; Pearson correlation of their rankings with each metric.</p>
+          <div class="stats frag" data-frag="1">
+            <div class="stat"><div class="v">0.87</div><div class="k">VFS</div></div>
+            <div class="stat"><div class="v">0.82</div><div class="k">GPS</div></div>
+            <div class="stat"><div class="v">0.85</div><div class="k">LPS</div></div>
+            <div class="stat"><div class="v gold">0.89</div><div class="k">Overall</div></div>
+          </div>
+          <div class="frag" data-frag="2" style="margin-top:30px;">
+            <div class="rwrap">
+              <table class="rtab graded humantab">
+                <thead><tr class="hd2"><th class="m">Metric</th><th>A1</th><th>A2</th><th>A3</th><th>A4</th><th>A5</th><th>A6</th><th>A7</th><th class="avg">Avg</th></tr></thead>
+                <tbody>
+                  <tr class="row"><td class="m" data-c="0">VFS</td><td data-c="1" class="g3">0.87</td><td data-c="2" class="g3">0.86</td><td data-c="3" class="g3">0.88</td><td data-c="4" class="g3">0.90</td><td data-c="5" class="g3">0.85</td><td data-c="6" class="g3">0.89</td><td data-c="7" class="g3">0.87</td><td data-c="8" class="g3 avg">0.87</td></tr>
+                  <tr class="row"><td class="m" data-c="0">GPS</td><td data-c="1" class="g3">0.82</td><td data-c="2" class="g3">0.80</td><td data-c="3" class="g3">0.83</td><td data-c="4" class="g3">0.84</td><td data-c="5" class="g3">0.81</td><td data-c="6" class="g3">0.85</td><td data-c="7" class="g3">0.82</td><td data-c="8" class="g3 avg">0.82</td></tr>
+                  <tr class="row"><td class="m" data-c="0">LPS</td><td data-c="1" class="g3">0.85</td><td data-c="2" class="g3">0.84</td><td data-c="3" class="g3">0.86</td><td data-c="4" class="g3">0.87</td><td data-c="5" class="g3">0.83</td><td data-c="6" class="g3">0.88</td><td data-c="7" class="g3">0.85</td><td data-c="8" class="g3 avg">0.85</td></tr>
+                  <tr class="row"><td class="m" data-c="0">Overall (OS)</td><td data-c="1" class="g3">0.88</td><td data-c="2" class="g3">0.86</td><td data-c="3" class="g3">0.89</td><td data-c="4" class="g3">0.91</td><td data-c="5" class="g3">0.86</td><td data-c="6" class="g3">0.92</td><td data-c="7" class="g3">0.88</td><td data-c="8" class="g3 avg">0.89</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="takeaway frag" data-frag="2">Every proposed metric exceeds <b>0.8</b> for <b>every annotator</b>; Overall
+            aligns best.</div>
         </div>
       </section>
 
@@ -5399,28 +5578,25 @@
         </div>
       </section>
 
-      <!-- ═══════════ 27 · SUMMARY ═══════════ -->
+      <!-- ═══════════ 33 · CONCLUSION ═══════════ -->
       <section class="slide vcenter" data-eyebrow="07 · Conclusion" id="concSlide"
-        data-notes="To summarise. Fid-HTML: a web-native representation where position and style are required rather than optional, so fidelity is a property of the format. VFDR-Bench with GPS, LPS and VFS: the first benchmark to score physical structure and rendered appearance. And REPLICA: Segment, Localize, Assemble, Refine — agents where judgment is needed, tools where determinism is needed — reaching 93% visual fidelity and 0.86 overall, ahead of GPT-5 and Gemini. And the headline for the agentic argument: REPLICA with an 8-billion-parameter backbone beats Qwen3-VL-30B by 39% overall, at 3.75 times smaller and comparable inference time. Structured decomposition beats brute-force scale.">
+        data-notes="To summarise, in thesis order. Represent: FID-HTML, a web-native representation where position and style are required rather than optional, so fidelity is a property of the format. Measure: VFDR-Bench — five thousand pages, twenty-two languages, seventeen domains, annotated in FID-HTML — with GPS, LPS and VFS, the first metrics to score physical structure and rendered appearance, and they agree with human experts. Generate: REPLICA — Segment, Localize, Assemble, Refine — agents where judgment is needed, tools where determinism is needed — reaching 0.93 visual fidelity and 0.86 overall. And the answer to the chapter-six question: with an 8-billion-parameter backbone REPLICA beats Qwen3-VL-30B by 39 % overall at 3.75 times smaller. Structured decomposition beats brute-force scale. [1:00]">
         <div class="kicker">One paradigm, three contributions</div>
-        <h2>Representation Format → Method → Benchmark & Metrics</h2>
+        <h2>Represent → Measure → Generate</h2>
         <div class="slide-body">
           <div class="grid3" style="flex:0 0 auto;">
-            <div class="card"><span class="tag">Representation Format</span>
+            <div class="card"><span class="tag">Represent · Representation</span>
               <h3>FID-HTML</h3>
-              <!-- <p>A web-native format where position and style are <b>required</b>, inline, per element — fidelity by construction.</p> -->
-              <p>A web-native format for <b>Visually Faithful Document Reconstruction</b></p>
+              <p>A web-native format where position and style are <b>required</b> — fidelity by construction.</p>
             </div>
-            <div class="card accent"><span class="tag">Method</span>
+            <div class="card"><span class="tag">Measure · Benchmark &amp; Metrics</span>
+              <h3>VFDR-Bench<br><span class="h3sub">+ GPS · LPS · VFS</span></h3>
+              <p><b>5,000</b> FID-HTML-annotated pages, <b>22</b> languages, <b>17</b> domains; metrics that match human
+                judgement.</p>
+            </div>
+            <div class="card accent"><span class="tag">Generate · Method</span>
               <h3>REPLICA</h3>
-              <p>Agentic Framework with <b>Segment → Localize → Assemble → Refine.</b>
-                <!-- <b>Agents where judgment is needed, tools where determinism is.</b> -->
-              </p>
-            </div>
-            <div class="card"><span class="tag">Benchmark & Metrics</span>
-              <h3>VFDR-Bench + GPS · LPS · VFS</h3>
-              <p><b>5,000</b> expert-annotated documents, <b>15+</b> languages, <b>3</b> new metrics.
-              </p>
+              <p>Agentic framework: <b>Segment → Localize → Assemble → Refine</b>.</p>
             </div>
           </div>
           <div class="stats" style="margin-top:34px;">
@@ -5428,33 +5604,55 @@
               <div class="v gold">0.93</div>
               <div class="k">Visual fidelity (VFS)</div>
             </div>
-            <!-- <div class="stat">
-              <div class="v">0.86</div>
-              <div class="k">Overall score</div>
-            </div>
             <div class="stat">
               <div class="v">0.86</div>
-              <div class="k">Global position (GPS)</div>
+              <div class="k">Overall score (OS)</div>
             </div>
             <div class="stat">
-              <div class="v">39%</div>
-              <div class="k">gain over Qwen3-VL-30B<br>at 3.75× smaller</div>
-            </div> -->
+              <div class="v">+39%</div>
+              <div class="k">over Qwen3-VL-30B<br>at 3.75× smaller</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════ 34 · FUTURE DIRECTIONS (thesis §6.4) ═══════════ -->
+      <section class="slide vcenter" data-eyebrow="07 · Conclusion" id="futureSlide"
+        data-notes="Where this goes next — thesis section 6.4. Multi-page reconstruction with a document-level memory, so tables that cross a page break and sections that carry over are rebuilt as one document. Interactive, human-in-the-loop refinement — editing FID-HTML in web-native interfaces while keeping it valid. Large-scale document simulators — the synthesis engine I showed as training data for OCR, layout and multimodal systems. And the long-run picture: documents as editable, grounded, agent-compatible web resources, with reconstruction and synthesis as two halves of one system. If asked about the limitations: font identification at scale, handwritten and degraded archives, and cheaper proxy rendering for the refine loop are the direct answers to each limitation card. [0:45]">
+        <div class="kicker">Thesis §6.4</div>
+        <h2>Future <em>directions</em></h2>
+        <div class="slide-body">
+          <div class="grid4 futgrid">
+            <div class="card"><span class="num-badge">1</span>
+              <h3>Multi-page reconstruction</h3>
+              <p>Document-level memory — tables that cross pages, sections that carry over.</p>
+            </div>
+            <div class="card"><span class="num-badge">2</span>
+              <h3>Human-in-the-loop refinement</h3>
+              <p>Edit FID-HTML in web-native interfaces while preserving its validity.</p>
+            </div>
+            <div class="card"><span class="num-badge">3</span>
+              <h3>Large-scale document simulators</h3>
+              <p>The synthesis engine as training data for OCR, layout and multimodal systems.</p>
+            </div>
+            <div class="card accent"><span class="num-badge gold">4</span>
+              <h3>Documents as web resources</h3>
+              <p>Editable, grounded, agent-compatible — reconstruction and synthesis unified.</p>
+            </div>
           </div>
         </div>
       </section>
 
       <!-- ═══════════ 28 · THANK YOU ═══════════ -->
       <section class="slide thanks" data-eyebrow="Thank you"
-        data-notes="Thank you. Happy to take questions. Everything — paper, code, dataset, models, and this deck — is linked from the project page.">
+        data-notes="Thank you. Happy to take questions. Everything — paper, code, dataset, models — is linked from the project page; the three QR codes on the right are the sister papers built on FID-HTML supervision. Backup slides follow after this one (press the down arrow or O).">
         <h1>Thank you</h1>
         <div class="sub">Questions?</div>
-        <!-- <div class="sesscard">
-          <span class="sk">Oral Session #8 &#183; Layout Analysis</span>
-          <span class="sd">Room EI9</span>
-          <span class="sd">Tue 1 Sep &#183; 10:40</span>
-          <span class="sd">Paper 88</span>
-        </div> -->
+        <div class="sesscard">
+          <span class="sk">tallapragada.s@research.iiit.ac.in</span>
+          <span class="sd">replica-agents.github.io</span>
+          <span class="sd"><img class="sessicdar" src="static/images/logos/icdar_logo.png" alt="">REPLICA — ICDAR 2026 Oral</span>
+        </div>
         <div class="qrwall">
           <div class="qrmain">
             <img src="static/images/qr/replica.png" alt="REPLICA project page QR code"
