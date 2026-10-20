@@ -4110,6 +4110,44 @@
       text-decoration: line-through;
     }
 
+    /* ---- Table 4.1: benchmark comparison (same .rtab, fewer and taller rows) ---- */
+    .rtab.benchtab td {
+      padding: 13px 14px;
+      font-size: 24px;
+    }
+
+    .rtab.benchtab th.gh {
+      font-size: 14px;
+    }
+
+    .rtab.benchtab tr.hd2 th {
+      font-size: 16px;
+    }
+
+    .rtab.benchtab td.ok {
+      color: #2f9e63;
+      font-weight: 800;
+    }
+
+    .rtab.benchtab td.no {
+      color: var(--ink-3);
+    }
+
+    .rtab.benchtab tr.ours td {
+      font-size: 25px;
+      padding: 13px 14px;
+    }
+
+    .rtab.benchtab tr.ours td.ok {
+      color: #0d5c32;
+    }
+
+    .rtab.benchtab th.gh.b[data-ax="ev"],
+    .rtab.benchtab td[data-c="5"],
+    .rtab.benchtab th[data-c="5"] {
+      border-left: 1px solid var(--line);
+    }
+
     /* the chapter-06 board starts as the chapter-04 board; REPLICA arrives on beat 1 */
     .rtab tr.ours.hide {
       display: none;
@@ -4723,6 +4761,22 @@
         data-notes="Chapter four, the second contribution: measure. A target with no ruler cannot be optimised. Every existing benchmark is annotated in Markdown or plain text, so there is no ground truth for position or style — you cannot score what a page looks like against a reference that never recorded it. So before building a system, we built the ruler. [0:20]">
         <h1>VFDR-Bench &amp; Metrics</h1>
         <div class="q">We have a target representation. But how do we systematically evaluate whether a reconstruction truly preserves both the semantics and the appearance of the source?</div>
+      </section>
+
+      <!-- ═══════════ 14 · AGAINST EXISTING BENCHMARKS (thesis Table 4.1) ═══════════ -->
+      <section class="slide vcenter" data-eyebrow="04 · VFDR-Bench &amp; Metrics" data-frags="4" id="benchSlide"
+        data-notes="Thesis Table 4.1: VFDR-Bench against the document benchmarks people actually report on. [CLICK] Coverage first — images, languages, domains. Some are large: OCRBench-v2 has ten thousand images, READoc covers twenty-seven languages. I am not claiming most on either alone; the claim is breadth in combination — twenty-two languages across seventeen domains. [CLICK] Now the annotation format, and this is the real constraint. Markdown, plain text, at best LaTeX or generic HTML. A Markdown reference has no slot for where a block sits or what font it is in — so whatever you score against it, it cannot be position or style. [CLICK] Which is exactly what the last four columns show. Text extraction and logical structure, yes. Physical structure and visual fidelity: two empty columns for the whole field. [CLICK] VFDR-Bench: five thousand pages, annotated in FID-HTML, and the only benchmark that scores all four. [1:30]">
+        <div class="kicker">Thesis Table 4.1 · VFDR-Bench against existing benchmarks</div>
+        <h2>Broader coverage — and the <em>only</em> one measuring layout &amp; fidelity</h2>
+        <div class="slide-body">
+          <div class="rwrap">
+            <div class="rfit">
+              <table class="rtab benchtab" id="benchTable"></table>
+            </div>
+          </div>
+          <div class="takeaway frag" data-frag="4">The only document benchmark annotated in <b>FID-HTML</b> — and the
+            only one that scores <b>physical structure</b> and <b>visual fidelity</b>.</div>
+        </div>
       </section>
 
       <!-- ═══════════ VFDR-BENCH SAMPLE CAROUSEL ═══════════ -->
@@ -5724,6 +5778,7 @@
         if (slides[cur].id === "stagesSlide") renderStages();
         if (slides[cur].id === "qualSlide") renderQual();
         if (slides[cur].id === "baseSlide") { renderResults(baseTable, frag, { withOurs: false }); fitResults(slides[cur]); }
+        if (slides[cur].id === "benchSlide") { renderBench(frag); fitResults(slides[cur]); }
         if (slides[cur].id === "resSlide") { renderResults(resTable, frag, { withOurs: true, reveal: true }); fitResults(slides[cur]); }
         if (slides[cur].id === "ablSlide") renderAblation();
       }
@@ -6188,6 +6243,71 @@
             c.classList.add("g" + (good < 0.30 ? 0 : good < 0.55 ? 1 : good < 0.75 ? 2 : 3));
           });
         });
+      }
+
+      /* ═══════════ BENCHMARK COMPARISON (thesis Table 4.1) ═══════════
+         Same table component as the results board. Beats: coverage → annotation
+         format → what each benchmark can score (PS/VF empty for the field) →
+         VFDR-Bench's row. */
+      // [name, images, languages, domains, format, TE, LS, PS, VF]
+      const BENCH_ROWS = [
+        ["OmniAI OCR Benchmark", "1000", "1", "NA", "md", 1, 1, 0, 0],
+        ["OmniDocBench", "981", "3", "9", "txt", 1, 0, 0, 0],
+        ["CC-OCR", "800", "10", "6", "txt", 1, 0, 0, 0],
+        ["olmOCR-Bench", "1403", "1", "NA", "md", 1, 1, 0, 0],
+        ["OCRBench-v2", "10000", "2", "26", "md", 1, 1, 0, 0],
+        ["READoc", "3576", "27", "6", "md", 1, 1, 0, 0],
+        ["dp-bench", "200", "1", "4", "md", 1, 1, 0, 0],
+        ["KITAB-Bench", "917", "1", "9", "md", 1, 1, 0, 0],
+        ["Image2Struct", "2100", "1", "3", "LaTeX, HTML", 0, 1, 0, 0],
+        ["VFDR-Bench", "5,000", "22", "17", "FID-HTML", 1, 1, 1, 1, true]
+      ];
+      const benchTable = document.getElementById("benchTable");
+      (function buildBench() {
+        if (!benchTable) return;
+        let h = '<thead><tr><th class="gh m"></th>' +
+          '<th class="gh b" colspan="3" data-ax="cov">Coverage</th>' +
+          '<th class="gh b" data-ax="fmt">Annotation</th>' +
+          '<th class="gh b" colspan="4" data-ax="ev">What it can score</th></tr>' +
+          '<tr class="hd2"><th class="m">Benchmark</th>' +
+          ["Images", "Languages", "Domains", "Format", "TE", "LS", "PS", "VF"]
+            .map((c, i) => '<th data-c="' + (i + 1) + '">' + c + '</th>').join("") + '</tr></thead><tbody>';
+        BENCH_ROWS.forEach(r => {
+          const ours = r[9] === true;
+          h += '<tr class="row' + (ours ? " ours hide" : "") + '"><td class="m" data-c="0">' + r[0] +
+            (ours ? " <b>(ours)</b>" : "") + '</td>' +
+            r.slice(1, 5).map((x, i) => '<td data-c="' + (i + 1) + '">' + x + '</td>').join("") +
+            r.slice(5, 9).map((x, i) => '<td data-c="' + (i + 5) + '" class="' + (x ? "ok" : "no") + '">' +
+              (x ? "✓" : "✕") + '</td>').join("") + '</tr>';
+        });
+        benchTable.innerHTML = h + "</tbody>";
+      })();
+      function renderBench(n) {
+        const tb = benchTable; if (!tb) return;
+        tb.querySelectorAll("td,th").forEach(c => c.classList.remove("lit", "q", "best", "good", "g0"));
+        const ours = tb.querySelector("tr.ours");
+        if (ours) {
+          if (n >= 4 && ours.classList.contains("hide")) {
+            ours.classList.remove("enter"); void ours.offsetWidth; ours.classList.add("enter");
+          }
+          ours.classList.toggle("hide", n < 4);
+        }
+        tb.classList.toggle("focus", n > 0 && n < 4);
+        tb.classList.toggle("graded", n >= 3);
+        if (n <= 0) return;
+        const LIVE = { 1: [1, 2, 3], 2: [4], 3: [5, 6, 7, 8] }, AX = { 1: "cov", 2: "fmt", 3: "ev" };
+        if (n < 4) {
+          const live = new Set(LIVE[n]);
+          tb.querySelectorAll("td[data-c],th[data-c]").forEach(c => {
+            const ci = +c.dataset.c; if (ci) c.classList.add(live.has(ci) ? "lit" : "q");
+          });
+          tb.querySelectorAll("th.gh[data-ax]").forEach(h => h.classList.add(h.dataset.ax === AX[n] ? "lit" : "q"));
+        }
+        // from beat 3 on, the two columns nobody fills stay tinted red
+        if (n >= 3) tb.querySelectorAll("tr.row:not(.ours) td.no").forEach(c => {
+          if (+c.dataset.c >= 7) c.classList.add("g0");
+        });
+        if (n >= 4 && ours) ours.querySelectorAll("td.ok").forEach(c => c.classList.add("best"));
       }
 
       /* ═══════════ ABLATION CHART (paper Table 3) ═══════════
