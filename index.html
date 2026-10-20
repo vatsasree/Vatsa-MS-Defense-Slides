@@ -4724,6 +4724,49 @@
       cursor: default;
     }
 
+    /* ---- backup B7 / B8 ---- */
+    .slide.backup .imgbox img[src*="m3grounder"] {
+      background: #fff;
+    }
+
+    .b8grid {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1fr 820px;
+      gap: 28px;
+    }
+
+    .b8find {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .b8find .card {
+      padding: 18px 24px;
+    }
+
+    .b8find .card p {
+      font-size: 21px;
+    }
+
+    .rtab.b8tab td,
+    .rtab.b8tab th {
+      font-size: 21px;
+      padding: 8px 12px;
+    }
+
+    .b8grid .rwrap {
+      align-self: start;
+    }
+
+    .rtab.b8tab td.hi {
+      background: #eef5ef;
+      color: #14663a;
+      font-weight: 700;
+    }
+
     /* ---- future directions ---- */
     .futgrid .card {
       display: flex;
@@ -6583,6 +6626,65 @@
         </div>
       </section>
 
+
+      <!-- ═══════════ BACKUP B7 · M3GROUNDER DATA ENGINE (pptx 82; thesis §6.3.2) ═══════════ -->
+      <section class="slide backup" data-eyebrow="Backup"
+        data-notes="Backup — how REPLICA feeds M3Grounder's data engine. A page goes through the agentic parsing engine into FID-HTML; because every element carries its position, the nested DOM maps onto phrase inside line inside block, so an answer span projects onto precise pixel masks rather than coarse boxes. An LLM writes the question and answer against the FID-HTML, and post-processing turns the cited elements into masks. That is how GroundingDocQA reaches two hundred thousand documents and two million pixel-grounded QA pairs. When regions are mutated for synthetic data we inpaint rather than black-bar, so models cannot learn shortcut artefacts.">
+        <div class="kicker">Backup · M3Grounder (CVPR 2026) · thesis §6.3.2</div>
+        <h2>FID-HTML as a <em>grounding data engine</em></h2>
+        <div class="slide-body">
+          <div class="imgbox"><img src="assets/m3grounder_data_engine.png"
+              alt="M3Grounder data engine: page → agentic parsing → FID-HTML with positions → LLM question/answer → pixel-level masks" loading="lazy"></div>
+          <div class="takeaway">The nested DOM maps onto <b>phrase ⊂ line ⊂ block</b>, so answers project to precise masks —
+            <b>200,000</b> documents, <b>2,000,000</b> pixel-grounded QA pairs.</div>
+        </div>
+      </section>
+
+      <!-- ═══════════ BACKUP B8 · FINE-GRAINED BENCHMARK ANALYSIS (thesis Tables 4.5–4.8) ═══════════ -->
+      <section class="slide backup" data-eyebrow="Backup"
+        data-notes="Backup — the fine-grained analysis from chapter four, thesis Tables 4.5 to 4.8. Note these come from the chapter-four baseline sweep (Table 4.4's run), not Table 5.1. Position: every method struggles with absolute positioning; most score a little higher on single-column pages, with GPT-5 and Gemini the exceptions. Fidelity: higher on born-digital than scanned for nearly every method, because no baseline restores backgrounds; GOT-OCR and Docling drop about twenty per cent on scans; Marker is best at 0.76 thanks to visual stitching, GPT-5 within four per cent. Languages: Marker and Gemini 2.5 Pro are the most stable; specialists excel in English and drop sharply elsewhere; the Qwen family leads Chinese. Domains: forms, ID documents and receipts are hardest for logical structure.">
+        <div class="kicker">Backup · thesis Tables 4.5–4.8 (chapter-4 baseline sweep)</div>
+        <h2>Fine-grained <em>benchmark analysis</em></h2>
+        <div class="slide-body">
+          <div class="b8grid">
+            <div class="b8find">
+              <div class="card"><span class="tag">Position · Table 4.7</span><p>Absolute positioning is hard for everyone;
+                  most systems score higher on <b>single-column</b> pages (GPT-5, Gemini the exceptions).</p></div>
+              <div class="card"><span class="tag">Fidelity · Table 4.8</span><p>Higher on <b>born-digital</b> than scanned —
+                  no baseline restores backgrounds. Marker best (0.76, visual stitching); GPT-5 within 4 %.</p></div>
+              <div class="card"><span class="tag">Languages · Table 4.5</span><p><b>Marker</b> and <b>Gemini 2.5 Pro</b> most
+                  stable; specialists excel in English, drop sharply elsewhere; Qwen leads Chinese.</p></div>
+              <div class="card"><span class="tag">Domains · Table 4.6</span><p><b>Forms, ID documents, receipts</b> hardest
+                  for logical structure; GPT-5, Logics-Parsing, Marker most stable.</p></div>
+            </div>
+            <div class="rwrap">
+              <table class="rtab b8tab">
+                <thead><tr><th class="gh m"></th><th class="gh b" colspan="2">PS · column layout</th><th class="gh b" colspan="2">VFS · condition</th></tr>
+                  <tr class="hd2"><th class="m">Method</th><th>Single</th><th>Multi</th><th>Scanned</th><th>Born-digital</th></tr></thead>
+                <tbody>
+                  <tr class="row"><td class="m">Marker</td><td class="hi">0.29</td><td class="">0.25</td><td class="hi">0.76</td><td class="">0.75</td></tr>
+                  <tr class="row"><td class="m">Docling</td><td class="hi">0.20</td><td class="">0.17</td><td class="">0.46</td><td class="hi">0.68</td></tr>
+                  <tr class="row"><td class="m">RolmOCR</td><td class="hi">0.15</td><td class="">0.12</td><td class="hi">0.47</td><td class="">0.46</td></tr>
+                  <tr class="row"><td class="m">smolDocling</td><td class="">0.19</td><td class="">0.19</td><td class="">0.44</td><td class="hi">0.54</td></tr>
+                  <tr class="row"><td class="m">olmOCR-7B</td><td class="hi">0.17</td><td class="">0.14</td><td class="">0.27</td><td class="hi">0.39</td></tr>
+                  <tr class="row"><td class="m">Nanonets-OCR-s</td><td class="hi">0.16</td><td class="">0.13</td><td class="hi">0.48</td><td class="">0.47</td></tr>
+                  <tr class="row"><td class="m">OCRFlux-3B</td><td class="hi">0.17</td><td class="">0.11</td><td class="">0.36</td><td class="hi">0.48</td></tr>
+                  <tr class="row"><td class="m">Logics-Parsing</td><td class="hi">0.37</td><td class="">0.34</td><td class="hi">0.65</td><td class="">0.61</td></tr>
+                  <tr class="row"><td class="m">GOT-OCR-2.0</td><td class="">0.21</td><td class="">0.21</td><td class="">0.58</td><td class="hi">0.75</td></tr>
+                  <tr class="row"><td class="m">Qwen2.5-VL-7B</td><td class="hi">0.32</td><td class="">0.28</td><td class="">0.35</td><td class="hi">0.50</td></tr>
+                  <tr class="row"><td class="m">Qwen3-VL-30B-A3B</td><td class="hi">0.34</td><td class="">0.31</td><td class="">0.27</td><td class="hi">0.43</td></tr>
+                  <tr class="row"><td class="m">Gemma-3-27b-it</td><td class="hi">0.21</td><td class="">0.18</td><td class="">0.31</td><td class="hi">0.39</td></tr>
+                  <tr class="row"><td class="m">InternVL3-14B</td><td class="hi">0.26</td><td class="">0.24</td><td class="">0.25</td><td class="hi">0.48</td></tr>
+                  <tr class="row"><td class="m">Gemini-2.5-Pro</td><td class="">0.24</td><td class="hi">0.27</td><td class="">0.42</td><td class="hi">0.55</td></tr>
+                  <tr class="row"><td class="m">GPT-5</td><td class="">0.36</td><td class="hi">0.39</td><td class="">0.72</td><td class="hi">0.75</td></tr>
+                  <tr class="row"><td class="m">WebCoder-1.3B</td><td class="">0.07</td><td class="hi">0.11</td><td class="">0.22</td><td class="hi">0.38</td></tr>
+                  <tr class="row"><td class="m">WebSight-VLM-7B</td><td class="">0.10</td><td class="hi">0.13</td><td class="">0.24</td><td class="hi">0.40</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <div id="progress"></div>
       <div id="livebadge"><span class="dot"></span><span>live html · press V for source</span></div>

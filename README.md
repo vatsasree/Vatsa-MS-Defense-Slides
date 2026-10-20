@@ -41,7 +41,7 @@ fonts and the walkthrough's icons disappear.
 | `←` `PageUp` | previous beat / slide |
 | `↓` / `↑` | next / previous slide, skipping beats; `↓` from Thank you enters the backups |
 | `Home` / `End` | title / last backup |
-| `O` | overview (backups shown as B1…B6) |
+| `O` | overview (backups shown as B1…B8) |
 | `N` | speaker notes (every main slide ends with a timing cue) |
 | `V` | view the current slide's HTML source |
 | `F` | fullscreen |
@@ -56,4 +56,5 @@ Presenter remotes send PageUp / PageDown and work out of the box.
 ## Backups
 
 After Thank you: B1 full format comparison (Table 3.1, live) · B2 agent & tool reliability (Table 5.3) ·
-B3–B5 per-stage formalism (Segment, Localize, Assemble + Refine) · B6 the complete REPLICA pipeline figure.
+B3–B5 per-stage formalism (Segment, Localize, Assemble + Refine) · B6 the complete REPLICA pipeline figure ·
+B7 M3Grounder data engine (FID-HTML → pixel masks) · B8 fine-grained benchmark analysis (thesis Tables 4.5–4.8).
