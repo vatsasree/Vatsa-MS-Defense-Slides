@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>REPLICA — ICDAR 2026 Oral</title>
+  <title>Towards Visually Faithful Document Reconstruction — M.S. Thesis Defense</title>
   <style>
     :root {
       --navy: #1e3a5f;
@@ -1606,11 +1606,11 @@
     }
 
     /* ---- closing slide: three cards and one number, so both grow to fill ---- */
-    .slide[data-eyebrow="09 · Conclusion"] .grid3 {
+    #concSlide .grid3 {
       gap: 28px;
     }
 
-    .slide[data-eyebrow="09 · Conclusion"] .grid3 .card {
+    #concSlide .grid3 .card {
       min-height: 290px;
       display: flex;
       flex-direction: column;
@@ -1618,31 +1618,31 @@
       padding: 36px 34px;
     }
 
-    .slide[data-eyebrow="09 · Conclusion"] .grid3 .card h3 {
+    #concSlide .grid3 .card h3 {
       font-size: 42px;
       margin-bottom: 16px;
     }
 
-    .slide[data-eyebrow="09 · Conclusion"] .grid3 .card p {
+    #concSlide .grid3 .card p {
       font-size: 25px;
       line-height: 1.5;
     }
 
-    .slide[data-eyebrow="09 · Conclusion"] .grid3 .card .tag {
+    #concSlide .grid3 .card .tag {
       font-size: 16px;
       margin-bottom: 12px;
     }
 
-    .slide[data-eyebrow="09 · Conclusion"] .stats {
+    #concSlide .stats {
       margin-top: 46px !important;
     }
 
-    .slide[data-eyebrow="09 · Conclusion"] .stats .v {
+    #concSlide .stats .v {
       font-size: 140px;
       line-height: 1;
     }
 
-    .slide[data-eyebrow="09 · Conclusion"] .stats .k {
+    #concSlide .stats .k {
       font-size: 24px;
       margin-top: 10px;
     }
@@ -3967,6 +3967,153 @@
       color: rgba(255, 255, 255, .55);
       letter-spacing: .07em;
     }
+
+    /* ═══════════ THESIS DEFENSE ADDITIONS ═══════════
+       Everything below is new for the M.S. defense; it only composes the
+       components defined above (cards, stats, rtab, pagebox, stage-strip …). */
+    .title-slide h1.thesis {
+      font-size: 84px;
+      line-height: 1.08;
+      letter-spacing: 0;
+      margin-bottom: 18px;
+    }
+
+    .title-slide .subtitle {
+      font-size: 29px;
+      max-width: 1640px;
+      font-style: italic;
+    }
+
+    .title-slide .authors {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.5;
+    }
+
+    .title-slide .affil {
+      margin-top: 4px;
+    }
+
+    /* ---- the road ahead ---- */
+    .roadrows {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .roadrow {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 22px 30px;
+      box-shadow: 0 3px 14px rgba(30, 58, 95, .07);
+    }
+
+    .roadrow .num-badge {
+      width: 50px;
+      height: 50px;
+      font-size: 19px;
+    }
+
+    .roadrow .rn {
+      font-family: var(--serif);
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--navy);
+      width: 620px;
+      flex: none;
+      white-space: nowrap;
+    }
+
+    .roadrow .rd {
+      font-size: 23px;
+      color: var(--ink-2);
+      flex: 1;
+    }
+
+    .roadrow .rc {
+      font-family: var(--mono);
+      font-size: 15px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #8a6510;
+      background: var(--gold-soft);
+      border: 1.5px solid var(--gold-line);
+      border-radius: 999px;
+      padding: 6px 16px;
+    }
+
+    /* ---- section dividers: a sub-line under the question ---- */
+    .section-slide .ssub {
+      margin-top: 30px;
+      font-family: var(--mono);
+      font-size: 17px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .55);
+      padding-left: 30px;
+    }
+
+    /* ---- ladder: the four failures a text-only rebuild introduces ---- */
+    .ladder-wrap {
+      grid-template-columns: 462px 700px 330px;
+      column-gap: 64px;
+    }
+
+    .ladder-notes {
+      grid-column: 3;
+      grid-row: 1;
+      align-self: center;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .ladder-notes .lnh {
+      font-family: var(--mono);
+      font-size: 13px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      font-weight: 700;
+    }
+
+    .lnote {
+      position: relative;
+      border: 2px solid var(--red);
+      background: #fbe9e7;
+      color: #8c2d22;
+      border-radius: 10px;
+      padding: 12px 16px 12px 46px;
+      font-size: 19px;
+      line-height: 1.35;
+      transition: all .4s;
+    }
+
+    .lnote::before {
+      content: "\2716";
+      position: absolute;
+      left: 16px;
+      color: var(--red);
+      font-weight: 800;
+    }
+
+    .lnote.ok {
+      border-color: var(--green);
+      background: #eaf5f0;
+      color: var(--green);
+      text-decoration: line-through;
+    }
+
+    .lnote.ok::before {
+      content: "\2713";
+      color: var(--green);
+    }
   </style>
 </head>
 
@@ -3977,41 +4124,64 @@
 
       <!-- ═══════════ 0 · TITLE ═══════════ -->
       <section class="slide title-slide"
-        data-notes="Good morning. REPLICA — an agentic framework for visually faithful document reconstruction. Joint work between BharatGen and IIIT Hyderabad. The one-line version: we turn documents into HTML that doesn't just read like the original, it looks like it. Three contributions, and the talk follows them in order: a representation, Fid-HTML; a benchmark that can actually score it, VFDR-Bench; and the agentic framework that produces it, REPLICA.">
-        <div class="venue-chip">ICDAR 2026 <span class="oral">Oral</span></div>
-        <h1>REPLICA</h1>
-        <div class="subtitle">An Agentic Framework for<br>Visually Faithful Document Reconstruction</div>
+        data-notes="Good morning. My thesis is titled Towards Visually Faithful Document Reconstruction. The one-line version: turn documents into HTML that looks exactly like the original, not just reads like it. Three contributions, in thesis order: represent — a format, FID-HTML, that can carry what a page looks like; measure — a benchmark, VFDR-Bench, and metrics that can score it; and generate — an agentic framework, REPLICA, that produces it. [1:00]">
+        <div class="venue-chip">M.S. Thesis Defense <span class="oral">23 October 2026</span></div>
+        <div class="affil" style="margin:-18px 0 26px;">IIIT Hyderabad &nbsp;·&nbsp; CVIT</div>
+        <h1 class="thesis">Towards Visually Faithful<br>Document Reconstruction</h1>
+        <div class="subtitle">Turning scanned pages and PDFs into HTML that doesn't just read like the original — it looks like it.</div>
         <div class="roadmap">
-          <span class="rm"><b>Representation Format</b>FID-HTML</span>
+          <span class="rm"><b>Represent</b>FID-HTML</span>
           <span class="rmar">&rarr;</span>
-          <span class="rm"><b>Method</b>REPLICA</span>
+          <span class="rm"><b>Measure</b>VFDR-Bench + GPS · LPS · VFS</span>
           <span class="rmar">&rarr;</span>
-          <span class="rm"><b>Benchmark & Metrics</b>VFDR-Bench</span>
+          <span class="rm"><b>Generate</b>REPLICA</span>
         </div>
         <div class="authors">
-          Raghuveer R<sup>1*</sup>, Anirudh Srinivasan<sup>1*</sup>, Venkata Kesav Venna<sup>1*</sup>,
-          Sreevatsa S<sup>2</sup>,<br>Aryan Jain<sup>2</sup>, Sahithi Kukkala<sup>2</sup>, Ravi Kiran
-          Sarvadevabhatla<sup>1,2</sup>
-          <div class="affil"><sup>1</sup> BharatGen &nbsp;·&nbsp; <sup>2</sup> IIIT Hyderabad &nbsp;&nbsp;|&nbsp;&nbsp;
-            * Equal Contribution</div>
+          Tallapragada Shanmukha Sreevatsa
+          <div class="affil">Advisor: Dr. Ravi Kiran Sarvadevabhatla</div>
         </div>
         <div class="title-logos">
-          <img src="static/images/logos/bgen_logo.png" alt="BharatGen">
+          <img src="static/images/logos/cvit.png" alt="CVIT">
           <img src="static/images/logos/iiith_logo.jpeg" alt="IIIT Hyderabad">
-          <img src="static/images/logos/icdar_logo.png" alt="ICDAR 2026">
+          <img src="static/images/logos/bgen_logo.png" alt="BharatGen">
         </div>
       </section>
 
-      <!-- ═══════════ 2 · SECTION 01 ═══════════ -->
-      <!-- <section class="slide section-slide" data-eyebrow="01 · Motivation"
-        data-notes="Section one. The problem, and why the way a document looks is part of what it means.">
-        <h1>The problem</h1>
-        <div class="q">A document is not just its words. So what exactly is a document made of — and which parts do we
-          lose when we convert one?</div>
-      </section> -->
+      <!-- ═══════════ 01 · THE ROAD AHEAD ═══════════ -->
+      <section class="slide vcenter" data-eyebrow="Overview"
+        data-notes="How the talk is organised — it follows the thesis chapter by chapter. First the problem and why appearance matters; then how people have tried and what they miss. Then the three contributions in the order the argument needs them: represent — FID-HTML, the target format; measure — VFDR-Bench and its metrics, because a target with no ruler cannot be optimised; and only then generate — REPLICA, the system that produces it. The last chapter is the evidence, the honest edges, and what this unlocks downstream. [0:50]">
+        <h2>How this talk is organised</h2>
+        <div class="slide-body">
+          <div class="roadrows">
+            <div class="roadrow"><span class="num-badge">01</span><span class="rn">Introduction</span><span
+                class="rd">The problem, and why appearance matters</span></div>
+            <div class="roadrow"><span class="num-badge">02</span><span class="rn">Background &amp; Related Work</span><span
+                class="rd">How people have tried, and what they miss</span></div>
+            <div class="roadrow"><span class="num-badge">03</span><span class="rn">FID-HTML</span><span class="rd">A
+                representation designed to be faithful</span><span class="rc">represent</span></div>
+            <div class="roadrow"><span class="num-badge">04</span><span class="rn">VFDR-Bench &amp; Metrics</span><span
+                class="rd">A benchmark and metrics that measure fidelity</span><span class="rc">measure</span></div>
+            <div class="roadrow"><span class="num-badge gold">05</span><span class="rn">REPLICA</span><span class="rd">An
+                agentic framework that generates it</span><span class="rc">generate</span></div>
+            <div class="roadrow"><span class="num-badge">06</span><span class="rn">Results, Limitations &amp;
+                Applications</span><span class="rd">Evidence, honest edges, downstream impact</span><span
+                class="rc">results</span></div>
+          </div>
+          <div class="takeaway">The order follows the thesis: define the target, measure against it, then build the
+            system that beats existing methods on that measure.</div>
+        </div>
+      </section>
+
+      <!-- ═══════════ DIVIDER 01 ═══════════ -->
+      <section class="slide section-slide" data-eyebrow="01 · Introduction"
+        data-notes="Chapter one. The question the whole thesis answers. Not just 'can we read a document' — that is OCR, and it is largely solved — but can we convert it into something editable and web-native that keeps both what it says and what it looks like. [0:15]">
+        <h1>Introduction</h1>
+        <div class="q">Can we convert arbitrary scanned or digital documents into editable, web-native representations
+          that preserve both semantic meaning and rendered appearance?</div>
+      </section>
 
       <!-- ═══════════ LIVE FIDELITY LADDER ═══════════ -->
-      <section class="slide" data-eyebrow="01 · Motivation" data-frags="3" id="ladderSlide"
+      <section class="slide" data-eyebrow="01 · Introduction" data-frags="3" id="ladderSlide"
         data-notes="So what did we actually lose? Same document, twice. On the left the original page. On the right I rebuild it one layer at a time — this is running live, and at the end the two are literally the same markup. [CLICK] Level zero, text only: every word is present and in order, but it is a wall of prose. You cannot tell the heading from the body, the table has become a run of numbers, the total is indistinguishable from the fine print. Note the shape does not even match — a text stream has no page. This is what OCR and most parsers give you. [CLICK] Level one, add logical structure: now we know this is a heading, this is a table with rows and columns. Markdown-class output. A big win for machines — but still no page geometry, so the shape still does not match. [CLICK] Level two, add physical position: now the page has the same dimensions as the original, the two-column body is back, and the numbers align under their headers. Now you can tell which number belongs to which item. [CLICK] Level three, add visual fidelity: typography, weight, colour, the brand bar — and critically the strikethrough and the OVERDUE stamp. Now the right side is pixel-for-pixel the left side. Only the cancelled line reads as cancelled, and only now does the overdue notice exist at all.">
         <!-- <h2>Rebuilding a document, <em>one layer at a time</em></h2> -->
         <h2>What is <em>V</em>isually <em>F</em>aithful <em>D</em>ocument <em>R</em>econstruction ? </h2>
@@ -4139,7 +4309,7 @@
       </section>
 
       <!-- ═══════════ 5 · REQUIREMENTS FOR VFDR ═══════════ -->
-      <section class="slide vcenter" data-eyebrow="01 · Motivation" data-frags="2"
+      <section class="slide vcenter" data-eyebrow="01 · Introduction" data-frags="2"
         data-notes="Those four layers are exactly what a faithful reconstruction has to preserve, and they are the spine of the paper. Text — are the words right. Hierarchy — is the structure right: reading order, nesting, tables, lists. Geometry — is the position right: where does each block actually sit. And visual components — does it look right: typography, colour, weight, backgrounds. Prior work optimises the first two and lets the rest go, and the reason is simple: no prior benchmark measured the last two, so no prior system optimised them. [CLICK] And two requirements on the format itself: whatever we output has to be web-native, so it opens anywhere without a bespoke viewer, and machine-readable, so downstream models can consume the structure directly. Those six boxes are the specification for everything that follows.">
         <div class="kicker">The axes of document reconstruction</div>
         <!-- <h2>Requirements for <em>visually faithful</em> reconstruction</h2> -->
@@ -4221,8 +4391,15 @@
         </div>
       </section>
 
+      <!-- ═══════════ DIVIDER 02 ═══════════ -->
+      <section class="slide section-slide" data-eyebrow="02 · Background"
+        data-notes="Chapter two. Before proposing anything: how has the field tried, and what exactly does each family of methods keep and drop. [0:15]">
+        <h1>Background &amp; Related Work</h1>
+        <div class="q">Existing pipelines recover portions of text and hierarchy — but which signals do they preserve, and which do they quietly discard?</div>
+      </section>
+
       <!-- ═══════════ 6 · WHERE THE FIELD STANDS (baselines only) ═══════════ -->
-      <section class="slide demo bleed" data-eyebrow="02 · Where the field stands" data-embed="teaser" data-nav="1"
+      <section class="slide demo bleed" data-eyebrow="02 · Background" data-embed="teaser" data-nav="1"
         data-frags="2"
         data-notes="So how does the field do against that checklist? This is Figure 1A from the paper, running live. On the left the input page; on the right one system at a time. Marker, a strong pipeline tool, linearises three columns into one — the words survive, the page does not. [CLICK] GPT-5 gets the text largely right, then drifts on placement, font attributes and column count. [CLICK] Qwen3-VL-30B, same story. Every one of them ticks text and roughly ticks structure — and every one of them fails geometry and appearance. Notice I am not showing you our system yet. I want the failure to be the thing you remember, because the failure is the same in every case, and it is not a failure of the model.">
         <div class="kicker">Against the checklist</div>
@@ -4243,7 +4420,7 @@
       <!-- Deliberately a diagram and not a table: the full format comparison is
          paper Table 1, three slides later. This slide only has to land one
          causal claim, in about fifteen seconds. -->
-      <section class="slide vcenter" data-eyebrow="02 · Where the field stands" data-frags="2"
+      <section class="slide vcenter" data-eyebrow="02 · Background" data-frags="2"
         data-notes="So why did all three lose the same two things? It is not the model. It is what we asked the model to write. [CLICK] The page carries four axes. They all have to pass through one narrow place — the output format. Marker writes Markdown. The OCR VLMs write a flat text stream. GPT-5 and Qwen write generic HTML. [CLICK] And that is where two of them die. Markdown and plain text have no syntax for an x-y coordinate or a font colour — you literally cannot write it down. HTML does have the syntax, and this is the subtle case: the syntax exists, but a div with no style attribute is perfectly valid HTML — so it is optional, and what is optional gets left out. Either way there is no place to put position and style, and the information never reaches the page. [CLICK] So the sentence I want you to keep: what a format does not require, a system does not produce. The bottleneck is not the model. It is the target. Widen the target, and everything downstream changes — so that is what we did.">
         <!-- <div class="kicker">Not a model failure — a format failure</div> -->
         <!-- <h2>Four axes go in. <em>The output format only has room for two.</em></h2> -->
@@ -4349,13 +4526,12 @@
         </div>
       </section>
 
-      <!-- ═══════════ 7 · SECTION 03 ═══════════ -->
-      <!-- <section class="slide section-slide" data-eyebrow="03 · FID-HTML"
-        data-notes="Section two. We just argued the format is the ceiling — so this is the format. Everything the four axes ask for, carried in one file that a browser renders and a model can read.">
+      <!-- ═══════════ DIVIDER 03 ═══════════ -->
+      <section class="slide section-slide" data-eyebrow="03 · FID-HTML"
+        data-notes="Chapter three, the first contribution: represent. We just argued the format is the ceiling — so this is the format. [0:15]">
         <h1>FID-HTML</h1>
-        <div class="q">One format that carries <b>all four axes at once</b> — text, hierarchy, geometry and style — and
-          stays web-native and machine-readable.</div>
-      </section> -->
+        <div class="q">What representation could preserve a page's text, hierarchy, geometry, and style all at once — and still be web-native and machine-readable?</div>
+      </section>
 
       <!-- ═══════════ 7b · THE REVEAL — same page, rebuilt ═══════════ -->
       <section class="slide demo bleed" data-eyebrow="03 · FID-HTML" data-embed="teaser" data-frags="1"
@@ -4518,16 +4694,15 @@
         </div>
       </section>
 
-      <!-- ═══════════ 10 · SECTION 04 ═══════════ -->
-      <!-- <section class="slide section-slide" data-eyebrow="04 · The agentic"
-        data-notes="Section three, and this is the part I most want to land: why this system is agentic, and what that actually means.">
-        <h1>The agentic framework</h1>
-        <div class="q">A single model must jointly solve detection, recognition, ordering and styling — with no
-          geometric grounding and no way to check its own render. What if we decomposed instead?</div>
-      </section> -->
+      <!-- ═══════════ DIVIDER 05 ═══════════ -->
+      <section class="slide section-slide" data-eyebrow="05 · REPLICA"
+        data-notes="Chapter five, the third contribution: generate. We have the target and the ruler — now the system that hits the target. And the part I most want to land: why it is agentic, and what that actually means. [0:15]">
+        <h1>REPLICA</h1>
+        <div class="q">How can arbitrary scanned or digital documents be reconstructed into FID-HTML with both semantic correctness and near pixel-level visual fidelity?</div>
+      </section>
 
       <!-- ═══════════ 11 · AGENTS VS TOOLS ═══════════ -->
-      <section class="slide vcenter" data-eyebrow="04 · The agentic" data-frags="1"
+      <section class="slide vcenter" data-eyebrow="05 · REPLICA" data-frags="1"
         data-notes="First the vocabulary, because agentic is an overloaded word. We formalise the system as a coordination between two things. A TOOL is a fixed function: same input, same output, no judgment. A layout detector always returns boxes the same way; reading-order computation, font fitting, background extraction — deterministic, reproducible, cheap. An AGENT reasons: it decides which tool to call, when, and whether the result is good enough — then retries, overrides, reroutes or escalates. In the paper we write script-A for the set of agents and script-T for the set of tools; agents perform semantic reasoning, routing, grouping and generation, while tools execute structured reproducible operations. And the objective is precisely this: given a page image I, produce HTML H such that the RENDER of H aligns with I across all four axes. Note it is R of H — the rendering — not H itself. That single choice is what forces a refine stage to exist at all.">
         <!-- <div class="kicker">The vocabulary, precisely</div> -->
         <!-- <h2>Agents <em>reason</em>. Tools <em>execute</em>.</h2> -->
@@ -4631,7 +4806,7 @@
       </section>
 
       <!-- ═══════════ THE AGENTIC FRAMEWORK, STAGE BY STAGE ═══════════ -->
-      <section class="slide" data-eyebrow="04 · Approach" data-frags="4" id="stagesSlide"
+      <section class="slide" data-eyebrow="05 · REPLICA" data-frags="4" id="stagesSlide"
         data-notes="So how does that decomposition actually run? Four questions, four stages — and I will build the framework figure up one stage at a time. [CLICK] Stage 1, Segment: how do we divide the document into meaningful components? A document-type tool decides digital or scanned; a detector ensemble — DocLayout-YOLO, IndicDLP-YOLO, Hi-SAM — proposes regions; then two agents take over. The Labeling agent uses Set-of-Mark prompting to assign types and catch mis-segmentation, and the Grouping agent builds the layout graph, resolving caption-figure binding and list nesting. Output: a hierarchical layout tree. [CLICK] Stage 2, Localize: how do we convert each component into HTML? The Router agent picks a specialist from the crop itself, overriding the upstream label when the visual contradicts it. Six specialists — text, table, image, form, list, equation — emit sub-HTML with position and style inline. Tools like OCR and table-structure recognition are called only when needed. Nodes are conditionally independent, so this stage parallelises. [CLICK] Stage 3, Assemble: how do we compose them? A position-aware merge tool works bottom-up over the tree, then the Reading-Order agent linearises semantically — because top-to-bottom sorting fails on multi-column pages. [CLICK] Stage 4, Refine: how do we make it actually look right? Font-size and background tools, and then the Reflection agent renders the HTML, compares it against the source image, and injects CSS until it stabilises. That is the only component that ever sees the final render — and it is why the objective is stated on R of H.">
         <h2>The agentic framework, <em>stage by stage</em></h2>
         <div class="slide-body">
@@ -4721,7 +4896,7 @@
      opening "<!##" and closing "##>" markers below and re-save.
 
 <!##
-    <section class="slide" data-eyebrow="04 · Approach · Stage 1" data-frags="4"
+    <section class="slide" data-eyebrow="Backup" data-frags="4"
       data-notes="Stage one, Segment. A classifier tool decides digital or scanned. If digital we bypass detection and read boxes, spans and font metadata straight from PDF primitives. If scanned, a detector ensemble proposes candidate regions, fused by IoU merging. Those proposals are geometry-driven: they over-segment, merge incompatible content, and miss hierarchy. So the labeling agent assigns a structural label and attributes, and the grouping agent builds the graph G, constrained into a tree.">
       <div class="kicker">Stage 1 of 4</div>
       <h2><em>Segment</em> — hierarchical semantic layout detection</h2>
@@ -4760,7 +4935,7 @@
       </div>
     </section>
 
-    <section class="slide" data-eyebrow="04 · Approach · Stage 2" data-frags="4"
+    <section class="slide" data-eyebrow="Backup" data-frags="4"
       data-notes="Stage two, Localize. Each node arrives as a four-tuple: crop, bounding box, upstream label, structural constraints. The router agent selects a specialist from the crop, overriding the label when the visual contradicts it. Six specialists generate localized HTML. Auxiliary tools are invoked only when necessary. Nodes are conditionally independent, so the stage parallelises.">
       <div class="kicker">Stage 2 of 4</div>
       <h2><em>Localize</em> — layout-aware HTML generation</h2>
@@ -4802,7 +4977,7 @@
       </div>
     </section>
 
-    <section class="slide" data-eyebrow="04 · Approach · Stages 3–4" data-frags="3"
+    <section class="slide" data-eyebrow="Backup" data-frags="3"
       data-notes="Assemble merges bottom-up and orders semantically. Refine renders, compares against the source, and repairs until the appearance stabilises.">
       <div class="kicker">Stages 3 &amp; 4 of 4</div>
       <h2><em>Assemble</em>, then <em>Refine</em> against the render</h2>
@@ -4824,7 +4999,7 @@
 ═════════════════════════════════════════════════════════════════════ -->
 
       <!-- ═══════════ 18 · LIVE FRAMEWORK DEMO ═══════════ -->
-      <section class="slide demo bleed full" data-eyebrow="04 · Approach · Demo" data-embed="pipeline" data-frags="0"
+      <section class="slide demo bleed full" data-eyebrow="05 · REPLICA · Demo" data-embed="pipeline" data-frags="0"
         data-notes="Rather than describe it further — here is the whole framework running on a real page with every intermediate output: a Telugu newspaper, the layout that argues hardest for agents. Watch the Grouping Agent close a dashed outline around each article — headline, deck, figure, body columns — and the Reading-Order Agent reject raster order for story-major order, because a newspaper has no fixed reading order. Step through with the clicker one beat at a time, or press space to let the whole walkthrough run and space again to pause it. Each beat spotlights the corresponding part of Figure 4 on the left.">
         <!-- <div class="kicker">Interactive walkthrough</div> -->
         <h2>Walkthrough of the <em>REPLICA</em> Agentic Framework</h2>
@@ -4834,16 +5009,15 @@
         </div>
       </section>
 
-      <!-- ═══════════ 19 · SECTION 05 ═══════════ -->
-      <!-- <section class="slide section-slide" data-eyebrow="05 · Evaluation"
-        data-notes="Section four. How we measure it, and what we find.">
-        <h1>Evaluation</h1>
-        <div class="q"><b>FID-HTML</b> — the representation. <b>REPLICA</b> — the system.<br>
-          Nothing existed that could <b>score</b> either one.</div>
-      </section> -->
+      <!-- ═══════════ DIVIDER 04 ═══════════ -->
+      <section class="slide section-slide" data-eyebrow="04 · VFDR-Bench &amp; Metrics"
+        data-notes="Chapter four, the second contribution: measure. A target with no ruler cannot be optimised. Every existing benchmark is annotated in Markdown or plain text, so there is no ground truth for position or style — you cannot score what a page looks like against a reference that never recorded it. So before building a system, we built the ruler. [0:20]">
+        <h1>VFDR-Bench &amp; Metrics</h1>
+        <div class="q">We have a target representation. But how do we systematically evaluate whether a reconstruction truly preserves both the semantics and the appearance of the source?</div>
+      </section>
 
       <!-- ═══════════ VFDR-BENCH SAMPLE CAROUSEL ═══════════ -->
-      <section class="slide" data-eyebrow="05 · Evaluation" id="vfdrSlide"
+      <section class="slide" data-eyebrow="04 · VFDR-Bench &amp; Metrics" id="vfdrSlide"
         data-notes="This is what is actually in VFDR-Bench — thirty real pages from the set, grouped by document type, playing on their own. Five thousand documents, twenty-two languages, seventeen domains, and every single one annotated in Fid-HTML by trained annotators, because you cannot score position or style against a Markdown reference. Newspapers and periodicals; government and official records — birth certificates, tenders, memoranda; textbooks and exam papers, including right-to-left scripts; business and finance — statements, invoices with handwriting and rubber stamps; Indic and archival material on aged paper; and magazines and lifestyle layouts. Shift-arrow steps, P pauses, and clicking a page enlarges it.">
         <div class="kicker">What is actually in the benchmark &nbsp;·&nbsp;
           <span class="chint">plays automatically &nbsp;·&nbsp; <b>P</b> pause &nbsp;·&nbsp; <b>&#8679;&larr;
@@ -4880,7 +5054,7 @@
       </section>
 
       <!-- ═══════════ 20 · WHICH METRIC MEASURES WHAT ═══════════ -->
-      <section class="slide vcenter" data-eyebrow="05 · Evaluation" data-frags="3"
+      <section class="slide vcenter" data-eyebrow="04 · VFDR-Bench &amp; Metrics" data-frags="3"
         data-notes="Same four axes, one metric family each — and this shape is the one to keep in your head, because every result from here on is read on it. [CLICK] The two established axes. Text extraction: character and word recognition rate. Logical structure: normalised tree edit distance, with TEDS for tables and CDM for formulas. Both standard, both already in the literature. [CLICK] The two we introduce. Physical structure: Global and Local Position Score — one-to-one matching by maximum IoU, then area-normalised precision and recall, so it penalises both missed elements and hallucinated boxes. Visual fidelity: the Visual Fidelity Score, a VLM judging the rendered page against human-annotated ground truth. Neither axis had any metric at all before this work. [CLICK] Overall is the mean of the four, so nothing can buy a good score by winning one axis. And on trust: Pearson correlation with seven expert annotators is above 0.8 across a hundred documents.">
         <!-- <div class="kicker">Reading the scoreboard</div> -->
         <h2>Which metric measures <em>what</em></h2>
@@ -4957,8 +5131,16 @@
         </div>
       </section>
 
+      <!-- ═══════════ DIVIDER 06 ═══════════ -->
+      <section class="slide section-slide" data-eyebrow="06 · Results"
+        data-notes="Chapter six. The evidence, then the honest edges, then what this unlocks. Everything is measured with the benchmark and metrics from chapter four. [0:15]">
+        <h1>Results</h1>
+        <div class="q">Does structured agentic design actually beat brute-force model scaling on visually faithful reconstruction?</div>
+        <div class="ssub">All numbers that follow are on VFDR-Bench, with the metric suite of Chapter 04.</div>
+      </section>
+
       <!-- ═══════════ 21 · MAIN TABLE (paper Table 2, native & stepped) ═══════════ -->
-      <section class="slide" data-eyebrow="05 · Evaluation" data-frags="5" id="resSlide"
+      <section class="slide" data-eyebrow="06 · Results" data-frags="5" id="resSlide"
         data-notes="This is Table 2 in full — all sixteen methods. Each category is collapsed to its best system; click any category to expand it. I will walk it one axis at a time. [CLICK] Text extraction: almost everyone is passable — Marker 0.68, Qwen 0.66, GPT-5 0.65. Largely solved, which is why the field feels finished. [CLICK] Logical structure: tree edit distance is passable for the better systems — but nothing about it says WHERE anything is. [CLICK] Now physical structure, and the entire field collapses. Best baseline LPS 0.22, best GPS 0.43, most under 0.30. Nothing lands where it belongs. [CLICK] Visual fidelity: GPT-5 reaches 0.86 and Gemini 0.82 — genuinely good-looking pages — but with GPS of 0.43 and 0.31, those pages are not the source page. [CLICK] And the whole board, graded. REPLICA: 0.73 and 0.86 on position, 0.93 visual fidelity, 0.86 overall. The claim is not that we win a column — it is that there is no weak column.">
         <div class="kicker">Measured on VFDR-Bench — all 16 methods &nbsp;·&nbsp;
           <!-- <span class="chint">click a category to expand it</span> -->
@@ -4995,7 +5177,7 @@
       </section>
 
       <!-- ═══════════ 22 · ABLATION (paper Table 3, as a chart) ═══════════ -->
-      <section class="slide vcenter" data-eyebrow="05 · Evaluation" data-frags="3" id="ablSlide"
+      <section class="slide vcenter" data-eyebrow="06 · Results" data-frags="3" id="ablSlide"
         data-notes="The ablation, built up cumulatively, and read on the same four axes as everything else — the navy line is Overall, gold is the visual-fidelity axis, violet is the physical-structure axis. The bands are our own four stages. Three stages, three numbers, and they add up: 0.53 at the start, 0.93 at the end. [CLICK] Stage one, Segment: hierarchical layout, Hi-SAM and Set-of-Mark take us from 0.53 to 0.71 — plus eighteen. Notice it is the physical-structure line that climbs, 0.34 to 0.69: better segmentation buys geometry. [CLICK] Stage two, Localize: 0.71 to 0.86, plus fifteen. And here is the part that matters — a single monolithic generator only reaches 0.76. The remaining ten points come from routing to six specialists, at the same model size. That is the agentic decomposition paying for itself. [CLICK] Stage four, Refine: 0.86 to 0.93, plus seven, with visual fidelity reaching 0.97. Eighteen, fifteen, seven — forty points in total, and the two biggest are decomposition and looking at the render. Assemble has no row of its own here: it is not optional, so there is nothing to ablate.">
         <div class="kicker"> &nbsp;&nbsp; <span class="chint"></span></div>
         <h2>Ablation studies <span class="srcnote"></span></h2>
@@ -5007,7 +5189,7 @@
       </section>
 
       <!-- ═══════════ QUALITATIVE ═══════════ -->
-      <section class="slide" data-frags="4" data-eyebrow="05 · Evaluation" id="qualSlide"
+      <section class="slide" data-frags="4" data-eyebrow="06 · Results" id="qualSlide"
         data-notes="Spot the difference. On the left the source scan; on the right REPLICA's Fid-HTML rendered live by your browser — real selectable text and real inline CSS, not an image of our output. Both sides are forced into the same rectangle, so any size difference you see would be a real layout error. [CLICK] A government notice with a table, in Gujarati. [CLICK] A dense receipt — small type, faint scan. [CLICK] A multi-column magazine spread. [CLICK] And a scientific paper with equations and figures. In every case the column boundaries, typography and spatial layout survive.">
         <div class="kicker">Spot the difference <span class="qdots" id="qualDots"></span></div>
         <h2>Source scan <em>vs</em> live FID-HTML render</h2>
@@ -5131,7 +5313,7 @@
       </section>
 
       <!-- ═══════════ 25 · DOWNSTREAM (paper Fig. 2) ═══════════ -->
-      <section class="slide demo bleed" data-eyebrow="07 · Applications" data-embed="down" data-nav="1" data-frags="6"
+      <section class="slide demo bleed" data-eyebrow="06 · Applications" data-embed="down" data-nav="1" data-frags="6"
         data-notes="Because Fid-HTML is web-native and carries both semantics and geometry, it is reusable well beyond reconstruction — this is Figure 2 from the paper, live; hover any application to zoom into it. Layout-preserving document translation: translate a form and it still looks like that form. Document preservation and archiving. Indexing and searchability. Grounded document intelligence — the nested DOM maps directly onto phrase inside line inside block containment, so you get pixel-level grounding for free. Semantic chunking for RAG, where chunks follow logical structure rather than character counts. And position-aware retrieval — query by where something sits on the page.">
         <div class="kicker">Beyond reconstruction</div>
         <h2>What FID-HTML <em>unlocks</em> <span class="srcnote"></span></h2>
@@ -5142,7 +5324,7 @@
       </section>
 
       <!-- ═══════════ 26b · WHERE REPLICA SITS ═══════════ -->
-      <section class="slide vcenter" data-eyebrow="08 · The bigger picture" data-frags="2"
+      <section class="slide vcenter" data-eyebrow="06 · Applications" data-frags="2"
         data-notes="That was what the representation lets you do. This is what it has already done. Three papers are built on Fid-HTML supervision and all three are through review. [CLICK] REPLICA rebuilds any page as Fid-HTML — text, structure, position and style, all explicit — so every reconstructed page is labelled by construction, at whatever scale you can run it. M3Grounder, at CVPR, uses masks as evidence for grounded answers. DoCoG, an oral at ECCV, does grounded reasoning — every claim tied back to a region. And DocLayout-VL treats the page as a tree. None of them had to annotate a thing. [CLICK] And it runs the other way too: better segmentation, better reading order and better grounding come straight back into REPLICA's own stages. Neither half stands alone — the representation makes the supervision, the supervision makes the models, and the models make the representation better.">
         <div class="kicker">REPLICA as a data generator</div>
         <h2>Supervision for <em>grounded document models</em></h2>
@@ -5227,7 +5409,7 @@
       </section>
 
       <!-- ═══════════ 27 · SUMMARY ═══════════ -->
-      <section class="slide vcenter" data-eyebrow="09 · Conclusion"
+      <section class="slide vcenter" data-eyebrow="07 · Conclusion" id="concSlide"
         data-notes="To summarise. Fid-HTML: a web-native representation where position and style are required rather than optional, so fidelity is a property of the format. VFDR-Bench with GPS, LPS and VFS: the first benchmark to score physical structure and rendered appearance. And REPLICA: Segment, Localize, Assemble, Refine — agents where judgment is needed, tools where determinism is needed — reaching 93% visual fidelity and 0.86 overall, ahead of GPT-5 and Gemini. And the headline for the agentic argument: REPLICA with an 8-billion-parameter backbone beats Qwen3-VL-30B by 39% overall, at 3.75 times smaller and comparable inference time. Structured decomposition beats brute-force scale.">
         <div class="kicker">One paradigm, three contributions</div>
         <h2>Representation Format → Method → Benchmark & Metrics</h2>
