@@ -4182,7 +4182,7 @@
 
       <!-- ═══════════ LIVE FIDELITY LADDER ═══════════ -->
       <section class="slide" data-eyebrow="01 · Introduction" data-frags="3" id="ladderSlide"
-        data-notes="So what did we actually lose? Same document, twice. On the left the original page. On the right I rebuild it one layer at a time — this is running live, and at the end the two are literally the same markup. [CLICK] Level zero, text only: every word is present and in order, but it is a wall of prose. You cannot tell the heading from the body, the table has become a run of numbers, the total is indistinguishable from the fine print. Note the shape does not even match — a text stream has no page. This is what OCR and most parsers give you. [CLICK] Level one, add logical structure: now we know this is a heading, this is a table with rows and columns. Markdown-class output. A big win for machines — but still no page geometry, so the shape still does not match. [CLICK] Level two, add physical position: now the page has the same dimensions as the original, the two-column body is back, and the numbers align under their headers. Now you can tell which number belongs to which item. [CLICK] Level three, add visual fidelity: typography, weight, colour, the brand bar — and critically the strikethrough and the OVERDUE stamp. Now the right side is pixel-for-pixel the left side. Only the cancelled line reads as cancelled, and only now does the overdue notice exist at all.">
+        data-notes="So what did we actually lose? Same document, twice. On the left the original page. On the right I rebuild it one layer at a time — this is running live, and at the end the two are literally the same markup. [CLICK] Level zero, text only: every word is present and in order, but it is a wall of prose. You cannot tell the heading from the body, the table has become a run of numbers, the total is indistinguishable from the fine print. Note the shape does not even match — a text stream has no page. This is what OCR and most parsers give you. Look at the four red notes on the right. Every word survived. A person reading the right-hand version could pay a cancelled charge, miss an overdue notice and misread what they owe. Style is data. [CLICK] Level one, add logical structure: now we know this is a heading, this is a table with rows and columns. Markdown-class output. A big win for machines — but still no page geometry, so the shape still does not match. [CLICK] Level two, add physical position: now the page has the same dimensions as the original, the two-column body is back, and the numbers align under their headers. Now you can tell which number belongs to which item. [CLICK] Level three, add visual fidelity: typography, weight, colour, the brand bar — and critically the strikethrough and the OVERDUE stamp. Now the right side is pixel-for-pixel the left side. Only the cancelled line reads as cancelled, and only now does the overdue notice exist at all — and only now do all four turn green. [3:00]">
         <!-- <h2>Rebuilding a document, <em>one layer at a time</em></h2> -->
         <h2>What is <em>V</em>isually <em>F</em>aithful <em>D</em>ocument <em>R</em>econstruction ? </h2>
         <div class="slide-body">
@@ -4303,6 +4303,14 @@
             <div class="ladder-out">
               <div class="pagebox" id="ladderBox"><!-- clone injected here --></div>
               <div class="cap"><b>Reconstruction</b> — rebuilt live, layer by layer</div>
+            </div>
+            <!-- what a text-only rebuild loses; each flips to ✓ at the level that repairs it -->
+            <div class="ladder-notes">
+              <div class="lnh">What the reader loses</div>
+              <div class="lnote" data-fix="3"><b>OVERDUE</b> stamp lost</div>
+              <div class="lnote" data-fix="3"><b>VOID</b> marker lost — reads as an active charge</div>
+              <div class="lnote" data-fix="2">Columns collapsed — which cell goes where?</div>
+              <div class="lnote" data-fix="3"><b>TOTAL DUE</b> no longer stands out</div>
             </div>
           </div>
         </div>
@@ -5705,6 +5713,7 @@
           s.classList.toggle("on", i === Math.min(frag, 3));
           s.classList.toggle("done", i < Math.min(frag, 3));
         });
+        document.querySelectorAll("#ladderSlide .lnote").forEach(n => n.classList.toggle("ok", frag >= +n.dataset.fix));
       }
 
       /* ---------- staged framework reveal ----------
