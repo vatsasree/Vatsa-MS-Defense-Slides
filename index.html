@@ -4110,6 +4110,22 @@
       text-decoration: line-through;
     }
 
+    /* the chapter-06 board starts as the chapter-04 board; REPLICA arrives on beat 1 */
+    .rtab tr.ours.hide {
+      display: none;
+    }
+
+    .rtab tr.ours.enter td {
+      animation: oursIn .55s cubic-bezier(.22, .7, .3, 1);
+    }
+
+    @keyframes oursIn {
+      from {
+        transform: translateY(28px);
+        opacity: 0;
+      }
+    }
+
     .lnote.ok::before {
       content: "\2713";
       color: var(--green);
@@ -4824,6 +4840,27 @@
         </div>
       </section>
 
+      <!-- ═══════════ 20 · THE BAR TO BEAT (Table 5.1 baselines; second instance of the results table) ═══════════ -->
+      <section class="slide" data-eyebrow="04 · VFDR-Bench &amp; Metrics" data-frags="5" id="baseSlide"
+        data-notes="So we have the ruler. This is what it says about the field: fifteen existing methods — pipeline tools, expert OCR models, general VLMs and screenshot-to-HTML models — all scored on VFDR-Bench with the metrics I just showed you. Same axis walk as before. [CLICK] Text extraction: almost everyone is passable — Marker 0.68 WRR, Qwen and GPT-5 close behind. Largely solved, which is why the field feels finished. [CLICK] Logical structure, tree edit distance, lower is better: the OCR specialists sit near 0.9 because they emit an almost flat stream; GPT-5 is the best at 0.49. [CLICK] Physical structure: the whole field collapses. Best LPS 0.22, best GPS 0.43, most systems under 0.30. Nothing lands where it belongs. [CLICK] Visual fidelity: GPT-5 0.86, Gemini 0.82 — good-looking pages, but with GPS of 0.43 and 0.31 they are not the source page. [CLICK] Graded: the strongest system tops out at 0.58 overall. The benchmark is hard, and it discriminates — and this is the bar REPLICA has to clear. Hold on to this picture; it comes back in chapter six. [2:00]">
+        <div class="kicker">Table 5.1 · 15 existing methods on VFDR-Bench</div>
+        <h2>The benchmark is <em>hard</em>, and it discriminates</h2>
+        <div class="slide-body">
+          <div class="rwrap">
+            <div class="rfit">
+              <table class="rtab" id="baseTable"></table>
+            </div>
+          </div>
+          <div class="rnote">
+            <div class="rlegend"><span>weakest</span><i style="background:#fdeceb"></i><i
+                style="background:#fdf1dd"></i><i style="background:#eef5ef"></i><i
+                style="background:#dcefe1"></i><span>strongest</span></div>
+          </div>
+          <div class="takeaway frag bartake" data-frag="5">The strongest system tops out at <b>OS 0.58</b>. Text is
+            largely solved; position and style collapse for the whole field. This is the bar REPLICA has to clear.</div>
+        </div>
+      </section>
+
       <!-- ═══════════ DIVIDER 05 ═══════════ -->
       <section class="slide section-slide" data-eyebrow="05 · REPLICA"
         data-notes="Chapter five, the third contribution: generate. We have the target and the ruler — now the system that hits the target. And the part I most want to land: why it is agentic, and what that actually means. [0:15]">
@@ -5040,8 +5077,8 @@
       </section>
 
       <!-- ═══════════ 21 · MAIN TABLE (paper Table 2, native & stepped) ═══════════ -->
-      <section class="slide" data-eyebrow="06 · Results" data-frags="5" id="resSlide"
-        data-notes="This is Table 2 in full — all sixteen methods. Each category is collapsed to its best system; click any category to expand it. I will walk it one axis at a time. [CLICK] Text extraction: almost everyone is passable — Marker 0.68, Qwen 0.66, GPT-5 0.65. Largely solved, which is why the field feels finished. [CLICK] Logical structure: tree edit distance is passable for the better systems — but nothing about it says WHERE anything is. [CLICK] Now physical structure, and the entire field collapses. Best baseline LPS 0.22, best GPS 0.43, most under 0.30. Nothing lands where it belongs. [CLICK] Visual fidelity: GPT-5 reaches 0.86 and Gemini 0.82 — genuinely good-looking pages — but with GPS of 0.43 and 0.31, those pages are not the source page. [CLICK] And the whole board, graded. REPLICA: 0.73 and 0.86 on position, 0.93 visual fidelity, 0.86 overall. The claim is not that we win a column — it is that there is no weak column.">
+      <section class="slide" data-eyebrow="06 · Results" data-frags="6" id="resSlide"
+        data-notes="This is the board you saw at the end of chapter four. One row is new. [CLICK] REPLICA. Now the same walk, one axis at a time, and watch where our row turns green. [CLICK] Text extraction: almost everyone is passable — Marker 0.68, Qwen 0.66, GPT-5 0.65. Largely solved, which is why the field feels finished. [CLICK] Logical structure: tree edit distance is passable for the better systems — but nothing about it says WHERE anything is. [CLICK] Now physical structure, and the entire field collapses. Best baseline LPS 0.22, best GPS 0.43, most under 0.30. Nothing lands where it belongs. [CLICK] Visual fidelity: GPT-5 reaches 0.86 and Gemini 0.82 — genuinely good-looking pages — but with GPS of 0.43 and 0.31, those pages are not the source page. [CLICK] And the whole board, graded. REPLICA: 0.73 and 0.86 on position, 0.93 visual fidelity, 0.86 overall. The claim is not that we win a column — it is that there is no weak column. [2:30]">
         <div class="kicker">Measured on VFDR-Bench — all 16 methods &nbsp;·&nbsp;
           <!-- <span class="chint">click a category to expand it</span> -->
         </div>
@@ -5053,7 +5090,7 @@
             </div>
           </div>
           <div class="rnote">
-            <div class="rlegend" id="resLegend"><span>weakest</span><i style="background:#fdeceb"></i><i
+            <div class="rlegend"><span>weakest</span><i style="background:#fdeceb"></i><i
                 style="background:#fdf1dd"></i><i style="background:#eef5ef"></i><i
                 style="background:#dcefe1"></i><span>strongest</span></div>
             <!-- takeaways spoken, not shown; the table now owns the slide.
@@ -5686,7 +5723,8 @@
         if (slides[cur].id === "ladderSlide") renderLadder();
         if (slides[cur].id === "stagesSlide") renderStages();
         if (slides[cur].id === "qualSlide") renderQual();
-        if (slides[cur].id === "resSlide") { renderResults(); fitResults(); }
+        if (slides[cur].id === "baseSlide") { renderResults(baseTable, frag, { withOurs: false }); fitResults(slides[cur]); }
+        if (slides[cur].id === "resSlide") { renderResults(resTable, frag, { withOurs: true, reveal: true }); fitResults(slides[cur]); }
         if (slides[cur].id === "ablSlide") renderAblation();
       }
 
@@ -6017,8 +6055,11 @@
         return out;
       })();
 
-      (function buildResults() {
-        const tb = document.getElementById("resTable"); if (!tb) return;
+      // One builder, two instances: #baseTable (chapter 04, the fifteen baselines —
+      // "the bar to beat") and #resTable (chapter 06, the same board plus REPLICA).
+      // Both come from RES_GROUPS, so the two slides can never disagree.
+      function buildResults(tb, groups, { withOurs }) {
+        if (!tb) return;
         const head = '<thead><tr><th class="gh m"></th>' +
           '<th class="gh b" colspan="2" data-ax="TE">Text extraction</th>' +
           '<th class="gh b" data-ax="LS">Logical structure</th>' +
@@ -6026,16 +6067,17 @@
           '<th class="gh b" data-ax="VF">Visual fidelity</th>' +
           '<th class="gh b" data-ax="OS">Overall</th></tr>' +
           '<tr class="hd2"><th class="m">Method</th>' +
-          ["WRR \u2191", "CRR \u2191", "NTED \u2193", "LPS \u2191", "GPS \u2191", "VFS \u2191", "OS \u2191"]
+          ["WRR ↑", "CRR ↑", "NTED ↓", "LPS ↑", "GPS ↑", "VFS ↑", "OS ↑"]
             .map((c, i) => '<th data-c="' + (i + 1) + '">' + c + '</th>').join("") + '</tr></thead>';
         let body = "<tbody>";
-        RES_GROUPS.forEach((g, gi) => {
+        groups.forEach((g, gi) => {
+          if (g.ours && !withOurs) return;
           // rank within the category so the collapsed view shows its best system
           const best = [...g.rows].sort((a, b) => b.v[6] - a.v[6])[0];
           if (!g.ours) {
             // open from the start: the slide says "all 16 methods", so it shows
             // all 16 instead of four collapsed groups sitting above a band of white
-            body += '<tr class="cat open" data-g="' + gi + '"><td colspan="8"><span class="car">\u25be</span>' + g.name +
+            body += '<tr class="cat open" data-g="' + gi + '"><td colspan="8"><span class="car">▾</span>' + g.name +
               '<span class="cn">' + g.rows.length + ' systems</span></td></tr>';
           }
           g.rows.forEach(r => {
@@ -6051,14 +6093,17 @@
             e.stopPropagation();
             const g = tr.dataset.g, open = tr.classList.toggle("open");
             const n = tb.querySelectorAll('tr.row[data-g="' + g + '"]').length;
-            tr.querySelector(".car").textContent = open ? "\u25be" : "\u25b8";
+            tr.querySelector(".car").textContent = open ? "▾" : "▸";
             tr.querySelector(".cn").textContent = open ? n + " systems" : n + " systems — showing best";
             tb.querySelectorAll('tr.xtra[data-g="' + g + '"]').forEach(r => r.classList.toggle("open", open));
           });
         });
-      })();
-      function resExpandFor(method) {
-        const tb = document.getElementById("resTable");
+      }
+      const baseTable = document.getElementById("baseTable");
+      const resTable = document.getElementById("resTable");
+      buildResults(baseTable, RES_GROUPS, { withOurs: false });
+      buildResults(resTable, RES_GROUPS, { withOurs: true });
+      function resExpandFor(tb, method) {
         const row = tb && tb.querySelector('tr.row[data-m="' + method + '"]');
         if (!row || !row.classList.contains("xtra") || row.classList.contains("open")) return;
         const cat = tb.querySelector('tr.cat[data-g="' + row.dataset.g + '"]');
@@ -6067,28 +6112,47 @@
       // Measured in layout pixels, so the stage's own transform does not enter
       // into it. Transform does not affect layout, so .rwrap keeps its flexed
       // height and this settles in one pass.
-      function fitResults() {
-        const wrap = document.querySelector("#resSlide .rwrap");
-        const fit = document.querySelector("#resSlide .rfit");
+      function fitResults(slideEl) {
+        if (!slideEl) return;
+        const wrap = slideEl.querySelector(".rwrap");
+        const fit = slideEl.querySelector(".rfit");
         if (!wrap || !fit) return;
         fit.style.transform = "none";
         fit.style.width = "100%";
-        const avail = wrap.clientHeight, need = fit.scrollHeight;
+        // offsetHeight, not scrollHeight: the REPLICA row slides in with a
+        // transform, and scrollHeight would count that overflow mid-animation
+        const avail = wrap.clientHeight, need = fit.offsetHeight;
         if (!avail || !need) return;
         // exactly 1 when it genuinely fits — overflow is hidden, so sitting flush
         // against the box is safe and a 0.3% shrink would be pure noise
         const k = need > avail ? avail / need : 1;
         if (k < 1) { fit.style.transform = "scale(" + k + ")"; fit.style.width = (100 / k) + "%"; }
       }
+      function fitAllResults() {
+        ["baseSlide", "resSlide", "benchSlide"].forEach(id => fitResults(document.getElementById(id)));
+      }
 
-      function renderResults() {
-        const tb = document.getElementById("resTable"); if (!tb) return;
-        const n = frag;
+      // n is the slide's fragment. Without reveal: 0 plain, 1–5 = TE, LS, PS, VF,
+      // graded. With reveal (the chapter-06 instance) beat 0 is exactly where the
+      // chapter-04 instance ended — graded, REPLICA hidden — beat 1 slides the
+      // REPLICA row in on a clean board, and beats 2–6 replay the axis walk.
+      function renderResults(tb, n, { withOurs, reveal }) {
+        if (!tb) return;
+        const slideEl = tb.closest(".slide");
         tb.querySelectorAll("td,th").forEach(c => c.classList.remove("lit", "q", "mark", "good", "best", "g0", "g1", "g2", "g3"));
-        tb.classList.toggle("focus", n > 0);
-        const legend = document.getElementById("resLegend");
-        if (n <= 0) { tb.classList.remove("graded"); if (legend) legend.classList.remove("on"); return; }
-        const step = RES_AXES[Math.min(n, RES_AXES.length) - 1];
+        const ourRow = tb.querySelector("tbody tr.ours");
+        if (ourRow) {
+          const hide = !!reveal && n === 0;
+          if (!hide && ourRow.classList.contains("hide")) {
+            ourRow.classList.remove("enter"); void ourRow.offsetWidth; ourRow.classList.add("enter");
+          }
+          ourRow.classList.toggle("hide", hide);
+        }
+        const k = reveal ? (n === 0 ? RES_AXES.length : n - 1) : n;
+        tb.classList.toggle("focus", k > 0);
+        const legend = slideEl && slideEl.querySelector(".rlegend");
+        if (k <= 0) { tb.classList.remove("graded"); if (legend) legend.classList.remove("on"); return; }
+        const step = RES_AXES[Math.min(k, RES_AXES.length) - 1];
         const live = new Set(step.cols);
         tb.querySelectorAll("td[data-c],th[data-c]").forEach(c => {
           const ci = +c.dataset.c; if (ci === 0) return;
@@ -6098,13 +6162,12 @@
           h.classList.add(h.dataset.ax === step.ax || step.ax === "OS" ? "lit" : "q");
         });
         // our cells go green in whichever columns this beat is lighting
-        const ourRow = tb.querySelector("tbody tr.ours");
-        if (ourRow) ourRow.querySelectorAll("td[data-c]").forEach(c => {
+        if (ourRow && withOurs && !ourRow.classList.contains("hide")) ourRow.querySelectorAll("td[data-c]").forEach(c => {
           const ci = +c.dataset.c;
           if (ci !== 0 && live.has(ci) && RES_BEST[ci]) c.classList.add("best");
         });
         (RES_MARKS[step.ax] || []).forEach(([m, ci]) => {
-          resExpandFor(m);
+          resExpandFor(tb, m);
           const row = tb.querySelector('tr.row[data-m="' + m + '"]');
           const cell = row && row.querySelector('td[data-c="' + ci + '"]');
           if (cell) cell.classList.add("mark");
@@ -6473,10 +6536,10 @@
       document.getElementById("btnNotes").addEventListener("click", e => { e.stopPropagation(); notesEl.classList.toggle("on"); });
       document.getElementById("btnHelp").addEventListener("click", e => { e.stopPropagation(); helpEl.classList.toggle("on"); });
 
-      window.addEventListener("resize", () => { fit(); fitEmbeds(slides[cur]); fitResults(); if (slides[cur].id === "qualSlide") fitQual(); });
+      window.addEventListener("resize", () => { fit(); fitEmbeds(slides[cur]); fitAllResults(); if (slides[cur].id === "qualSlide") fitQual(); });
       // fonts settle after first layout, and their metrics are what decide
       // whether the last two systems fit — re-fit once they land
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => fitResults());
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => fitAllResults());
       window.addEventListener("hashchange", () => {
         const n = parseInt(location.hash.slice(1), 10);
         if (!isNaN(n) && n !== cur) goto(n, false);
