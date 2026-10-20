@@ -4205,6 +4205,89 @@
       margin: 2px 0 6px;
     }
 
+    /* ---- taxonomy of prior work ---- */
+    .taxgrid {
+      align-items: stretch;
+    }
+
+    .taxcard {
+      display: flex;
+      flex-direction: column;
+      padding: 30px 28px;
+      min-height: 600px;
+    }
+
+    .taxcard h3 {
+      font-size: 29px;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .taxcard .chips {
+      margin-top: 10px;
+    }
+
+    .taxcard .chips .chip {
+      font-size: 15px;
+      padding: 4px 11px;
+    }
+
+    .taxbreak {
+      margin-top: 20px;
+      font-size: 21px;
+      line-height: 1.42;
+      color: #8c2d22;
+      border-left: 3px solid var(--red);
+      padding-left: 12px;
+      flex: 1;
+    }
+
+    .taxemit {
+      margin-top: 18px;
+      align-self: flex-start;
+      font-family: var(--mono);
+      font-size: 14px;
+      white-space: nowrap;
+      font-weight: 700;
+      color: var(--navy);
+      background: var(--gold-soft);
+      border: 1.5px solid var(--gold-line);
+      border-radius: 999px;
+      padding: 6px 14px;
+    }
+
+    .taxemit span {
+      color: #8a6510;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-size: 12px;
+      margin-right: 6px;
+    }
+
+    /* ---- ground truth ---- */
+    .gtgrid .card {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding: 40px 36px;
+      min-height: 380px;
+    }
+
+    .gtgrid .card h3 {
+      font-size: 40px;
+      margin: 0;
+    }
+
+    .gtgrid .card p {
+      font-size: 27px;
+    }
+
+    .gtgrid .num-badge {
+      width: 56px;
+      height: 56px;
+      font-size: 24px;
+    }
+
     /* ---- future directions ---- */
     .futgrid .card {
       display: flex;
@@ -4578,6 +4661,44 @@
         </div>
       </section>
 
+      <!-- ═══════════ 07 · A TAXONOMY OF PRIOR WORK (thesis Ch. 2) ═══════════ -->
+      <section class="slide vcenter" data-eyebrow="02 · Background" data-frags="4" id="taxSlide"
+        data-notes="Chapter two of the thesis in one slide: four families of prior work, and for each, what it emits — because what it emits is the ceiling. [CLICK] Foundations: OCR engines, layout detectors, document VLMs. Both OCR paradigms optimise text; detectors give coarse blocks with no DOM. Note that REPLICA's own Segment stage builds on this line — DocLayout-YOLO, an IndicDLP ensemble and Hi-SAM. [CLICK] Document-to-markup: Marker, MinerU, Docling, the PDF converters and the end-to-end VLMs. For them linearisation is a design goal; for us it is the failure mode. The capability matrix is thesis Table 4.2 if anyone wants the detail. [CLICK] Physical reconstruction and screenshot-to-HTML. DREAM is pixel-faithful but autoregressive and domain-narrow; screenshot-to-HTML is web-native but distribution-shifted from text-dense documents. REPLICA sits on both axes — logical and physical — in web-native HTML and CSS. [CLICK] And the benchmarks only score text and logical structure, against Markdown references — the field cannot improve what it does not measure. You cannot even extend OmniDocBench: its references are Markdown, so there is no ground truth for position or style. [2:30]">
+        <div class="kicker">Thesis Ch. 2 · four families, and what each one emits</div>
+        <h2>A taxonomy of <em>prior work</em></h2>
+        <div class="slide-body">
+          <div class="grid4 taxgrid">
+            <div class="card taxcard frag" data-frag="1"><span class="tag">Foundations</span>
+              <h3>OCR, layout analysis &amp; document VLMs</h3>
+              <div class="chips"><span class="chip">Tesseract</span><span class="chip">PaddleOCR 3.0</span><span class="chip">Surya</span><span class="chip">GOT-OCR 2.0</span><span class="chip">DeepSeek-OCR</span><span class="chip">DocLayout-YOLO</span><span class="chip">LayoutLMv3</span><span class="chip">DiT</span><span class="chip">Donut</span><span class="chip">Nougat</span><span class="chip">SmolDocling</span><span class="chip">Dolphin</span></div>
+              <div class="taxbreak">Both OCR paradigms optimise text; detectors give coarse blocks with no DOM; VLM markup stays semantic-first — every failure mode is a visual one.</div>
+              <div class="taxemit"><span>emits</span> plain text · boxes · loose markup</div>
+            </div>
+            <div class="card taxcard frag" data-frag="2"><span class="tag">Doc → Markup</span>
+              <h3>Parsers, PDF converters &amp; end-to-end VLMs</h3>
+              <div class="chips"><span class="chip">Marker</span><span class="chip">MinerU</span><span class="chip">Docling</span><span class="chip">Unstructured</span><span class="chip">Nanonets-OCR-s</span><span class="chip">OCRFlux</span><span class="chip">pdf2htmlEX</span><span class="chip">PyMuPDF</span><span class="chip">Pandoc</span><span class="chip">Qwen2.5/3-VL</span><span class="chip">olmOCR</span><span class="chip">Logics-Parsing</span></div>
+              <div class="taxbreak">Linearisation is a design goal for them and a failure mode for us; PDF→DOM needs born-digital streams; end-to-end markup has no deterministic control over geometry.</div>
+              <div class="taxemit"><span>emits</span> Markdown · JSON · generic HTML</div>
+            </div>
+            <div class="card taxcard frag" data-frag="3"><span class="tag">Physical reconstruction</span>
+              <h3>Pixel-faithful rebuilds &amp; screenshot-to-HTML</h3>
+              <div class="chips"><span class="chip">DREAM</span><span class="chip">PDFMathTranslate</span><span class="chip">image-to-LaTeX</span><span class="chip">WebCode2M</span><span class="chip">UICopilot</span><span class="chip">Design2Code</span><span class="chip">render-&amp;-reflect loops</span></div>
+              <div class="taxbreak">Domain-restricted — scientific two-column PDFs or text-light UIs; neither yields web-native, style-complete HTML for dense multilingual pages.</div>
+              <div class="taxemit"><span>emits</span> LaTeX · UI HTML</div>
+            </div>
+            <div class="card taxcard frag" data-frag="4"><span class="tag">Benchmarks</span>
+              <h3>How the field keeps score</h3>
+              <div class="chips"><span class="chip">OmniDocBench</span><span class="chip">OCRBench v2</span><span class="chip">READoc</span><span class="chip">KITAB-Bench</span><span class="chip">olmOCR-Bench</span><span class="chip">CC-OCR</span><span class="chip">DP-Bench</span><span class="chip">Image2Struct</span><span class="chip">WebCode2M</span><span class="chip">Design2Code</span></div>
+              <div class="taxbreak">Text and logical structure only, annotated in plain text or Markdown — no axis for physical structure, rendered layout, font/style fidelity or figure/background reintegration.</div>
+              <div class="taxemit"><span>emits</span> md / txt references</div>
+            </div>
+          </div>
+          <div class="takeaway frag" data-frag="4">Logical methods recover content &amp; hierarchy; physical methods chase
+            pixels in narrow domains. <b>Nobody delivers web-native HTML faithful in content, structure, style and rendered
+              appearance.</b></div>
+        </div>
+      </section>
+
       <!-- ═══════════ 6b · THE FORMAT IS THE BOTTLENECK ═══════════ -->
       <!-- Deliberately a diagram and not a table: the full format comparison is
          paper Table 1, three slides later. This slide only has to land one
@@ -4915,6 +5036,32 @@
             <div class="carodots" id="caroDots"></div>
             <div class="carostate on" id="caroState">&#9654; playing</div>
           </div>
+        </div>
+      </section>
+
+      <!-- ═══════════ 16 · GROUND TRUTH (pptx 30) ═══════════ -->
+      <section class="slide vcenter" data-eyebrow="04 · VFDR-Bench &amp; Metrics" data-frags="3" id="gtSlide"
+        data-notes="How five thousand pages got a reference you can score position and style against. [CLICK] Trained annotators author ground-truth FID-HTML for every page — position, style and hierarchy, not just text. [CLICK] A second pass checks the rendered HTML against the source page, with particular care for complex layouts and fine detail. [CLICK] The result: every reference is expert-annotated and scorable on all four axes. If asked how this squares with the thesis text: REPLICA produced a first pass, and every page was then fully reviewed and corrected by trained annotators, so the released references are human-verified. [0:45]">
+        <div class="kicker">Thesis §4.3 · constructing the reference</div>
+        <h2>Ground truth — how <em>5,000 pages</em> were annotated</h2>
+        <div class="slide-body">
+          <div class="grid3 gtgrid">
+            <div class="card frag" data-frag="1"><span class="num-badge">1</span>
+              <h3>Annotate</h3>
+              <p>Trained annotators author ground-truth <b>FID-HTML</b> for every page — position, style and hierarchy.</p>
+            </div>
+            <div class="card frag" data-frag="2"><span class="num-badge">2</span>
+              <h3>Verify</h3>
+              <p>A second pass checks the <b>rendered HTML against the source</b>, with particular care for complex layouts
+                and fine detail.</p>
+            </div>
+            <div class="card accent frag" data-frag="3"><span class="num-badge gold">3</span>
+              <h3>Result</h3>
+              <p><b>100 %</b> expert-annotated references, scorable on <b>all four axes</b>.</p>
+            </div>
+          </div>
+          <div class="takeaway frag" data-frag="3">You cannot score position or style against a Markdown reference — so the
+            reference had to be <b>FID-HTML</b>.</div>
         </div>
       </section>
 
