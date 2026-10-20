@@ -4374,6 +4374,334 @@
       letter-spacing: .04em;
     }
 
+    /* ═══════════ SYNTHETIC DOCUMENT GENERATION ═══════════ */
+    #synthSlide h2 {
+      margin-bottom: 12px;
+    }
+
+    .synthstrip {
+      margin-bottom: 14px;
+    }
+
+    .synthstrip .st {
+      padding: 8px 14px;
+    }
+
+    .synthstrip .st .t {
+      font-size: 19px;
+    }
+
+    .synth {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+    }
+
+    .synth-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .synth-mid {
+      width: 380px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding-top: 30px;
+    }
+
+    .synth-mid .codecard {
+      flex: none;
+    }
+
+    .synth-mid .cc-body {
+      font-size: 17px;
+      overflow: hidden;
+    }
+
+    .synth-uses .chips {
+      margin-top: 0;
+    }
+
+    .synth-uses .chip {
+      font-size: 15px !important;
+    }
+
+    .synth-arrow {
+      margin-top: 12px;
+      font-size: 18px;
+      line-height: 1.45;
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    #synthSlide .pagebox.sized {
+      padding: 0;
+    }
+
+    #synthBox {
+      border: 2px dashed var(--line);
+      background: transparent;
+    }
+
+    #synthBox.on {
+      border: 1px solid var(--line);
+      background: var(--paper);
+    }
+
+    .synth-empty {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-family: var(--serif);
+      font-size: 64px;
+      color: var(--line);
+    }
+
+    #synthBox.on .synth-empty {
+      display: none;
+    }
+
+    #synthBox .idc {
+      display: none;
+    }
+
+    #synthBox.on .idc {
+      display: block;
+    }
+
+    /* the mock card: authored in HTML/CSS the way the ladder invoice is */
+    .idc {
+      position: absolute;
+      inset: 0;
+      padding: 26px 30px 22px;
+      font-family: var(--sans);
+      color: #23324a;
+      background: linear-gradient(180deg, #fbf6ea 0%, #f4ecdb 100%);
+      transition: background .4s;
+    }
+
+    .idc-head {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 3px double #8a6510;
+      padding-bottom: 12px;
+    }
+
+    .idc-emb {
+      width: 60px;
+      height: 60px;
+      flex: none;
+    }
+
+    .idc-t1 {
+      font-family: var(--serif);
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: #1e3a5f;
+    }
+
+    .idc-t2 {
+      font-size: 20px;
+      color: #8a6510;
+      margin-top: 2px;
+    }
+
+    .idc-idrow {
+      margin-top: 14px;
+      font-family: var(--mono);
+      font-size: 17px;
+      font-weight: 700;
+      color: #8c2d22;
+      text-align: right;
+    }
+
+    .idc-body {
+      position: relative;
+      margin-top: 12px;
+      height: 196px;
+    }
+
+    .idc-photo {
+      width: 140px;
+      height: 168px;
+      border: 2px solid #b9ad92;
+      background: #fff;
+    }
+
+    .idc-photo .slot.photo {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .idc-photo svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .idc-photo .ph-bg {
+      fill: var(--ph-bg, #dfe6ee);
+    }
+
+    .idc-photo .ph-fg {
+      fill: var(--ph-fg, #8d9aab);
+    }
+
+    .idc-seal {
+      position: absolute;
+      right: 14px;
+      top: 26px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid rgba(138, 101, 16, .55);
+      box-shadow: inset 0 0 0 6px rgba(138, 101, 16, .12);
+      display: grid;
+      place-items: center;
+      transform: rotate(-14deg);
+    }
+
+    .idc-seal span {
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      color: rgba(138, 101, 16, .7);
+    }
+
+    .idc-fields {
+      display: grid;
+      grid-template-columns: 172px 1fr;
+      row-gap: 11px;
+      margin: 8px 0 0;
+      font-size: 18px;
+    }
+
+    .idc-fields dt {
+      color: #5b6577;
+    }
+
+    .idc-fields dd {
+      margin: 0;
+      font-weight: 700;
+      color: #1e2d42;
+    }
+
+    .idc-foot {
+      position: absolute;
+      left: 30px;
+      right: 30px;
+      bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .idc-sig {
+      align-self: flex-end;
+      border-top: 1.5px solid #5b6577;
+      padding-top: 4px;
+      font-size: 13px;
+      color: #5b6577;
+    }
+
+    .idc-note {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .08em;
+      color: #9a917e;
+      text-transform: uppercase;
+    }
+
+    .idc-fixed {
+      display: none;
+    }
+
+    .slot {
+      position: relative;
+      border-radius: 3px;
+      transition: opacity .3s, background .3s, color .3s, outline-color .3s;
+    }
+
+    /* beat 1 · localize: slots outlined in gold, everything else tinted "fixed" */
+    .synth.L1 .tpl .slot {
+      outline: 2px dashed var(--gold);
+      outline-offset: 2px;
+      background: var(--gold-soft);
+    }
+
+    .synth.L1 .tpl .slot::after {
+      content: attr(data-slot);
+      position: absolute;
+      top: -17px;
+      left: 0;
+      font: 700 10px var(--mono);
+      color: #8a6510;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* field values carry their label to the right; the ID (right-aligned) and
+       the photo keep it on top */
+    .synth.L1 .tpl .idc-fields .slot::after {
+      top: 50%;
+      left: 100%;
+      margin-left: 10px;
+      transform: translateY(-50%);
+    }
+
+    .synth.L1 .tpl .idc {
+      background: linear-gradient(180deg, #e9eef6 0%, #dfe6f0 100%);
+    }
+
+    .synth.L1 .tpl .idc-fixed {
+      display: block;
+      position: absolute;
+      left: 12px;
+      bottom: 6px;
+      font: 700 11px var(--mono);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--navy-soft);
+    }
+
+    /* beat 3 · diff: unchanged regions dim, changed values go green */
+    .synth-diff {
+      position: absolute;
+      inset: 0;
+      background: rgba(245, 243, 238, .62);
+      z-index: 1;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .4s;
+    }
+
+    .synth.L3 .synth-diff {
+      opacity: 1;
+    }
+
+    .synth.L3 .out .slot.changed {
+      z-index: 2;
+      background: #d3efdb;
+      color: #0d5c32;
+      outline: 2px solid #2f9e63;
+      outline-offset: 1px;
+    }
+
+    .synth.L3 .out .slot.photo.changed {
+      background: transparent;
+    }
+
     /* ---- future directions ---- */
     .futgrid .card {
       display: flex;
@@ -5782,6 +6110,100 @@
         </div>
       </section>
 
+      <!-- ═══════════ 31b · SYNTHETIC DOCUMENT GENERATION (thesis §6.3.1) ═══════════
+           The template is an HTML mock (no real person); the synthetic card on the
+           right is a clone of it with only the slot text swapped, so layout, fonts
+           and spacing are identical by construction. S cycles variants. -->
+      <section class="slide" data-eyebrow="06 · Applications" data-frags="4" id="synthSlide"
+        data-notes="One application gets its own slide, because it is where this work goes next: synthetic document generation, thesis section 6.3.1. Curated real documents are converted to FID-HTML by REPLICA — on the left, a template identity card, built here as live HTML. [CLICK] Localize: the DOM hierarchy and semantic tags let us find the mutable regions — names, dates, identifiers, and in other documents diagnoses, account numbers, tabular values, addresses — and parameterise them into slots. Everything else is fixed. [CLICK] Fill: a generation engine fills the slots from domain schemas and constrained value generators — this schema in the middle — and the right card is the result. [CLICK] Render and diff: only the slot values changed. Because edits operate on FID-HTML, typography, alignment, spacing and tables survive by construction, and the output renders back to images or PDFs. [CLICK] This matters exactly where real data is scarce for legal, financial or privacy reasons: medical reports, transcripts, bank statements, payslips, ID cards — pre-training and fine-tuning data for document VLMs. When sensitive regions are mutated we inpaint photorealistically rather than black-bar, so downstream models cannot learn shortcut artefacts. During questions, S on this slide generates another variant live. [2:00]">
+        <h2>Synthetic document generation — <em>FID-HTML as a template engine</em></h2>
+        <div class="slide-body">
+          <div class="stage-strip synthstrip">
+            <div class="st"><span class="n">1</span><span class="t">Real document</span></div>
+            <div class="st"><span class="n">2</span><span class="t">REPLICA → FID-HTML</span></div>
+            <div class="st"><span class="n">3</span><span class="t">Localize mutable slots</span></div>
+            <div class="st"><span class="n">4</span><span class="t">Fill from schema</span></div>
+            <div class="st"><span class="n">5</span><span class="t">Render</span></div>
+          </div>
+          <div class="synth" id="synthWrap">
+            <div class="synth-col">
+              <div class="pagebox sized tpl">
+                <div class="idc" id="synthSrc">
+                  <div class="idc-head">
+                    <svg class="idc-emb" viewBox="0 0 60 60" aria-hidden="true">
+                      <circle cx="30" cy="30" r="27" fill="none" stroke="#8a6510" stroke-width="2.5" />
+                      <circle cx="30" cy="30" r="8" fill="#8a6510" />
+                      <g stroke="#8a6510" stroke-width="2">
+                        <path d="M30 4 V 18 M30 42 V 56 M4 30 H 18 M42 30 H 56 M12 12 L 22 22 M38 38 L 48 48 M48 12 L 38 22 M22 38 L 12 48" />
+                      </g>
+                    </svg>
+                    <div class="idc-ttl">
+                      <div class="idc-t1">IDENTITY CARD</div>
+                      <div class="idc-t2">గుర్తింపు కార్డు</div>
+                    </div>
+                  </div>
+                  <div class="idc-idrow">ID No. <span class="slot" data-slot="id">AP/12/045/38291</span></div>
+                  <div class="idc-body">
+                    <div class="idc-photo"><span class="slot photo" data-slot="photo"><svg viewBox="0 0 100 120"
+                          aria-hidden="true">
+                          <rect width="100" height="120" class="ph-bg" />
+                          <circle cx="50" cy="44" r="22" class="ph-fg" />
+                          <path d="M10 120 C 12 86, 30 76, 50 76 C 70 76, 88 86, 90 120 Z" class="ph-fg" />
+                        </svg></span></div>
+                    <div class="idc-seal"><span>SPECIMEN</span></div>
+                  </div>
+                  <dl class="idc-fields">
+                    <dt>Elector's name</dt>
+                    <dd><span class="slot" data-slot="name">Lakshmi Prasanna Varma</span></dd>
+                    <dt>Parent's name</dt>
+                    <dd><span class="slot" data-slot="parent">Venkata Rao Varma</span></dd>
+                    <dt>Sex</dt>
+                    <dd><span class="slot" data-slot="sex">F</span></dd>
+                    <dt>Age as on 1.1.1995</dt>
+                    <dd><span class="slot" data-slot="age">34</span></dd>
+                  </dl>
+                  <div class="idc-foot">
+                    <span class="idc-sig">Electoral Registration Officer</span>
+                    <span class="idc-note">Synthetic specimen · not a real document</span>
+                  </div>
+                  <span class="idc-fixed">fixed</span>
+                </div>
+              </div>
+              <div class="cap"><b>Template</b> — FID-HTML with mutable slots</div>
+            </div>
+
+            <div class="synth-mid">
+              <div class="codecard schema frag" data-frag="2">
+                <div class="cc-head">Schema</div>
+                <pre class="cc-body"><span class="a">name</span>:   person · script=<span class="s">te</span>
+<span class="a">parent</span>: person
+<span class="a">sex</span>:    {M, F}
+<span class="a">age</span>:    18–90
+<span class="a">id</span>:     ^[A-Z]{2}/\d{2}/
+        \d{3}/\d{5}$
+<span class="a">photo</span>:  portrait · synthetic</pre>
+              </div>
+              <div class="synth-uses frag" data-frag="4">
+                <div class="chips"><span class="chip">medical reports</span><span class="chip">academic
+                    transcripts</span><span class="chip">bank statements</span><span class="chip">payslips</span><span
+                    class="chip">identity cards</span></div>
+                <div class="synth-arrow">→ pre-training / fine-tuning data for document VLMs where real corpora are
+                  blocked by privacy or law</div>
+              </div>
+            </div>
+
+            <div class="synth-col">
+              <div class="pagebox sized out" id="synthBox">
+                <div class="synth-empty">—</div>
+              </div>
+              <div class="cap"><b>Synthetic</b> — <span id="synthCap">same template, new values</span></div>
+            </div>
+          </div>
+          <div class="takeaway frag" data-frag="3">Edits happen in FID-HTML, so typography, alignment, spacing and tables
+            survive by construction — <b>one template, unlimited privacy-safe variants</b>.</div>
+        </div>
+      </section>
+
       <!-- ═══════════ 26b · WHERE REPLICA SITS ═══════════ -->
       <section class="slide vcenter" data-eyebrow="06 · Applications" data-frags="3"
         data-notes="That was what the representation lets you do. This is what it has already done. Three papers are built on Fid-HTML supervision and all three are through review. [CLICK] REPLICA rebuilds any page as Fid-HTML — text, structure, position and style, all explicit — so every reconstructed page is labelled by construction, at whatever scale you can run it. M3Grounder, at CVPR, uses masks as evidence for grounded answers. DoCoG, an oral at ECCV, does grounded reasoning — every claim tied back to a region. And DocLayout-VL treats the page as a tree. None of them had to annotate a thing. [CLICK] And it runs the other way too: better segmentation, better reading order and better grounding come straight back into REPLICA's own stages. Neither half stands alone — the representation makes the supervision, the supervision makes the models, and the models make the representation better. [CLICK] Concretely, thesis section 6.3.2: GroundingDocQA — two hundred thousand documents and two million pixel-grounded question-answer pairs, generated this way. FID-HTML's nested DOM maps onto phrase inside line inside block, so regions project to precise masks rather than boxes. [1:30]">
@@ -6274,6 +6696,7 @@
         if (slides[cur].id === "benchSlide") { renderBench(frag); fitResults(slides[cur]); }
         if (slides[cur].id === "resSlide") { renderResults(resTable, frag, { withOurs: true, reveal: true }); fitResults(slides[cur]); }
         if (slides[cur].id === "ablSlide") renderAblation();
+        if (slides[cur].id === "synthSlide") renderSynth();
       }
 
       /* ---------- the live fidelity ladder ---------- */
@@ -6803,6 +7226,71 @@
         if (n >= 4 && ours) ours.querySelectorAll("td.ok").forEach(c => c.classList.add("best"));
       }
 
+      /* ═══════════ SYNTHETIC DOCUMENT GENERATION ═══════════
+         The synthetic card is a clone of the template, exactly like the ladder's
+         reconstruction: only [data-slot] contents are ever written, so layout,
+         fonts, spacing, seal and emblem cannot drift. S cycles the variants. */
+      const SYNTH_VARIANTS = [
+        { cap: "Telugu", name: "శ్రీనివాస్ రెడ్డి", parent: "నారాయణ రెడ్డి", sex: "M", age: "52", id: "TS/07/118/50263", bg: "#e4ece4", fg: "#7f9583" },
+        { cap: "Hindi", name: "अनीता शर्मा", parent: "राजेश शर्मा", sex: "F", age: "27", id: "UP/31/204/77810", bg: "#efe6dc", fg: "#a08a74" },
+        { cap: "Latin script", name: "Farhan Qureshi", parent: "Imran Qureshi", sex: "M", age: "68", id: "MH/04/322/19457", bg: "#e6e3ef", fg: "#8a84a3" },
+        { cap: "Telugu", name: "సరస్వతి నాయుడు", parent: "గోపాల్ నాయుడు", sex: "F", age: "45", id: "AP/09/087/62034", bg: "#f0e4e4", fg: "#a88585" }
+      ];
+      let synthVar = 0;
+      (function buildSynth() {
+        const src = document.getElementById("synthSrc"), box = document.getElementById("synthBox");
+        if (!src || !box) return;
+        const clone = src.cloneNode(true);
+        clone.removeAttribute("id");
+        box.appendChild(clone);
+        const diff = document.createElement("div");
+        diff.className = "synth-diff";
+        box.appendChild(diff);
+      })();
+      function fillSynth(animate) {
+        const box = document.getElementById("synthBox"); if (!box) return;
+        const v = SYNTH_VARIANTS[synthVar % SYNTH_VARIANTS.length];
+        const src = document.getElementById("synthSrc");
+        box.querySelectorAll("[data-slot]").forEach(sl => {
+          const k = sl.dataset.slot;
+          const write = () => {
+            if (k === "photo") { sl.style.setProperty("--ph-bg", v.bg); sl.style.setProperty("--ph-fg", v.fg); }
+            else sl.textContent = v[k];
+            const orig = src.querySelector('[data-slot="' + k + '"]');
+            sl.classList.toggle("changed", k === "photo" || !orig || orig.textContent !== sl.textContent);
+            sl.style.opacity = "1";
+          };
+          if (animate) { sl.style.opacity = "0"; setTimeout(write, 300); } else write();
+        });
+        const cap = document.getElementById("synthCap");
+        if (cap) cap.textContent = "variant " + (synthVar % SYNTH_VARIANTS.length + 1) + " of " + SYNTH_VARIANTS.length + " · " + v.cap;
+      }
+      let synthShown = -1;
+      function renderSynth() {
+        const wrap = document.getElementById("synthWrap"), box = document.getElementById("synthBox");
+        if (!wrap || !box) return;
+        wrap.classList.toggle("L1", frag >= 1);
+        wrap.classList.toggle("L2", frag >= 2);
+        wrap.classList.toggle("L3", frag === 3);
+        wrap.classList.toggle("L4", frag >= 4);
+        const show = frag >= 2;
+        // flip the values in when the card first appears, not on every re-render
+        if (show && synthShown !== synthVar) { fillSynth(box.classList.contains("on")); synthShown = synthVar; }
+        box.classList.toggle("on", show);
+        // beat 0 shows the template, i.e. step 2 (REPLICA → FID-HTML); beats 1–3
+        // are steps 3–5; the last beat leaves the whole strip done
+        const on = frag === 0 ? 1 : frag < 4 ? frag + 1 : 99;
+        document.querySelectorAll("#synthSlide .synthstrip .st").forEach((st, i) => {
+          st.classList.toggle("active", i === on);
+          st.classList.toggle("done", i < on);
+        });
+      }
+      function nextVariant() {
+        synthVar = (synthVar + 1) % SYNTH_VARIANTS.length;
+        if (frag < 2) { frag = 2; applyFrags(); }
+        else { fillSynth(true); synthShown = synthVar; }
+      }
+
       /* ═══════════ ABLATION CHART (paper Table 3) ═══════════
          The table is replaced by the shape it implies: three of the four axes
          plotted across the framework's own stages, so the audience reads *which
@@ -7115,6 +7603,8 @@
           }
           if (k === "p" || k === "P") { e.preventDefault(); caro.toggle(); return; }
         }
+        // On the synthetic-generation slide, S fills the template with the next variant.
+        if (slides[cur].id === "synthSlide" && (k === "s" || k === "S")) { e.preventDefault(); nextVariant(); return; }
         // On the walkthrough, space is play/pause rather than "next". The arrows
         // still step it beat by beat, so the presenter can narrate it manually
         // or hand it over and let it run.
