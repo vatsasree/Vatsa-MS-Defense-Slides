@@ -4702,6 +4702,28 @@
       background: transparent;
     }
 
+    /* ---- backups ---- */
+    .b2wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .rtab.b2tab td,
+    .rtab.b2tab th {
+      font-size: 22px;
+      padding: 7px 18px;
+    }
+
+    .rtab.b2tab td.m {
+      padding-left: 34px;
+      font-weight: 500;
+    }
+
+    .rtab.b2tab tr.cat td {
+      cursor: default;
+    }
+
     /* ---- future directions ---- */
     .futgrid .card {
       display: flex;
@@ -6406,13 +6428,51 @@
         </div>
       </section>
 
-      <!-- ═════════════════════════════════════════════════════════════════════
-     ARCHIVED — per-stage detail slides (Segment / Localize / Assemble+Refine).
-     Superseded by the "stage by stage" reveal above. To restore: delete the
-     opening "<!##" and closing "##>" markers below and re-save.
+      <!-- ═══════════ BACKUP B1 · FULL FORMAT COMPARISON (thesis Table 3.1 / paper Table 1) ═══════════ -->
+      <section class="slide demo bleed backup" data-eyebrow="Backup" data-embed="fmt"
+        data-notes="Backup B1 — the full format ledger, thesis Table 3.1 / paper Table 1, live from the project page. Markdown has no slot for position or style. LaTeX is expressive but partial on hierarchy and not web-native. DocTags and hOCR carry boxes but are partial on styling. Plain HTML CAN express fidelity but never REQUIRES it: two valid HTML documents with the same text can render completely differently. FID-HTML is the only row full across every column, because position and style are mandatory, inline, per element.">
+        <div class="kicker">Backup · thesis Table 3.1</div>
+        <h2>Comparison with <em>existing representations</em></h2>
+        <div class="slide-body">
+          <div class="embed">
+            <iframe src="site.html?embed=fidhtml&part=table" title="Format comparison (paper Table 1)"></iframe>
+          </div>
+        </div>
+      </section>
 
-<!##
-    <section class="slide" data-eyebrow="Backup" data-frags="4"
+      <!-- ═══════════ BACKUP B2 · AGENT & TOOL RELIABILITY (thesis Table 5.3) ═══════════ -->
+      <section class="slide vcenter backup" data-eyebrow="Backup"
+        data-notes="Backup B2 — thesis Table 5.3 in full, trace-based reliability per component. The Segment agent: attribute-type and attribute-value F1 of 0.98 and 0.99, hierarchy consistency 0.98. Router accuracy 0.97. The Localize specialists emit valid sub-HTML 96 per cent of the time. Reflection adds 0.06 overall. Tools: 99.5 per cent of tool calls succeed, reading order is 0.98 accurate, font fitting succeeds 97 per cent and background stitching 96 per cent of the time.">
+        <div class="kicker">Backup · thesis Table 5.3</div>
+        <h2>Agent &amp; tool reliability — <em>every component</em></h2>
+        <div class="slide-body">
+          <div class="rwrap b2wrap">
+            <table class="rtab graded b2tab">
+              <thead><tr class="hd2"><th class="m">Component / metric</th><th>Score</th></tr></thead>
+              <tbody>
+                  <tr class="cat"><td colspan="2">Segment agent</td></tr>
+                  <tr class="row"><td class="m">AT-F1</td><td class="g3">0.98</td></tr>
+                  <tr class="row"><td class="m">AV-F1</td><td class="g3">0.99</td></tr>
+                  <tr class="row"><td class="m">Hierarchy consistency</td><td class="g3">0.98</td></tr>
+                  <tr class="cat"><td colspan="2">Router agent</td></tr>
+                  <tr class="row"><td class="m">Routing accuracy</td><td class="g3">0.97</td></tr>
+                  <tr class="cat"><td colspan="2">Localize agents</td></tr>
+                  <tr class="row"><td class="m">Sub-HTML validity</td><td class="g3">0.96</td></tr>
+                  <tr class="cat"><td colspan="2">Refine · reflection</td></tr>
+                  <tr class="row"><td class="m">Reflection gain (OS)</td><td class="g3">+0.06</td></tr>
+                  <tr class="cat"><td colspan="2">Tools</td></tr>
+                  <tr class="row"><td class="m">Tool-call success</td><td class="g3">0.995</td></tr>
+                  <tr class="row"><td class="m">Reading-order accuracy</td><td class="g3">0.98</td></tr>
+                  <tr class="row"><td class="m">Font-fit success</td><td class="g3">0.97</td></tr>
+                  <tr class="row"><td class="m">Background-stitch success</td><td class="g3">0.96</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════ BACKUP B3 · PER-STAGE FORMALISM (restored from the ICDAR archive) ═══════════ -->
+    <section class="slide backup" data-eyebrow="Backup" data-frags="4"
       data-notes="Stage one, Segment. A classifier tool decides digital or scanned. If digital we bypass detection and read boxes, spans and font metadata straight from PDF primitives. If scanned, a detector ensemble proposes candidate regions, fused by IoU merging. Those proposals are geometry-driven: they over-segment, merge incompatible content, and miss hierarchy. So the labeling agent assigns a structural label and attributes, and the grouping agent builds the graph G, constrained into a tree.">
       <div class="kicker">Stage 1 of 4</div>
       <h2><em>Segment</em> — hierarchical semantic layout detection</h2>
@@ -6451,7 +6511,7 @@
       </div>
     </section>
 
-    <section class="slide" data-eyebrow="Backup" data-frags="4"
+    <section class="slide backup" data-eyebrow="Backup" data-frags="4"
       data-notes="Stage two, Localize. Each node arrives as a four-tuple: crop, bounding box, upstream label, structural constraints. The router agent selects a specialist from the crop, overriding the label when the visual contradicts it. Six specialists generate localized HTML. Auxiliary tools are invoked only when necessary. Nodes are conditionally independent, so the stage parallelises.">
       <div class="kicker">Stage 2 of 4</div>
       <h2><em>Localize</em> — layout-aware HTML generation</h2>
@@ -6486,14 +6546,14 @@
           <div class="col">
             <div class="codecard">
               <div class="cc-head">H<sub>v</sub> — real sub-HTML emitted for one region</div>
-              <pre class="cc-body">&amp;lt;h2 class="title_2" style="position: absolute; left: 232px; top: 99px;"&amp;gt;…&amp;lt;/h2&amp;gt;</pre>
+              <pre class="cc-body">&lt;h2 class="title_2" style="position: absolute; left: 232px; top: 99px;"&gt;…&lt;/h2&gt;</pre>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="slide" data-eyebrow="Backup" data-frags="3"
+    <section class="slide backup" data-eyebrow="Backup" data-frags="3"
       data-notes="Assemble merges bottom-up and orders semantically. Refine renders, compares against the source, and repairs until the appearance stabilises.">
       <div class="kicker">Stages 3 &amp; 4 of 4</div>
       <h2><em>Assemble</em>, then <em>Refine</em> against the render</h2>
@@ -6511,8 +6571,18 @@
         <div class="takeaway frag" data-frag="3">Fidelity has to be checked on the render, not the markup.</div>
       </div>
     </section>
-##>
-═════════════════════════════════════════════════════════════════════ -->
+
+      <!-- ═══════════ BACKUP B6 · THE COMPLETE REPLICA PIPELINE (paper Fig. 4) ═══════════ -->
+      <section class="slide backup" data-eyebrow="Backup"
+        data-notes="Backup B6 — the complete REPLICA pipeline as one static figure (paper Fig. 4): Segment, Localize, Assemble, Refine, with every agent and tool in place. Useful if someone wants to see the whole system at once rather than stage by stage.">
+        <div class="kicker">Backup · paper Fig. 4</div>
+        <h2>The complete <em>REPLICA</em> pipeline</h2>
+        <div class="slide-body">
+          <div class="imgbox"><img src="static/images/replica-agents-maindiag-final.png"
+              alt="The complete REPLICA pipeline: Segment, Localize, Assemble, Refine" loading="lazy"></div>
+        </div>
+      </section>
+
 
       <div id="progress"></div>
       <div id="livebadge"><span class="dot"></span><span>live html · press V for source</span></div>
