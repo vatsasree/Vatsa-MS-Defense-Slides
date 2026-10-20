@@ -9,18 +9,13 @@
   <!-- Favicon (placeholder path; drop a real static/images/favicon.png later) -->
   <link rel="icon" type="image/png" href="static/images/favicon.png" />
 
-  <!-- Fonts: Inter + JetBrains Mono -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <!-- Fonts: Inter + JetBrains Mono, vendored so the deck works with no network -->
+  <link rel="stylesheet" href="vendor/fonts/fonts.css" />
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <!-- Font Awesome 6.5.2, vendored -->
+  <link rel="stylesheet" href="vendor/fa/css/all.min.css" />
 
-  <!-- KaTeX (optional math rendering; degrades gracefully) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <!-- KaTeX removed: nothing on the page calls it (no renderMathInElement, no math delimiters) -->
 
   <style>
     /* ============================================================

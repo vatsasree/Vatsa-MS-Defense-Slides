@@ -9,6 +9,7 @@ It extends the ICDAR 2026 REPLICA oral deck, re-ordered to the thesis chapters
   (`site.html?embed=teaser|fidhtml|demo|downstream`). Its own qualitative section is intentionally
   trimmed (only the four pairs the deck uses are in `static/images/qual/`), so opening `site.html`
   directly shows placeholders there and logs a few harmless 404s.
+- `vendor/` — Font Awesome 6.5.2 (`vendor/fa/`) and Inter + JetBrains Mono woff2 (`vendor/fonts/`), for offline use.
 - `static/` — trimmed copy of the website's assets (≈ 224 MB, every file < 100 MB, no LFS).
 
 ## Presenting from GitHub Pages
@@ -30,8 +31,9 @@ dies after that, the loaded page keeps working.
 
 then open http://localhost:8099.
 
-Fonts and icons inside the live figures come from Google Fonts / cdnjs; offline, they fall back to system
-fonts and the walkthrough's icons disappear.
+The deck makes no network requests: Font Awesome 6.5.2 and the Inter / JetBrains Mono web fonts are
+vendored under `vendor/` (≈ 1.4 MB, licences in the file headers), and the unused KaTeX tags were removed
+from `site.html`. Only the "Paper" / dataset links on the project page itself point off-site.
 
 ## Keys
 
