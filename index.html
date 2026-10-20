@@ -4694,6 +4694,128 @@
         </div>
       </section>
 
+      <!-- ═══════════ DIVIDER 04 ═══════════ -->
+      <section class="slide section-slide" data-eyebrow="04 · VFDR-Bench &amp; Metrics"
+        data-notes="Chapter four, the second contribution: measure. A target with no ruler cannot be optimised. Every existing benchmark is annotated in Markdown or plain text, so there is no ground truth for position or style — you cannot score what a page looks like against a reference that never recorded it. So before building a system, we built the ruler. [0:20]">
+        <h1>VFDR-Bench &amp; Metrics</h1>
+        <div class="q">We have a target representation. But how do we systematically evaluate whether a reconstruction truly preserves both the semantics and the appearance of the source?</div>
+      </section>
+
+      <!-- ═══════════ VFDR-BENCH SAMPLE CAROUSEL ═══════════ -->
+      <section class="slide" data-eyebrow="04 · VFDR-Bench &amp; Metrics" id="vfdrSlide"
+        data-notes="This is what is actually in VFDR-Bench — thirty real pages from the set, grouped by document type, playing on their own. Five thousand documents, twenty-two languages, seventeen domains, and every single one annotated in Fid-HTML by trained annotators, because you cannot score position or style against a Markdown reference. Newspapers and periodicals; government and official records — birth certificates, tenders, memoranda; textbooks and exam papers, including right-to-left scripts; business and finance — statements, invoices with handwriting and rubber stamps; Indic and archival material on aged paper; and magazines and lifestyle layouts. Shift-arrow steps, P pauses, and clicking a page enlarges it.">
+        <div class="kicker">What is actually in the benchmark &nbsp;·&nbsp;
+          <span class="chint">plays automatically &nbsp;·&nbsp; <b>P</b> pause &nbsp;·&nbsp; <b>&#8679;&larr;
+              &#8679;&rarr;</b> step &nbsp;·&nbsp; click a page to enlarge</span>
+        </div>
+        <h2>VFDR-Bench — <em>5,000 documents</em>, annotated in FID-HTML</h2>
+        <div class="slide-body">
+          <div class="stats caro-stats">
+            <div class="stat">
+              <div class="v">5,000</div>
+              <div class="k">documents</div>
+            </div>
+            <div class="stat">
+              <div class="v">22</div>
+              <div class="k">languages</div>
+            </div>
+            <div class="stat">
+              <div class="v">17</div>
+              <div class="k">domains</div>
+            </div>
+            <div class="stat">
+              <div class="v gold">100%</div>
+              <div class="k">expert human annotated</div>
+            </div>
+          </div>
+          <div class="carowrap">
+            <div class="carotabs" id="caroTabs"></div>
+            <div class="carostage" id="caroStage"></div>
+            <div class="carocap" id="caroCap"></div>
+            <div class="carodots" id="caroDots"></div>
+            <div class="carostate on" id="caroState">&#9654; playing</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════ 20 · WHICH METRIC MEASURES WHAT ═══════════ -->
+      <section class="slide vcenter" data-eyebrow="04 · VFDR-Bench &amp; Metrics" data-frags="3"
+        data-notes="Same four axes, one metric family each — and this shape is the one to keep in your head, because every result from here on is read on it. [CLICK] The two established axes. Text extraction: character and word recognition rate. Logical structure: normalised tree edit distance, with TEDS for tables and CDM for formulas. Both standard, both already in the literature. [CLICK] The two we introduce. Physical structure: Global and Local Position Score — one-to-one matching by maximum IoU, then area-normalised precision and recall, so it penalises both missed elements and hallucinated boxes. Visual fidelity: the Visual Fidelity Score, a VLM judging the rendered page against human-annotated ground truth. Neither axis had any metric at all before this work. [CLICK] Overall is the mean of the four, so nothing can buy a good score by winning one axis. And on trust: Pearson correlation with seven expert annotators is above 0.8 across a hundred documents.">
+        <!-- <div class="kicker">Reading the scoreboard</div> -->
+        <h2>Which metric measures <em>what</em></h2>
+        <div class="slide-body">
+          <div class="radarwrap">
+            <svg class="mradar" viewBox="150 18 1090 592"
+              aria-label="The four axes of document reconstruction and the metric family on each">
+              <g class="rgrid">
+                <circle cx="620" cy="300" r="190" />
+                <circle cx="620" cy="300" r="142" />
+                <circle cx="620" cy="300" r="95" />
+                <circle cx="620" cy="300" r="48" />
+                <line x1="620" y1="300" x2="620" y2="110" />
+                <line x1="620" y1="300" x2="810" y2="300" />
+                <line x1="620" y1="300" x2="620" y2="490" />
+                <line x1="620" y1="300" x2="430" y2="300" />
+              </g>
+              <g class="rnode">
+                <circle cx="620" cy="110" r="7" class="std" />
+                <circle cx="810" cy="300" r="7" class="std" />
+                <circle cx="620" cy="490" r="7" class="new" />
+                <circle cx="430" cy="300" r="7" class="new" />
+              </g>
+
+              <g class="rlab std frag" data-frag="1">
+                <text x="620" y="66" text-anchor="middle" class="ax">Text Extraction</text>
+                <text x="620" y="90" text-anchor="middle" class="qq">are the words right?</text>
+                <text x="828" y="288" class="ax">Logical Structure</text>
+                <text x="828" y="312" class="qq">is the structure right?</text>
+                <text x="828" y="340" class="mt">NTED &#8595; · TEDS &#8593; · CDM &#8593; <tspan class="chipstd"
+                    dx="9">standard</tspan></text>
+                <text x="620" y="44" text-anchor="middle" class="mt">WRR &#8593; · CRR &#8593; <tspan class="chipstd"
+                    dx="9">standard</tspan></text>
+              </g>
+              <g class="rlab new frag" data-frag="2">
+                <text x="620" y="528" text-anchor="middle" class="ax">Physical Structure</text>
+                <text x="620" y="552" text-anchor="middle" class="qq">is the position right?</text>
+                <text x="620" y="580" text-anchor="middle" class="mt">GPS &#8593; · LPS &#8593; <tspan class="chipnew"
+                    dx="9">NEW</tspan></text>
+                <text x="412" y="288" text-anchor="end" class="ax">Visual Fidelity</text>
+                <text x="412" y="312" text-anchor="end" class="qq">does it look right?</text>
+                <text x="412" y="340" text-anchor="end" class="mt">VFS &#8593; <tspan class="chipnew" dx="9">NEW</tspan>
+                </text>
+              </g>
+              <g class="rcentre frag" data-frag="3">
+                <circle cx="620" cy="300" r="44" />
+                <text x="620" y="295" text-anchor="middle" class="os">OS</text>
+                <text x="620" y="318" text-anchor="middle" class="osn">mean of 4</text>
+              </g>
+            </svg>
+            <div class="radarside">
+              <!-- The radar already names every metric and its direction, so the
+                   cards only have to say what each family looks at. -->
+              <div class="rs-card frag" data-frag="1">
+                <h4>Two axes already had metrics</h4>
+                <p><b>WRR / CRR</b> — words and characters recovered<br>
+                  <b>NTED</b> — DOM against the reference tree
+                </p>
+              </div>
+              <div class="rs-card gold frag" data-frag="2">
+                <!-- <h4>Two had none. We built them.</h4> -->
+                <h4>We introduce</h4>
+                <p><b>GPS / LPS</b> — where every block and line lands<br>
+                  <b>VFS</b> — typography, colour and spacing, judged by a VLM
+                </p>
+                <p class="rs-tiny">Both read the <b>render</b>, not the markup.</p>
+              </div>
+              <div class="rs-card frag" data-frag="3">
+                <h4>Overall = the mean of the four</h4>
+                <!-- <p>No axis can be bought.<br>Pearson <b>&gt; 0.8</b> against seven expert annotators.</p> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- ═══════════ DIVIDER 05 ═══════════ -->
       <section class="slide section-slide" data-eyebrow="05 · REPLICA"
         data-notes="Chapter five, the third contribution: generate. We have the target and the ruler — now the system that hits the target. And the part I most want to land: why it is agentic, and what that actually means. [0:15]">
@@ -4890,114 +5012,6 @@
         </div>
       </section>
 
-      <!-- ═════════════════════════════════════════════════════════════════════
-     ARCHIVED — per-stage detail slides (Segment / Localize / Assemble+Refine).
-     Superseded by the "stage by stage" reveal above. To restore: delete the
-     opening "<!##" and closing "##>" markers below and re-save.
-
-<!##
-    <section class="slide" data-eyebrow="Backup" data-frags="4"
-      data-notes="Stage one, Segment. A classifier tool decides digital or scanned. If digital we bypass detection and read boxes, spans and font metadata straight from PDF primitives. If scanned, a detector ensemble proposes candidate regions, fused by IoU merging. Those proposals are geometry-driven: they over-segment, merge incompatible content, and miss hierarchy. So the labeling agent assigns a structural label and attributes, and the grouping agent builds the graph G, constrained into a tree.">
-      <div class="kicker">Stage 1 of 4</div>
-      <h2><em>Segment</em> — hierarchical semantic layout detection</h2>
-      <div class="slide-body">
-        <div class="stage-strip">
-          <div class="st active"><span class="n">1</span><span class="t">Segment</span></div>
-          <div class="st"><span class="n">2</span><span class="t">Localize</span></div>
-          <div class="st"><span class="n">3</span><span class="t">Assemble</span></div>
-          <div class="st"><span class="n">4</span><span class="t">Refine</span></div>
-        </div>
-        <div class="cols">
-          <div class="col" style="flex:1.3;">
-            <div class="mathrow">
-              <div class="frag" data-frag="1">
-                <span class="math">δ = T<sub>type</sub>(I),&nbsp; δ ∈ {digital, scanned}</span>
-                <div class="mathnote"><b>1A · tool.</b> Digital → read from PDF primitives, bypassing detection. Scanned → infer from visual geometry.</div>
-              </div>
-              <div class="frag" data-frag="2">
-                <span class="math">B = {b<sub>i</sub>}<sup>N</sup><sub>i=1</sub>,&nbsp; b<sub>i</sub> = m(I),&nbsp; m ∈ T<sub>det</sub></span>
-                <div class="mathnote"><b>1B · tool ensemble.</b> DocLayout-YOLO + IndicDLP-YOLO + Hi-SAM, fused by IoU merging.</div>
-              </div>
-              <div class="frag" data-frag="3">
-                <span class="math">(ℓ<sub>i</sub>, τ<sub>i</sub>) = A<sub>lab</sub>(I, b<sub>i</sub>)</span>
-                <div class="mathnote"><b>1C · agent.</b> Set-of-Mark prompting; identifies mis-segmented or mixed-content regions.</div>
-              </div>
-              <div class="frag" data-frag="4">
-                <span class="math">G = (V, E)&nbsp; ⟹&nbsp; T<sub>layout</sub> = Tree(G)</span>
-                <div class="mathnote"><b>1D · agent.</b> Acyclicity + single-parent constraints yield the layout tree.</div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="imgbox"><img src="static/images/demo/newspaper/S1_tree.png" alt="Segment"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" data-eyebrow="Backup" data-frags="4"
-      data-notes="Stage two, Localize. Each node arrives as a four-tuple: crop, bounding box, upstream label, structural constraints. The router agent selects a specialist from the crop, overriding the label when the visual contradicts it. Six specialists generate localized HTML. Auxiliary tools are invoked only when necessary. Nodes are conditionally independent, so the stage parallelises.">
-      <div class="kicker">Stage 2 of 4</div>
-      <h2><em>Localize</em> — layout-aware HTML generation</h2>
-      <div class="slide-body">
-        <div class="stage-strip">
-          <div class="st done"><span class="n">1</span><span class="t">Segment</span></div>
-          <div class="st active"><span class="n">2</span><span class="t">Localize</span></div>
-          <div class="st"><span class="n">3</span><span class="t">Assemble</span></div>
-          <div class="st"><span class="n">4</span><span class="t">Refine</span></div>
-        </div>
-        <div class="cols">
-          <div class="col" style="flex:1.3;">
-            <div class="mathrow">
-              <div class="frag" data-frag="1">
-                <span class="math">v ↦ (I<sub>v</sub>, b<sub>v</sub>, ℓ<sub>v</sub>, φ<sub>v</sub>)</span>
-                <div class="mathnote">Crop, bounding box, upstream label, and structural constraints φ.</div>
-              </div>
-              <div class="frag" data-frag="2">
-                <span class="math">a<sub>v</sub> = A<sub>route</sub>(I<sub>v</sub>, ℓ<sub>v</sub>, φ<sub>v</sub>)</span>
-                <div class="mathnote"><b>2A · agent.</b> Takes the crop, not just the label — overrides and reroutes on mismatch.</div>
-              </div>
-              <div class="frag" data-frag="3">
-                <span class="math">𝒜<sub>spec</sub> = {A<sub>text</sub>, A<sub>table</sub>, A<sub>img</sub>, A<sub>form</sub>, A<sub>list</sub>, A<sub>eqn</sub>}</span>
-                <div class="mathnote"><b>2B · agents.</b> Six specialists producing H<sub>v</sub>.</div>
-              </div>
-              <div class="frag" data-frag="4">
-                <span class="math">T<sub>aux</sub> ⊂ 𝒯 &nbsp;<span class="op">only when necessary</span></span>
-                <div class="mathnote">OCR, table structure recognition, TexTAR. Conditionally independent → parallelisable.</div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="codecard">
-              <div class="cc-head">H<sub>v</sub> — real sub-HTML emitted for one region</div>
-              <pre class="cc-body">&amp;lt;h2 class="title_2" style="position: absolute; left: 232px; top: 99px;"&amp;gt;…&amp;lt;/h2&amp;gt;</pre>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide" data-eyebrow="Backup" data-frags="3"
-      data-notes="Assemble merges bottom-up and orders semantically. Refine renders, compares against the source, and repairs until the appearance stabilises.">
-      <div class="kicker">Stages 3 &amp; 4 of 4</div>
-      <h2><em>Assemble</em>, then <em>Refine</em> against the render</h2>
-      <div class="slide-body">
-        <div class="grid2" style="flex:1;">
-          <div class="card frag" data-frag="1">
-            <h3>Assemble</h3>
-            <p><b>T<sub>pos</sub></b> bottom-up merge; <b>A<sub>ro</sub></b> semantic reading order under ≺.</p>
-          </div>
-          <div class="card accent frag" data-frag="2">
-            <h3>Refine — the closed loop</h3>
-            <p><b>T<sub>font</sub></b>, <b>T<sub>bg</sub></b>, and <b>A<sub>ref</sub></b> comparing R(H) to I for up to 5 iterations.</p>
-          </div>
-        </div>
-        <div class="takeaway frag" data-frag="3">Fidelity has to be checked on the render, not the markup.</div>
-      </div>
-    </section>
-##>
-═════════════════════════════════════════════════════════════════════ -->
-
       <!-- ═══════════ 18 · LIVE FRAMEWORK DEMO ═══════════ -->
       <section class="slide demo bleed full" data-eyebrow="05 · REPLICA · Demo" data-embed="pipeline" data-frags="0"
         data-notes="Rather than describe it further — here is the whole framework running on a real page with every intermediate output: a Telugu newspaper, the layout that argues hardest for agents. Watch the Grouping Agent close a dashed outline around each article — headline, deck, figure, body columns — and the Reading-Order Agent reject raster order for story-major order, because a newspaper has no fixed reading order. Step through with the clicker one beat at a time, or press space to let the whole walkthrough run and space again to pause it. Each beat spotlights the corresponding part of Figure 4 on the left.">
@@ -5006,128 +5020,6 @@
         <div class="slide-body">
           <div class="embed"><iframe src="site.html?embed=demo&doc=newspaper&rate=1.5"
               title="REPLICA framework demo"></iframe></div>
-        </div>
-      </section>
-
-      <!-- ═══════════ DIVIDER 04 ═══════════ -->
-      <section class="slide section-slide" data-eyebrow="04 · VFDR-Bench &amp; Metrics"
-        data-notes="Chapter four, the second contribution: measure. A target with no ruler cannot be optimised. Every existing benchmark is annotated in Markdown or plain text, so there is no ground truth for position or style — you cannot score what a page looks like against a reference that never recorded it. So before building a system, we built the ruler. [0:20]">
-        <h1>VFDR-Bench &amp; Metrics</h1>
-        <div class="q">We have a target representation. But how do we systematically evaluate whether a reconstruction truly preserves both the semantics and the appearance of the source?</div>
-      </section>
-
-      <!-- ═══════════ VFDR-BENCH SAMPLE CAROUSEL ═══════════ -->
-      <section class="slide" data-eyebrow="04 · VFDR-Bench &amp; Metrics" id="vfdrSlide"
-        data-notes="This is what is actually in VFDR-Bench — thirty real pages from the set, grouped by document type, playing on their own. Five thousand documents, twenty-two languages, seventeen domains, and every single one annotated in Fid-HTML by trained annotators, because you cannot score position or style against a Markdown reference. Newspapers and periodicals; government and official records — birth certificates, tenders, memoranda; textbooks and exam papers, including right-to-left scripts; business and finance — statements, invoices with handwriting and rubber stamps; Indic and archival material on aged paper; and magazines and lifestyle layouts. Shift-arrow steps, P pauses, and clicking a page enlarges it.">
-        <div class="kicker">What is actually in the benchmark &nbsp;·&nbsp;
-          <span class="chint">plays automatically &nbsp;·&nbsp; <b>P</b> pause &nbsp;·&nbsp; <b>&#8679;&larr;
-              &#8679;&rarr;</b> step &nbsp;·&nbsp; click a page to enlarge</span>
-        </div>
-        <h2>VFDR-Bench — <em>5,000 documents</em>, annotated in FID-HTML</h2>
-        <div class="slide-body">
-          <div class="stats caro-stats">
-            <div class="stat">
-              <div class="v">5,000</div>
-              <div class="k">documents</div>
-            </div>
-            <div class="stat">
-              <div class="v">22</div>
-              <div class="k">languages</div>
-            </div>
-            <div class="stat">
-              <div class="v">17</div>
-              <div class="k">domains</div>
-            </div>
-            <div class="stat">
-              <div class="v gold">100%</div>
-              <div class="k">expert human annotated</div>
-            </div>
-          </div>
-          <div class="carowrap">
-            <div class="carotabs" id="caroTabs"></div>
-            <div class="carostage" id="caroStage"></div>
-            <div class="carocap" id="caroCap"></div>
-            <div class="carodots" id="caroDots"></div>
-            <div class="carostate on" id="caroState">&#9654; playing</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ═══════════ 20 · WHICH METRIC MEASURES WHAT ═══════════ -->
-      <section class="slide vcenter" data-eyebrow="04 · VFDR-Bench &amp; Metrics" data-frags="3"
-        data-notes="Same four axes, one metric family each — and this shape is the one to keep in your head, because every result from here on is read on it. [CLICK] The two established axes. Text extraction: character and word recognition rate. Logical structure: normalised tree edit distance, with TEDS for tables and CDM for formulas. Both standard, both already in the literature. [CLICK] The two we introduce. Physical structure: Global and Local Position Score — one-to-one matching by maximum IoU, then area-normalised precision and recall, so it penalises both missed elements and hallucinated boxes. Visual fidelity: the Visual Fidelity Score, a VLM judging the rendered page against human-annotated ground truth. Neither axis had any metric at all before this work. [CLICK] Overall is the mean of the four, so nothing can buy a good score by winning one axis. And on trust: Pearson correlation with seven expert annotators is above 0.8 across a hundred documents.">
-        <!-- <div class="kicker">Reading the scoreboard</div> -->
-        <h2>Which metric measures <em>what</em></h2>
-        <div class="slide-body">
-          <div class="radarwrap">
-            <svg class="mradar" viewBox="150 18 1090 592"
-              aria-label="The four axes of document reconstruction and the metric family on each">
-              <g class="rgrid">
-                <circle cx="620" cy="300" r="190" />
-                <circle cx="620" cy="300" r="142" />
-                <circle cx="620" cy="300" r="95" />
-                <circle cx="620" cy="300" r="48" />
-                <line x1="620" y1="300" x2="620" y2="110" />
-                <line x1="620" y1="300" x2="810" y2="300" />
-                <line x1="620" y1="300" x2="620" y2="490" />
-                <line x1="620" y1="300" x2="430" y2="300" />
-              </g>
-              <g class="rnode">
-                <circle cx="620" cy="110" r="7" class="std" />
-                <circle cx="810" cy="300" r="7" class="std" />
-                <circle cx="620" cy="490" r="7" class="new" />
-                <circle cx="430" cy="300" r="7" class="new" />
-              </g>
-
-              <g class="rlab std frag" data-frag="1">
-                <text x="620" y="66" text-anchor="middle" class="ax">Text Extraction</text>
-                <text x="620" y="90" text-anchor="middle" class="qq">are the words right?</text>
-                <text x="828" y="288" class="ax">Logical Structure</text>
-                <text x="828" y="312" class="qq">is the structure right?</text>
-                <text x="828" y="340" class="mt">NTED &#8595; · TEDS &#8593; · CDM &#8593; <tspan class="chipstd"
-                    dx="9">standard</tspan></text>
-                <text x="620" y="44" text-anchor="middle" class="mt">WRR &#8593; · CRR &#8593; <tspan class="chipstd"
-                    dx="9">standard</tspan></text>
-              </g>
-              <g class="rlab new frag" data-frag="2">
-                <text x="620" y="528" text-anchor="middle" class="ax">Physical Structure</text>
-                <text x="620" y="552" text-anchor="middle" class="qq">is the position right?</text>
-                <text x="620" y="580" text-anchor="middle" class="mt">GPS &#8593; · LPS &#8593; <tspan class="chipnew"
-                    dx="9">NEW</tspan></text>
-                <text x="412" y="288" text-anchor="end" class="ax">Visual Fidelity</text>
-                <text x="412" y="312" text-anchor="end" class="qq">does it look right?</text>
-                <text x="412" y="340" text-anchor="end" class="mt">VFS &#8593; <tspan class="chipnew" dx="9">NEW</tspan>
-                </text>
-              </g>
-              <g class="rcentre frag" data-frag="3">
-                <circle cx="620" cy="300" r="44" />
-                <text x="620" y="295" text-anchor="middle" class="os">OS</text>
-                <text x="620" y="318" text-anchor="middle" class="osn">mean of 4</text>
-              </g>
-            </svg>
-            <div class="radarside">
-              <!-- The radar already names every metric and its direction, so the
-                   cards only have to say what each family looks at. -->
-              <div class="rs-card frag" data-frag="1">
-                <h4>Two axes already had metrics</h4>
-                <p><b>WRR / CRR</b> — words and characters recovered<br>
-                  <b>NTED</b> — DOM against the reference tree
-                </p>
-              </div>
-              <div class="rs-card gold frag" data-frag="2">
-                <!-- <h4>Two had none. We built them.</h4> -->
-                <h4>We introduce</h4>
-                <p><b>GPS / LPS</b> — where every block and line lands<br>
-                  <b>VFS</b> — typography, colour and spacing, judged by a VLM
-                </p>
-                <p class="rs-tiny">Both read the <b>render</b>, not the markup.</p>
-              </div>
-              <div class="rs-card frag" data-frag="3">
-                <h4>Overall = the mean of the four</h4>
-                <!-- <p>No axis can be bought.<br>Pearson <b>&gt; 0.8</b> against seven expert annotators.</p> -->
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -5500,6 +5392,114 @@
         </div>
       </section>
 
+      <!-- ═════════════════════════════════════════════════════════════════════
+     ARCHIVED — per-stage detail slides (Segment / Localize / Assemble+Refine).
+     Superseded by the "stage by stage" reveal above. To restore: delete the
+     opening "<!##" and closing "##>" markers below and re-save.
+
+<!##
+    <section class="slide" data-eyebrow="Backup" data-frags="4"
+      data-notes="Stage one, Segment. A classifier tool decides digital or scanned. If digital we bypass detection and read boxes, spans and font metadata straight from PDF primitives. If scanned, a detector ensemble proposes candidate regions, fused by IoU merging. Those proposals are geometry-driven: they over-segment, merge incompatible content, and miss hierarchy. So the labeling agent assigns a structural label and attributes, and the grouping agent builds the graph G, constrained into a tree.">
+      <div class="kicker">Stage 1 of 4</div>
+      <h2><em>Segment</em> — hierarchical semantic layout detection</h2>
+      <div class="slide-body">
+        <div class="stage-strip">
+          <div class="st active"><span class="n">1</span><span class="t">Segment</span></div>
+          <div class="st"><span class="n">2</span><span class="t">Localize</span></div>
+          <div class="st"><span class="n">3</span><span class="t">Assemble</span></div>
+          <div class="st"><span class="n">4</span><span class="t">Refine</span></div>
+        </div>
+        <div class="cols">
+          <div class="col" style="flex:1.3;">
+            <div class="mathrow">
+              <div class="frag" data-frag="1">
+                <span class="math">δ = T<sub>type</sub>(I),&nbsp; δ ∈ {digital, scanned}</span>
+                <div class="mathnote"><b>1A · tool.</b> Digital → read from PDF primitives, bypassing detection. Scanned → infer from visual geometry.</div>
+              </div>
+              <div class="frag" data-frag="2">
+                <span class="math">B = {b<sub>i</sub>}<sup>N</sup><sub>i=1</sub>,&nbsp; b<sub>i</sub> = m(I),&nbsp; m ∈ T<sub>det</sub></span>
+                <div class="mathnote"><b>1B · tool ensemble.</b> DocLayout-YOLO + IndicDLP-YOLO + Hi-SAM, fused by IoU merging.</div>
+              </div>
+              <div class="frag" data-frag="3">
+                <span class="math">(ℓ<sub>i</sub>, τ<sub>i</sub>) = A<sub>lab</sub>(I, b<sub>i</sub>)</span>
+                <div class="mathnote"><b>1C · agent.</b> Set-of-Mark prompting; identifies mis-segmented or mixed-content regions.</div>
+              </div>
+              <div class="frag" data-frag="4">
+                <span class="math">G = (V, E)&nbsp; ⟹&nbsp; T<sub>layout</sub> = Tree(G)</span>
+                <div class="mathnote"><b>1D · agent.</b> Acyclicity + single-parent constraints yield the layout tree.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="imgbox"><img src="static/images/demo/newspaper/S1_tree.png" alt="Segment"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-eyebrow="Backup" data-frags="4"
+      data-notes="Stage two, Localize. Each node arrives as a four-tuple: crop, bounding box, upstream label, structural constraints. The router agent selects a specialist from the crop, overriding the label when the visual contradicts it. Six specialists generate localized HTML. Auxiliary tools are invoked only when necessary. Nodes are conditionally independent, so the stage parallelises.">
+      <div class="kicker">Stage 2 of 4</div>
+      <h2><em>Localize</em> — layout-aware HTML generation</h2>
+      <div class="slide-body">
+        <div class="stage-strip">
+          <div class="st done"><span class="n">1</span><span class="t">Segment</span></div>
+          <div class="st active"><span class="n">2</span><span class="t">Localize</span></div>
+          <div class="st"><span class="n">3</span><span class="t">Assemble</span></div>
+          <div class="st"><span class="n">4</span><span class="t">Refine</span></div>
+        </div>
+        <div class="cols">
+          <div class="col" style="flex:1.3;">
+            <div class="mathrow">
+              <div class="frag" data-frag="1">
+                <span class="math">v ↦ (I<sub>v</sub>, b<sub>v</sub>, ℓ<sub>v</sub>, φ<sub>v</sub>)</span>
+                <div class="mathnote">Crop, bounding box, upstream label, and structural constraints φ.</div>
+              </div>
+              <div class="frag" data-frag="2">
+                <span class="math">a<sub>v</sub> = A<sub>route</sub>(I<sub>v</sub>, ℓ<sub>v</sub>, φ<sub>v</sub>)</span>
+                <div class="mathnote"><b>2A · agent.</b> Takes the crop, not just the label — overrides and reroutes on mismatch.</div>
+              </div>
+              <div class="frag" data-frag="3">
+                <span class="math">𝒜<sub>spec</sub> = {A<sub>text</sub>, A<sub>table</sub>, A<sub>img</sub>, A<sub>form</sub>, A<sub>list</sub>, A<sub>eqn</sub>}</span>
+                <div class="mathnote"><b>2B · agents.</b> Six specialists producing H<sub>v</sub>.</div>
+              </div>
+              <div class="frag" data-frag="4">
+                <span class="math">T<sub>aux</sub> ⊂ 𝒯 &nbsp;<span class="op">only when necessary</span></span>
+                <div class="mathnote">OCR, table structure recognition, TexTAR. Conditionally independent → parallelisable.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="codecard">
+              <div class="cc-head">H<sub>v</sub> — real sub-HTML emitted for one region</div>
+              <pre class="cc-body">&amp;lt;h2 class="title_2" style="position: absolute; left: 232px; top: 99px;"&amp;gt;…&amp;lt;/h2&amp;gt;</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-eyebrow="Backup" data-frags="3"
+      data-notes="Assemble merges bottom-up and orders semantically. Refine renders, compares against the source, and repairs until the appearance stabilises.">
+      <div class="kicker">Stages 3 &amp; 4 of 4</div>
+      <h2><em>Assemble</em>, then <em>Refine</em> against the render</h2>
+      <div class="slide-body">
+        <div class="grid2" style="flex:1;">
+          <div class="card frag" data-frag="1">
+            <h3>Assemble</h3>
+            <p><b>T<sub>pos</sub></b> bottom-up merge; <b>A<sub>ro</sub></b> semantic reading order under ≺.</p>
+          </div>
+          <div class="card accent frag" data-frag="2">
+            <h3>Refine — the closed loop</h3>
+            <p><b>T<sub>font</sub></b>, <b>T<sub>bg</sub></b>, and <b>A<sub>ref</sub></b> comparing R(H) to I for up to 5 iterations.</p>
+          </div>
+        </div>
+        <div class="takeaway frag" data-frag="3">Fidelity has to be checked on the render, not the markup.</div>
+      </div>
+    </section>
+##>
+═════════════════════════════════════════════════════════════════════ -->
+
       <div id="progress"></div>
       <div id="livebadge"><span class="dot"></span><span>live html · press V for source</span></div>
     </div>
@@ -5598,6 +5598,11 @@
       const svTitle = document.getElementById("svTitle");
 
       let cur = 0, frag = 0, blanked = false;
+      // Backup slides sit after "Thank you". The counter, progress bar and →/←
+      // treat Thank you as the end of the talk; backups are reached with ↓, End or O.
+      const lastMain = slides.reduce((a, s, i) => s.classList.contains("backup") ? a : i, 0);
+      const isBackup = i => i > lastMain;
+      const slideLabel = i => i === 0 ? "TITLE" : isBackup(i) ? "B" + (i - lastMain) : String(i);
 
       function fit() {
         // A transiently zero-sized window (mid-navigation, restored tab) would
@@ -5723,7 +5728,9 @@
         }
         if (!s.querySelector(".counter") && cur > 0) {
           const c = document.createElement("div");
-          c.className = "counter"; c.textContent = cur + " / " + (slides.length - 1); s.appendChild(c);
+          c.className = "counter";
+          c.textContent = isBackup(cur) ? "Backup · " + slideLabel(cur) : cur + " / " + lastMain;
+          s.appendChild(c);
         }
         // letterbox takes the slide's own colour, so a non-16:9 screen shows no band
         document.getElementById("deck").classList.toggle("dark",
@@ -5738,7 +5745,7 @@
         // the sample carousel only runs while its slide is on screen
         if (s.id === "vfdrSlide") caro.enter(); else caro.leave();
         if (s.id === "qualSlide") setTimeout(fitQual, 60);
-        progress.style.width = (cur / (slides.length - 1) * 100) + "%";
+        progress.style.width = (isBackup(cur) ? 100 : cur / lastMain * 100) + "%";
         notesBody.textContent = s.dataset.notes || "—";
         history.replaceState(null, "", "#" + cur);
         ovGrid.querySelectorAll(".oi").forEach((o, i) => o.classList.toggle("cur", i === cur));
@@ -5893,7 +5900,8 @@
           frag++; applyFrags(); drivePipeline("step"); syncNav(cur);
           return;
         }
-        if (cur < slides.length - 1) goto(cur + 1, false);
+        // never drift from Thank you into the backups
+        if (cur !== lastMain && cur < slides.length - 1) goto(cur + 1, false);
       }
       function prev() {
         if (slides[cur].dataset.embed === "pipeline" && !demoState.atStart) {
@@ -5903,7 +5911,7 @@
           frag--; applyFrags(); drivePipeline("back"); syncNav(cur);
           return;
         }
-        if (cur > 0) goto(cur - 1, true);
+        if (cur > 0 && cur !== lastMain + 1) goto(cur - 1, true);
       }
 
       /* ---------- source viewer: the deck showing its own markup ---------- */
@@ -5937,7 +5945,7 @@
         const t = s.querySelector("h1,h2");
         const d = document.createElement("div");
         d.className = "oi";
-        d.innerHTML = '<div class="on-n">' + (i === 0 ? "TITLE" : i) + '</div><div class="on-t">' + (t ? t.textContent.trim() : "") + '</div>';
+        d.innerHTML = '<div class="on-n">' + slideLabel(i) + '</div><div class="on-t">' + (t ? t.textContent.trim() : "") + '</div>';
         d.addEventListener("click", () => { overview.classList.remove("on"); goto(i, false); });
         ovGrid.appendChild(d);
       });
