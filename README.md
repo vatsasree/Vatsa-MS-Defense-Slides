@@ -1,16 +1,59 @@
-# Vatsa — MS Thesis Defense Slides
+# Towards Visually Faithful Document Reconstruction — M.S. Thesis Defense
 
-Planning stage. `PLAN.md` is the full implementation plan: an extension of the ICDAR 2026 oral
-deck (`replica-agents.github.io/slides.html`), re-ordered to the thesis chapters, cross-checked
-against the thesis PDF. Defense: 23 October 2026.
+Slide deck for Tallapragada Shanmukha Sreevatsa's M.S. thesis defense (IIIT Hyderabad · CVIT, 23 October 2026).
+It extends the ICDAR 2026 REPLICA oral deck, re-ordered to the thesis chapters
+(Represent FID-HTML → Measure VFDR-Bench & metrics → Generate REPLICA → Results). `PLAN.md` is the full spec.
 
-Once built the deck is `index.html`, presented from GitHub Pages
-(`https://<user>.github.io/Vatsa-MS-Defense-Slides/`). Local fallback:
+- `index.html` — the deck (one file, inline CSS + JS, no build step).
+- `site.html` — copy of the REPLICA project page; the deck iframes four live figures from it
+  (`site.html?embed=teaser|fidhtml|demo|downstream`). Its own qualitative section is intentionally
+  trimmed (only the four pairs the deck uses are in `static/images/qual/`), so opening `site.html`
+  directly shows placeholders there and logs a few harmless 404s.
+- `static/` — trimmed copy of the website's assets (≈ 224 MB, every file < 100 MB, no LFS).
+
+## Presenting from GitHub Pages
+
+Repo → Settings → Pages → *Deploy from a branch* → `main`, `/ (root)`. The deck is then at
+
+    https://<user>.github.io/Vatsa-MS-Defense-Slides/
+
+All paths are relative, so the sub-path works. First deploy takes a minute or two; later pushes a few
+seconds to a minute (hard-refresh to bust the cache).
+
+**Ritual:** open the Pages URL ten minutes early in Chrome, press `F`, step through every slide once with
+`↓` (this loads all iframes and the qualitative pages into cache), press `Home`. If the room's network
+dies after that, the loaded page keeps working.
+
+**Fallback:** a local clone, served over http (not `file://` — the iframes and the qualitative probes need it):
 
     python3 -m http.server 8099
 
-then open http://localhost:8099 (not file://). Keys: → / Space next beat · ← back · ↓/↑ skip slide ·
-F fullscreen · N notes · O overview · V slide source · B blank · S (synthetic slide) next variant · ? help.
+then open http://localhost:8099.
 
-Before presenting: open the Pages URL ten minutes early, press F, step through every slide once
-with ↓ (loads all iframes into cache), press Home.
+Fonts and icons inside the live figures come from Google Fonts / cdnjs; offline, they fall back to system
+fonts and the walkthrough's icons disappear.
+
+## Keys
+
+| Key | Action |
+|---|---|
+| `→` `Space` `PageDown` | next beat / slide (stops at Thank you) |
+| `←` `PageUp` | previous beat / slide |
+| `↓` / `↑` | next / previous slide, skipping beats; `↓` from Thank you enters the backups |
+| `Home` / `End` | title / last backup |
+| `O` | overview (backups shown as B1…B6) |
+| `N` | speaker notes (every main slide ends with a timing cue) |
+| `V` | view the current slide's HTML source |
+| `F` | fullscreen |
+| `B` | blank screen |
+| `?` | help |
+| `Space` (walkthrough) | play / pause; arrows still step |
+| `P`, `⇧←` `⇧→` (VFDR-Bench carousel) | pause / step pages; click a page to enlarge |
+| `S` (synthetic document generation) | fill the template with the next variant |
+
+Presenter remotes send PageUp / PageDown and work out of the box.
+
+## Backups
+
+After Thank you: B1 full format comparison (Table 3.1, live) · B2 agent & tool reliability (Table 5.3) ·
+B3–B5 per-stage formalism (Segment, Localize, Assemble + Refine) · B6 the complete REPLICA pipeline figure.
