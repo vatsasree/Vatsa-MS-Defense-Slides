@@ -4288,6 +4288,92 @@
       font-size: 24px;
     }
 
+    /* ---- limitations: four cards, the fourth is high-resource skew ---- */
+    .limgrid.grid4 .card.lim h3 {
+      font-size: 30px;
+    }
+
+    .limfig .sbase {
+      stroke: var(--line);
+      stroke-width: 2;
+    }
+
+    .limfig .sbar.hi {
+      fill: var(--navy);
+    }
+
+    .limfig .sbar.lo {
+      fill: var(--red);
+      opacity: .85;
+    }
+
+    .limfig .sl {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      fill: var(--ink-2);
+      font-weight: 700;
+    }
+
+    /* ---- robustness & reliability ---- */
+    .robgrid .card {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      padding: 34px 34px;
+      min-height: 470px;
+    }
+
+    .robgrid .stats {
+      margin-top: 18px;
+    }
+
+    .robgrid .stat .v {
+      font-size: 84px;
+    }
+
+    .robgrid .stat .k {
+      font-size: 16px;
+    }
+
+    .robgrid .mathnote {
+      font-size: 22px;
+      line-height: 1.5;
+      color: var(--ink-2);
+    }
+
+    .reltiles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px 14px;
+      margin-top: 10px;
+    }
+
+    .reltiles .stat .v {
+      font-size: 64px;
+    }
+
+    /* ---- GroundingDocQA beat on the supervision diagram ---- */
+    .relsvg .gdqa rect {
+      fill: var(--gold-soft);
+      stroke: var(--gold);
+      stroke-width: 2;
+    }
+
+    .relsvg .gdqa .gq1 {
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 700;
+      fill: var(--navy);
+    }
+
+    .relsvg .gdqa .gq2 {
+      font-family: var(--mono);
+      font-size: 15px;
+      font-weight: 700;
+      fill: #8a6510;
+      letter-spacing: .04em;
+    }
+
     /* ---- future directions ---- */
     .futgrid .card {
       display: flex;
@@ -5527,13 +5613,45 @@
         </div>
       </section>
 
+      <!-- ═══════════ 29 · ROBUSTNESS AND RELIABILITY (pptx 75 + 77; thesis p.56, Table 5.3) ═══════════ -->
+      <section class="slide vcenter" data-eyebrow="06 · Results" data-frags="2" id="robustSlide"
+        data-notes="Two questions a committee should ask of an agentic system: does it hold up off the easy distribution, and do the individual agents and tools actually do their jobs? [CLICK] Across languages and document types: REPLICA sustains 0.86 overall, 0.93 on English and 0.89 on Chinese, across fifteen languages and more than ten document types, with minimal variance. Baselines drop by up to twenty per cent in overall and structural accuracy beyond English and Chinese — GPT-5 goes from 0.62 to 0.50. Note this is fifteen languages for the robustness analysis; the benchmark itself has twenty-two. [CLICK] And from execution traces, per component: routing accuracy 0.97, sub-HTML validity 0.96, tool-call success 99.5 per cent, reflection adds 0.06, and reading-order accuracy is 0.98. The full Table 5.3 is in the backup slides. [1:15]">
+        <div class="kicker">Thesis §5.6 · Table 5.3</div>
+        <h2>Can we trust it? <em>Robustness and reliability</em></h2>
+        <div class="slide-body">
+          <div class="grid2 robgrid">
+            <div class="card frag" data-frag="1"><span class="tag">Across languages and document types</span>
+              <div class="stats">
+                <div class="stat"><div class="v gold">0.86</div><div class="k">OS · all</div></div>
+                <div class="stat"><div class="v">0.93</div><div class="k">OS · English</div></div>
+                <div class="stat"><div class="v">0.89</div><div class="k">OS · Chinese</div></div>
+              </div>
+              <div class="mathnote">REPLICA sustains performance across <b>15 languages</b> and <b>10+ document types</b> with
+                minimal variance; baselines drop up to <b>20 %</b> in overall and structural accuracy beyond
+                English/Chinese (GPT-5: <b>0.62 → 0.50</b>).</div>
+            </div>
+            <div class="card accent frag" data-frag="2"><span class="tag">Agent &amp; tool reliability · trace-based</span>
+              <div class="reltiles">
+                <div class="stat"><div class="v">0.97</div><div class="k">routing accuracy</div></div>
+                <div class="stat"><div class="v">0.96</div><div class="k">sub-HTML validity</div></div>
+                <div class="stat"><div class="v">99.5%</div><div class="k">tool-call success</div></div>
+                <div class="stat"><div class="v">+0.06</div><div class="k">reflection gain</div></div>
+                <div class="stat"><div class="v">0.98</div><div class="k">reading-order accuracy</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="takeaway frag" data-frag="2">Exactly what the <b>22-language, 17-domain</b> design of VFDR-Bench was
+            built to surface.</div>
+        </div>
+      </section>
+
       <!-- ═══════════ 26 · LIMITATIONS ═══════════ -->
       <section class="slide vcenter" data-eyebrow="06 · Limitations"
-        data-notes="Being honest about the edges. First: single-page only — multi-page structures such as a table spanning a page break can fragment. Second: font identification. Bold, italic, underline and colour are recovered reliably, but exact font families are not; existing work covers mostly English and Chinese, and large-scale multilingual font recognition remains an open problem. Third: the refine loop's repeated browser rendering costs real latency against a single forward pass. Those are the three we state in the paper.">
+        data-notes="Being honest about the edges. First: single-page only — multi-page structures such as a table spanning a page break can fragment. Second: font identification. Bold, italic, underline and colour are recovered reliably, but exact font families are not; existing work covers mostly English and Chinese, and large-scale multilingual font recognition remains an open problem. Third: the refine loop's repeated browser rendering costs real latency against a single forward pass. And fourth, the one the thesis adds in section 6.2: high-resource skew. The benchmark, and the models it evaluates, lean to Latin and CJK scripts and clean layouts; Indic, Hebrew, Arabic, handwritten and degraded archival pages are under-represented — which is exactly where I would extend it next. [1:30]">
         <!-- <div class="kicker">Being honest about the edges</div> -->
         <h2>Limitations</h2>
         <div class="slide-body">
-          <div class="grid3 limgrid" style="flex:0 0 auto;">
+          <div class="grid4 limgrid" style="flex:0 0 auto;">
 
             <div class="card lim">
               <h3>Single-page only</h3>
@@ -5625,6 +5743,30 @@
               <!-- <p>The refine loop renders in a browser repeatedly — <b>real latency</b> versus a single forward pass.</p> -->
             </div>
 
+            <div class="card lim">
+              <h3>High-resource skew</h3>
+              <!-- benchmark coverage by script: tall where data is plentiful,
+                 short where it is not -->
+              <svg class="limfig" viewBox="0 0 320 166"
+                aria-label="Coverage leans to Latin and CJK scripts; Indic, Hebrew, Arabic and handwritten pages are under-represented">
+                <path class="sbase" d="M8 118 H 312" />
+                <rect class="sbar hi" x="14" y="18" width="36" height="100" rx="3" />
+                <text x="32" y="132" class="sl" text-anchor="middle">Latin</text>
+                <rect class="sbar hi" x="65" y="32" width="36" height="86" rx="3" />
+                <text x="83" y="132" class="sl" text-anchor="middle">CJK</text>
+                <rect class="sbar lo" x="116" y="88" width="36" height="30" rx="3" />
+                <text x="134" y="132" class="sl" text-anchor="middle">Indic</text>
+                <rect class="sbar lo" x="167" y="98" width="36" height="20" rx="3" />
+                <text x="185" y="132" class="sl" text-anchor="middle">Hebrew</text>
+                <rect class="sbar lo" x="218" y="101" width="36" height="17" rx="3" />
+                <text x="236" y="132" class="sl" text-anchor="middle">Arabic</text>
+                <rect class="sbar lo" x="269" y="107" width="36" height="11" rx="3" />
+                <text x="287" y="132" class="sl" text-anchor="middle">Handwr.</text>
+                <text x="160" y="150" class="lcap" text-anchor="middle">leans to high-resource scripts &amp; clean layouts</text>
+                <text x="160" y="163" class="lcap" text-anchor="middle">handwritten &amp; degraded archives under-represented</text>
+              </svg>
+            </div>
+
           </div>
         </div>
       </section>
@@ -5641,8 +5783,8 @@
       </section>
 
       <!-- ═══════════ 26b · WHERE REPLICA SITS ═══════════ -->
-      <section class="slide vcenter" data-eyebrow="06 · Applications" data-frags="2"
-        data-notes="That was what the representation lets you do. This is what it has already done. Three papers are built on Fid-HTML supervision and all three are through review. [CLICK] REPLICA rebuilds any page as Fid-HTML — text, structure, position and style, all explicit — so every reconstructed page is labelled by construction, at whatever scale you can run it. M3Grounder, at CVPR, uses masks as evidence for grounded answers. DoCoG, an oral at ECCV, does grounded reasoning — every claim tied back to a region. And DocLayout-VL treats the page as a tree. None of them had to annotate a thing. [CLICK] And it runs the other way too: better segmentation, better reading order and better grounding come straight back into REPLICA's own stages. Neither half stands alone — the representation makes the supervision, the supervision makes the models, and the models make the representation better.">
+      <section class="slide vcenter" data-eyebrow="06 · Applications" data-frags="3"
+        data-notes="That was what the representation lets you do. This is what it has already done. Three papers are built on Fid-HTML supervision and all three are through review. [CLICK] REPLICA rebuilds any page as Fid-HTML — text, structure, position and style, all explicit — so every reconstructed page is labelled by construction, at whatever scale you can run it. M3Grounder, at CVPR, uses masks as evidence for grounded answers. DoCoG, an oral at ECCV, does grounded reasoning — every claim tied back to a region. And DocLayout-VL treats the page as a tree. None of them had to annotate a thing. [CLICK] And it runs the other way too: better segmentation, better reading order and better grounding come straight back into REPLICA's own stages. Neither half stands alone — the representation makes the supervision, the supervision makes the models, and the models make the representation better. [CLICK] Concretely, thesis section 6.3.2: GroundingDocQA — two hundred thousand documents and two million pixel-grounded question-answer pairs, generated this way. FID-HTML's nested DOM maps onto phrase inside line inside block, so regions project to precise masks rather than boxes. [1:30]">
         <div class="kicker">REPLICA as a data generator</div>
         <h2>Supervision for <em>grounded document models</em></h2>
         <div class="slide-body">
@@ -5713,6 +5855,12 @@
                 <path d="M455 232 C 640 232, 800 190, 995 186" fill="none" marker-end="url(#arwG)" />
                 <text x="725" y="150" text-anchor="middle" class="ft gold">generates the training data</text>
                 <text x="725" y="180" text-anchor="middle" class="fn">every page labelled by construction</text>
+              </g>
+              <!-- GroundingDocQA (thesis §6.3.2): the data REPLICA has already produced -->
+              <g class="gdqa frag" data-frag="3">
+                <rect x="495" y="236" width="460" height="92" rx="14" />
+                <text x="725" y="274" text-anchor="middle" class="gq1">200,000 documents · 2,000,000</text>
+                <text x="725" y="306" text-anchor="middle" class="gq2">pixel-grounded QA pairs · GroundingDocQA</text>
               </g>
               <g class="relflow back frag" data-frag="2">
                 <path d="M995 438 C 812 444, 652 406, 458 372" fill="none" marker-end="url(#arwN)" />
