@@ -6108,38 +6108,6 @@
         </div>
       </section>
 
-      <!-- ═══════════ 29 · ROBUSTNESS AND RELIABILITY (pptx 75 + 77; thesis p.56, Table 5.3) ═══════════ -->
-      <section class="slide vcenter" data-eyebrow="06 · Results" data-frags="2" id="robustSlide"
-        data-notes="Two questions a committee should ask of an agentic system: does it hold up off the easy distribution, and do the individual agents and tools actually do their jobs? [CLICK] Across languages and document types: REPLICA sustains 0.86 overall, 0.93 on English and 0.89 on Chinese, across fifteen languages and more than ten document types, with minimal variance. Baselines drop by up to twenty per cent in overall and structural accuracy beyond English and Chinese — GPT-5 goes from 0.62 to 0.50. Note this is fifteen languages for the robustness analysis; the benchmark itself has twenty-two. [CLICK] And from execution traces, per component: routing accuracy 0.97, sub-HTML validity 0.96, tool-call success 99.5 per cent, reflection adds 0.06, and reading-order accuracy is 0.98. The full Table 5.3 is in the backup slides. [1:15]">
-        <div class="kicker">Thesis §5.6 · Table 5.3</div>
-        <h2>Can we trust it? <em>Robustness and reliability</em></h2>
-        <div class="slide-body">
-          <div class="grid2 robgrid">
-            <div class="card frag" data-frag="1"><span class="tag">Across languages and document types</span>
-              <div class="stats">
-                <div class="stat"><div class="v gold">0.86</div><div class="k">OS · all</div></div>
-                <div class="stat"><div class="v">0.93</div><div class="k">OS · English</div></div>
-                <div class="stat"><div class="v">0.89</div><div class="k">OS · Chinese</div></div>
-              </div>
-              <div class="mathnote">REPLICA sustains performance across <b>15 languages</b> and <b>10+ document types</b> with
-                minimal variance; baselines drop up to <b>20 %</b> in overall and structural accuracy beyond
-                English/Chinese (GPT-5: <b>0.62 → 0.50</b>).</div>
-            </div>
-            <div class="card accent frag" data-frag="2"><span class="tag">Agent &amp; tool reliability · trace-based</span>
-              <div class="reltiles">
-                <div class="stat"><div class="v">0.97</div><div class="k">routing accuracy</div></div>
-                <div class="stat"><div class="v">0.96</div><div class="k">sub-HTML validity</div></div>
-                <div class="stat"><div class="v">99.5%</div><div class="k">tool-call success</div></div>
-                <div class="stat"><div class="v">+0.06</div><div class="k">reflection gain</div></div>
-                <div class="stat"><div class="v">0.98</div><div class="k">reading-order accuracy</div></div>
-              </div>
-            </div>
-          </div>
-          <div class="takeaway frag" data-frag="2">Exactly what the <b>22-language, 17-domain</b> design of VFDR-Bench was
-            built to surface.</div>
-        </div>
-      </section>
-
       <!-- ═══════════ 26 · LIMITATIONS ═══════════ -->
       <section class="slide vcenter" data-eyebrow="06 · Limitations"
         data-notes="Being honest about the edges. First: single-page only — multi-page structures such as a table spanning a page break can fragment. Second: font identification. Bold, italic, underline and colour are recovered reliably, but exact font families are not; existing work covers mostly English and Chinese, and large-scale multilingual font recognition remains an open problem. Third: the refine loop's repeated browser rendering costs real latency against a single forward pass. And fourth, the one the thesis adds in section 6.2: high-resource skew. The benchmark, and the models it evaluates, lean to Latin and CJK scripts and clean layouts; Indic, Hebrew, Arabic, handwritten and degraded archival pages are under-represented — which is exactly where I would extend it next. [1:30]">
@@ -6464,7 +6432,7 @@
 
       <!-- ═══════════ 33 · CONCLUSION ═══════════ -->
       <section class="slide vcenter" data-eyebrow="07 · Conclusion" id="concSlide"
-        data-notes="To summarise, in thesis order. Represent: FID-HTML, a web-native representation where position and style are required rather than optional, so fidelity is a property of the format. Measure: VFDR-Bench — five thousand pages, twenty-two languages, seventeen domains, annotated in FID-HTML — with GPS, LPS and VFS, the first metrics to score physical structure and rendered appearance, and they agree with human experts. Generate: REPLICA — Segment, Localize, Assemble, Refine — agents where judgment is needed, tools where determinism is needed — reaching 0.93 visual fidelity and 0.86 overall. And the answer to the chapter-six question: with an 8-billion-parameter backbone REPLICA beats Qwen3-VL-30B by 39 % overall at 3.75 times smaller. Structured decomposition beats brute-force scale. [1:00]">
+        data-notes="To summarise, in thesis order. Represent: FID-HTML, a web-native representation where position and style are required rather than optional, so fidelity is a property of the format. Measure: VFDR-Bench — five thousand pages, twenty-two languages, seventeen domains, annotated in FID-HTML — with GPS, LPS and VFS, the first metrics to score physical structure and rendered appearance, and they agree with human experts. Generate: REPLICA — Segment, Localize, Assemble, Refine — agents where judgment is needed, tools where determinism is needed — reaching 0.93 visual fidelity and 0.86 overall. Against the strongest existing system, GPT-5 at 0.58 overall, that is 0.86. And the answer to the chapter-six question: every agent in REPLICA runs on an 8-billion-parameter Qwen3-VL; the same model family at 30 billion parameters, used end to end, reaches only 0.47. Structured decomposition beats brute-force scale. [1:00]">
         <div class="kicker">One paradigm, three contributions</div>
         <h2>Represent → Measure → Generate</h2>
         <div class="slide-body">
@@ -6490,11 +6458,7 @@
             </div>
             <div class="stat">
               <div class="v">0.86</div>
-              <div class="k">Overall score (OS)</div>
-            </div>
-            <div class="stat">
-              <div class="v">+39%</div>
-              <div class="k">over Qwen3-VL-30B<br>at 3.75× smaller</div>
+              <div class="k">Overall score (OS)<br>best existing method: 0.58 (GPT-5)</div>
             </div>
           </div>
         </div>
@@ -6582,6 +6546,38 @@
           <div class="embed">
             <iframe src="site.html?embed=fidhtml&part=table" title="Format comparison (paper Table 1)"></iframe>
           </div>
+        </div>
+      </section>
+
+      <!-- ═══════════ 29 · ROBUSTNESS AND RELIABILITY (pptx 75 + 77; thesis p.56, Table 5.3) ═══════════ -->
+      <section class="slide vcenter backup" data-eyebrow="Backup" data-frags="2" id="robustSlide"
+        data-notes="Two questions a committee should ask of an agentic system: does it hold up off the easy distribution, and do the individual agents and tools actually do their jobs? [CLICK] Across languages and document types: REPLICA sustains 0.86 overall, 0.93 on English and 0.89 on Chinese, across fifteen languages and more than ten document types, with minimal variance. Baselines drop by up to twenty per cent in overall and structural accuracy beyond English and Chinese — GPT-5 goes from 0.62 to 0.50. Note this is fifteen languages for the robustness analysis; the benchmark itself has twenty-two. [CLICK] And from execution traces, per component: routing accuracy 0.97, sub-HTML validity 0.96, tool-call success 99.5 per cent, reflection adds 0.06, and reading-order accuracy is 0.98. The full Table 5.3 is on the next backup.">
+        <div class="kicker">Backup · thesis §5.6 · Table 5.3</div>
+        <h2>Can we trust it? <em>Robustness and reliability</em></h2>
+        <div class="slide-body">
+          <div class="grid2 robgrid">
+            <div class="card frag" data-frag="1"><span class="tag">Across languages and document types</span>
+              <div class="stats">
+                <div class="stat"><div class="v gold">0.86</div><div class="k">OS · all</div></div>
+                <div class="stat"><div class="v">0.93</div><div class="k">OS · English</div></div>
+                <div class="stat"><div class="v">0.89</div><div class="k">OS · Chinese</div></div>
+              </div>
+              <div class="mathnote">REPLICA sustains performance across <b>15 languages</b> and <b>10+ document types</b> with
+                minimal variance; baselines drop up to <b>20 %</b> in overall and structural accuracy beyond
+                English/Chinese (GPT-5: <b>0.62 → 0.50</b>).</div>
+            </div>
+            <div class="card accent frag" data-frag="2"><span class="tag">Agent &amp; tool reliability · trace-based</span>
+              <div class="reltiles">
+                <div class="stat"><div class="v">0.97</div><div class="k">routing accuracy</div></div>
+                <div class="stat"><div class="v">0.96</div><div class="k">sub-HTML validity</div></div>
+                <div class="stat"><div class="v">99.5%</div><div class="k">tool-call success</div></div>
+                <div class="stat"><div class="v">+0.06</div><div class="k">reflection gain</div></div>
+                <div class="stat"><div class="v">0.98</div><div class="k">reading-order accuracy</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="takeaway frag" data-frag="2">Exactly what the <b>22-language, 17-domain</b> design of VFDR-Bench was
+            built to surface.</div>
         </div>
       </section>
 
