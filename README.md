@@ -43,7 +43,7 @@ from `site.html`. Only the "Paper" / dataset links on the project page itself po
 | `←` `PageUp` | previous beat / slide |
 | `↓` / `↑` | next / previous slide, skipping beats; `↓` from Thank you enters the backups |
 | `Home` / `End` | title / last backup |
-| `O` | overview (backups shown as B1…B8) |
+| `O` | overview (backups shown as B1…B11) |
 | `N` | speaker notes (every main slide ends with a timing cue) |
 | `V` | view the current slide's HTML source |
 | `F` | fullscreen |
@@ -51,12 +51,14 @@ from `site.html`. Only the "Paper" / dataset links on the project page itself po
 | `?` | help |
 | `Space` (walkthrough) | play / pause; arrows still step |
 | `P`, `⇧←` `⇧→` (VFDR-Bench carousel) | pause / step pages; click a page to enlarge |
-| `S` (synthetic document generation) | fill the template with the next variant |
+| `S` (synthetic document generation, main slide and B9) | fill the template with the next variant |
 
 Presenter remotes send PageUp / PageDown and work out of the box.
 
 ## Backups
 
-After Thank you: B1 full format comparison (Table 3.1, live) · B2 agent & tool reliability (Table 5.3) ·
-B3–B5 per-stage formalism (Segment, Localize, Assemble + Refine) · B6 the complete REPLICA pipeline figure ·
-B7 M3Grounder data engine (FID-HTML → pixel masks) · B8 fine-grained benchmark analysis (thesis Tables 4.5–4.8).
+After Thank you: B1 full format comparison (Table 3.1, live) · B2 robustness & reliability (§5.6) ·
+B3 agent & tool reliability, every component (Table 5.3) · B4 metric–human agreement per annotator (Table 4.3) ·
+B5–B7 per-stage formalism (Segment, Localize, Assemble + Refine) · B8 the complete REPLICA pipeline figure ·
+B9 synthetic generation on an identity-card mock (`S` cycles variants) · B10 M3Grounder data engine
+(FID-HTML → pixel masks) · B11 fine-grained benchmark analysis (Tables 4.5–4.8).
