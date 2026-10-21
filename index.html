@@ -2810,12 +2810,48 @@
       background: #dde6f2;
     }
 
+    /* best existing method in the lit column */
     .rtab td.mark {
-      outline: 3px solid var(--red);
+      outline: 3px solid var(--navy-soft);
       outline-offset: -3px;
       border-radius: 5px;
-      color: var(--red);
+      color: var(--navy);
       font-weight: 800;
+    }
+
+    /* the axis note and the grading legend share one row; they never show together */
+    #baseSlide .rnote,
+    #resSlide .rnote {
+      display: grid;
+    }
+
+    #baseSlide .rnote > *,
+    #resSlide .rnote > * {
+      grid-area: 1 / 1;
+    }
+
+    .rnote .rbbnote {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--ink-3);
+      opacity: 0;
+      transition: opacity .4s;
+      text-align: right;
+    }
+
+    .rnote .rbbnote.on {
+      opacity: 1;
+    }
+
+    .rnote .rbbnote i {
+      display: inline-block;
+      width: 26px;
+      height: 15px;
+      border-radius: 3px;
+      outline: 3px solid var(--navy-soft);
+      outline-offset: -3px;
+      vertical-align: -2px;
+      margin-right: 8px;
     }
 
     .rtab td.good {
@@ -5711,6 +5747,7 @@
             </div>
           </div>
           <div class="rnote">
+            <div class="rbbnote"><i></i>best existing method in this column</div>
             <div class="rlegend"><span>weakest</span><i style="background:#fdeceb"></i><i
                 style="background:#fdf1dd"></i><i style="background:#eef5ef"></i><i
                 style="background:#dcefe1"></i><span>strongest</span></div>
@@ -5949,6 +5986,7 @@
             </div>
           </div>
           <div class="rnote">
+            <div class="rbbnote"><i></i>best existing method in this column</div>
             <div class="rlegend"><span>weakest</span><i style="background:#fdeceb"></i><i
                 style="background:#fdf1dd"></i><i style="background:#eef5ef"></i><i
                 style="background:#dcefe1"></i><span>strongest</span></div>
@@ -7190,11 +7228,18 @@
         { ax: "TE", cols: [1, 2] }, { ax: "LS", cols: [3] }, { ax: "PS", cols: [4, 5] },
         { ax: "VF", cols: [6] }, { ax: "OS", cols: [1, 2, 3, 4, 5, 6, 7] }
       ];
-      // cells the spoken takeaway names — outlined so the claim and the table agree
-      const RES_MARKS = {
-        TE: [["Marker", 1]], LS: [["rolmOCR", 3], ["GPT-5", 3]],
-        PS: [["Qwen3-VL", 4], ["GPT-5", 5]], VF: [["GPT-5", 6], ["Gemini-2.5-Pro", 6]]
-      };
+      // The best existing method in each column, outlined while that axis is lit —
+      // computed from RES_GROUPS, so the outline is one rule the audience can read
+      // ("the strongest baseline here") rather than a hand-picked set of cells.
+      const RES_BASE_BEST = (() => {
+        const rows = RES_GROUPS.flatMap(g => g.rows).filter(r => !r.ours), out = {};
+        for (let ci = 1; ci <= 7; ci++) {
+          const vals = rows.map(r => r.v[ci - 1]);
+          const best = ci === 3 ? Math.min(...vals) : Math.max(...vals);   // NTED: lower is better
+          out[ci] = rows.filter(r => r.v[ci - 1] === best).map(r => r.m);
+        }
+        return out;
+      })();
       // Which columns REPLICA actually leads — computed, not asserted, so the
       // green never disagrees with the numbers if a score is ever edited.
       const RES_BEST = (() => {
@@ -7303,6 +7348,8 @@
         const k = reveal ? (n === 0 ? RES_AXES.length : n - 1) : n;
         tb.classList.toggle("focus", k > 0);
         const legend = slideEl && slideEl.querySelector(".rlegend");
+        const bbnote = slideEl && slideEl.querySelector(".rbbnote");
+        if (bbnote) bbnote.classList.remove("on");
         if (k <= 0) { tb.classList.remove("graded"); if (legend) legend.classList.remove("on"); return; }
         const step = RES_AXES[Math.min(k, RES_AXES.length) - 1];
         const live = new Set(step.cols);
@@ -7318,12 +7365,12 @@
           const ci = +c.dataset.c;
           if (ci !== 0 && live.has(ci) && RES_BEST[ci]) c.classList.add("best");
         });
-        (RES_MARKS[step.ax] || []).forEach(([m, ci]) => {
-          resExpandFor(tb, m);
+        if (step.ax !== "OS") step.cols.forEach(ci => RES_BASE_BEST[ci].forEach(m => {
           const row = tb.querySelector('tr.row[data-m="' + m + '"]');
           const cell = row && row.querySelector('td[data-c="' + ci + '"]');
           if (cell) cell.classList.add("mark");
-        });
+        }));
+        if (bbnote) bbnote.classList.toggle("on", step.ax !== "OS");
         // Final beat: a flat table gives the audience nothing to scan while the
         // speaker talks. Grade every cell instead, so the collapse on position
         // reads as a block of red and REPLICA's row stays the one gold line.
