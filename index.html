@@ -2500,8 +2500,8 @@
     /* ═══════════ METRIC RADAR ═══════════ */
     .radarwrap {
       display: grid;
-      grid-template-columns: 1.28fr .72fr;
-      gap: 36px;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 24px;
       align-items: center;
       flex: 1;
       min-height: 0;
@@ -2634,6 +2634,29 @@
 
     .rs-card p:last-child {
       margin-bottom: 0;
+    }
+
+    .rs-math {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 10px;
+    }
+
+    .rs-math .math {
+      font-size: 20px;
+      padding: 6px 13px;
+      align-self: flex-start;
+    }
+
+    .rs-why {
+      font-size: 16px;
+      color: var(--ink-3);
+      line-height: 1.4;
+    }
+
+    .rs-why b {
+      color: var(--navy);
     }
 
     .rs-card p.rs-tiny {
@@ -5582,12 +5605,12 @@
 
       <!-- ═══════════ 20 · WHICH METRIC MEASURES WHAT ═══════════ -->
       <section class="slide vcenter" data-eyebrow="04 · VFDR-Bench &amp; Metrics" data-frags="3"
-        data-notes="Same four axes, one metric family each — and this shape is the one to keep in your head, because every result from here on is read on it. [CLICK] The two established axes. Text extraction: character and word recognition rate. Logical structure: normalised tree edit distance, with TEDS for tables and CDM for formulas. Both standard, both already in the literature. [CLICK] The two we introduce. Physical structure: Global and Local Position Score — one-to-one matching by maximum IoU, then area-normalised precision and recall, so it penalises both missed elements and hallucinated boxes. Visual fidelity: the Visual Fidelity Score, a VLM judging the rendered page against human-annotated ground truth. Neither axis had any metric at all before this work. [CLICK] Overall is the mean of the four, so nothing can buy a good score by winning one axis. And on trust: Pearson correlation with seven expert annotators is above 0.8 across a hundred documents. [2:00]">
+        data-notes="Same four axes, one metric family each, defined where it is introduced — this shape is the one to keep in your head, because every result from here on is read on it. [CLICK] The two established axes. Text extraction: the mean of character and word recognition rates. Logical structure: tree edit distance between the two DOM trees — how many node insertions, deletions and substitutions turn one into the other — normalised by tree size, with TEDS for tables and CDM for formulas. Both standard. [CLICK] The two we introduce, and both read the rendered page, not the markup. Physical structure: run the same layout model on the source page and on the rendered HTML; for every block, GPS is the fraction of its true box that the rebuilt block covers, averaged over all blocks. LPS is the same at line level, using Hi-SAM line boxes. Visual fidelity: Gemini 2.5 Pro sees the rendered prediction next to the rendered ground truth and scores layout, fonts, styling, images and overall look. Neither axis had a metric before this work. [CLICK] Overall is the plain mean of the four, so nothing can buy a good score by winning one axis. [2:30]">
         <!-- <div class="kicker">Reading the scoreboard</div> -->
         <h2>Which metric measures <em>what</em></h2>
         <div class="slide-body">
           <div class="radarwrap">
-            <svg class="mradar" viewBox="150 18 1090 592"
+            <svg class="mradar" viewBox="150 6 1090 604"
               aria-label="The four axes of document reconstruction and the metric family on each">
               <g class="rgrid">
                 <circle cx="620" cy="300" r="190" />
@@ -5613,7 +5636,7 @@
                 <text x="828" y="312" class="qq">is the structure right?</text>
                 <text x="828" y="340" class="mt">NTED &#8595; · TEDS &#8593; · CDM &#8593; <tspan class="chipstd"
                     dx="9">standard</tspan></text>
-                <text x="620" y="44" text-anchor="middle" class="mt">WRR &#8593; · CRR &#8593; <tspan class="chipstd"
+                <text x="620" y="32" text-anchor="middle" class="mt">WRR &#8593; · CRR &#8593; <tspan class="chipstd"
                     dx="9">standard</tspan></text>
               </g>
               <g class="rlab new frag" data-frag="2">
@@ -5633,71 +5656,27 @@
               </g>
             </svg>
             <div class="radarside">
-              <!-- The radar already names every metric and its direction, so the
-                   cards only have to say what each family looks at. -->
+              <!-- Each family is defined where it is introduced (thesis §4.4), so the
+                   formal definitions need no slide of their own. -->
               <div class="rs-card frag" data-frag="1">
                 <h4>Two axes already had metrics</h4>
-                <p><b>WRR / CRR</b> — words and characters recovered<br>
-                  <b>NTED</b> — DOM against the reference tree
-                </p>
+                <div class="rs-math"><span class="math">TE = (CRR + WRR) / 2</span>
+                  <span class="rs-why">characters and words recovered</span></div>
+                <div class="rs-math"><span class="math">NTED = TED(T<sub>gt</sub>, T<sub>pred</sub>) / max(|T<sub>gt</sub>|, |T<sub>pred</sub>|)</span>
+                  <span class="rs-why">edits to turn one DOM tree into the other · TEDS for tables, CDM for formulae</span></div>
               </div>
               <div class="rs-card gold frag" data-frag="2">
-                <!-- <h4>Two had none. We built them.</h4> -->
                 <h4>We introduce</h4>
-                <p><b>GPS / LPS</b> — where every block and line lands<br>
-                  <b>VFS</b> — typography, colour and spacing, judged by a VLM
-                </p>
-                <p class="rs-tiny">Both read the <b>render</b>, not the markup.</p>
+                <div class="rs-math"><span class="math">GPS = |B<sub>gt</sub> ∩ B<sub>pred</sub>| / |B<sub>gt</sub>|</span>
+                  <span class="rs-why">how much of each block's true box the rebuilt block covers · <b>LPS</b>: the same for every
+                    line</span></div>
+                <div class="rs-math"><span class="math">VFS = Judge(render(pred), render(gt))</span>
+                  <span class="rs-why">a VLM (Gemini 2.5 Pro) compares the two pages: layout, fonts, styling, images</span></div>
               </div>
               <div class="rs-card frag" data-frag="3">
-                <h4>Overall = the mean of the four</h4>
-                <!-- <p>No axis can be bought.<br>Pearson <b>&gt; 0.8</b> against seven expert annotators.</p> -->
+                <h4>Overall</h4>
+                <div class="rs-math"><span class="math">OS = (TE + LS + PS + VF) / 4, &nbsp; PS = (GPS + LPS) / 2</span></div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ═══════════ 18 · THE METRICS, FORMALLY (thesis §4.4) ═══════════ -->
-      <section class="slide vcenter" data-eyebrow="04 · VFDR-Bench &amp; Metrics" data-frags="4" id="metricsSlide"
-        data-notes="The same four axes, now as formulas — thesis section 4.4. [CLICK] Position. GPS is the fraction of the ground-truth block area that the predicted block covers — intersection over the ground-truth box. Boxes come from layout models run on the source and on the rendered HTML, manually refined. LPS is the same idea at line level, with Hi-SAM line boxes. PS is their mean. Averaged over all boxes, so a missed region and a hallucinated region both cost you. [CLICK] Logical structure. Normalised tree edit distance between standardised DOM trees, plus TEDS for tables, CDM for formulae and a penalty on list structure. Where the trees cannot be normalised we fall back to LSS, a VLM judge that sees the DOM tree and the source image. [CLICK] Visual fidelity. VFS: Gemini 2.5 Pro compares the two renders on layout consistency, font attributes, styling, image placement and overall appearance. [CLICK] Text is the mean of character and word recognition rates, clipped per sample so a single OCR blow-up cannot dominate a multilingual average; and the overall score is the plain mean of the four axes. [1:30]">
-        <div class="kicker">Thesis §4.4 · four axes, four scores</div>
-        <h2>The metrics, <em>formally</em></h2>
-        <div class="slide-body">
-          <div class="grid2 fcards">
-            <div class="card frag" data-frag="1"><span class="tag">Physical structure · PS</span>
-              <h3>Position</h3>
-              <div class="mathrow">
-                <span class="math">GPS(B<sub>gt</sub>, B<sub>pred</sub>) = |B<sub>gt</sub> ∩ B<sub>pred</sub>| / |B<sub>gt</sub>|</span>
-                <span class="math">LPS: the same, at <b>line</b> level (Hi-SAM boxes) &nbsp;·&nbsp; PS = (GPS + LPS) / 2</span>
-              </div>
-              <div class="mathnote">Block boxes from layout models on source vs rendered HTML, manually refined. <b>Averaged over
-                  all boxes</b> — penalises missed and hallucinated regions alike.</div>
-            </div>
-            <div class="card frag" data-frag="2"><span class="tag">Logical structure · LS</span>
-              <h3>Hierarchy</h3>
-              <div class="mathrow">
-                <span class="math">NTED = 1 − TED(T<sub>gt</sub>, T<sub>pred</sub>) / max(|T<sub>gt</sub>|, |T<sub>pred</sub>|)</span>
-                <span class="math">+ TEDS (tables) &nbsp;·&nbsp; CDM (formulae) &nbsp;·&nbsp; list penalty (&lt;li&gt;)</span>
-              </div>
-              <div class="mathnote">Between standardised DOM trees. <b>LSS</b> — a VLM judge on DOM tree + source image — where
-                normalisation is impossible.</div>
-            </div>
-            <div class="card frag" data-frag="3"><span class="tag">Visual fidelity · VF</span>
-              <h3>Appearance</h3>
-              <div class="mathrow">
-                <span class="math">VFS = Judge<sub>Gemini 2.5 Pro</sub>(render(I), render(H))</span>
-              </div>
-              <div class="mathnote">Paired renders scored on <b>layout consistency, font attributes, styling, image placement,
-                  overall appearance</b>.</div>
-            </div>
-            <div class="card accent frag" data-frag="4"><span class="tag">Text &amp; overall</span>
-              <h3>Text, and the one number</h3>
-              <div class="mathrow">
-                <span class="math">TE = (CRR + WRR) / 2</span>
-                <span class="math">OS = (TE + LS + PS + VF) / 4</span>
-              </div>
-              <div class="mathnote">CRR / WRR clipped per sample, so OCR blow-ups don't dominate multilingual aggregates.</div>
             </div>
           </div>
         </div>
