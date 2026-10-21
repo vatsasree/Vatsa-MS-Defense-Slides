@@ -4324,27 +4324,72 @@
     }
 
     /* ---- ground truth ---- */
-    .gtgrid .card {
+    .gtflow {
       display: flex;
-      flex-direction: column;
-      gap: 18px;
-      padding: 40px 36px;
-      min-height: 380px;
+      align-items: stretch;
+      justify-content: center;
+      gap: 26px;
     }
 
-    .gtgrid .card h3 {
-      font-size: 40px;
+    .gtstep {
+      flex: 0 1 470px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 36px 30px;
+      text-align: center;
+      box-shadow: 0 3px 14px rgba(30, 58, 95, .07);
+    }
+
+    .gtstep.accent {
+      border-color: var(--gold);
+      background: var(--gold-soft);
+    }
+
+    .gtstep h3 {
+      font-family: var(--serif);
+      font-size: 33px;
+      white-space: nowrap;
+      color: var(--navy);
+      margin: 22px 0 10px;
+    }
+
+    .gtstep p {
+      font-size: 24px;
+      line-height: 1.4;
+      color: var(--ink-2);
       margin: 0;
     }
 
-    .gtgrid .card p {
-      font-size: 27px;
+    .gtfig {
+      height: 170px;
+      display: grid;
+      place-items: center;
+      font-family: var(--mono);
+      font-size: 96px;
+      font-weight: 700;
+      color: var(--navy-soft);
     }
 
-    .gtgrid .num-badge {
-      width: 56px;
-      height: 56px;
-      font-size: 24px;
+    .gtfig.match {
+      color: #2f9e63;
+      font-size: 120px;
+    }
+
+    .gtfig svg {
+      height: 160px;
+    }
+
+    .gtfig .pg { fill: #fff; stroke: var(--line); stroke-width: 2; }
+    .gtfig .hd { fill: var(--navy); }
+    .gtfig .ln { fill: #dfe3e8; }
+    .gtfig .im { fill: var(--gold-soft); stroke: var(--gold-line); }
+
+    .gtarrow {
+      align-self: center;
+      font-size: 54px;
+      color: var(--gold);
+      font-weight: 700;
     }
 
     /* ---- limitations: four cards, the fourth is high-resource skew ---- */
@@ -4824,6 +4869,43 @@
       background: #eef5ef;
       color: #14663a;
       font-weight: 700;
+    }
+
+    /* ---- human agreement: the study in three steps ---- */
+    .hsteps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-bottom: 46px;
+    }
+
+    .hstep {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 22px 24px;
+    }
+
+    .hstep p {
+      margin: 0;
+      font-size: 23px;
+      line-height: 1.4;
+      color: var(--ink-2);
+    }
+
+    .hstep p b {
+      color: var(--navy);
+    }
+
+    .hcap {
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 16px;
+      color: var(--ink-3);
+      margin-top: 16px;
     }
 
     /* ---- future directions ---- */
@@ -5579,27 +5661,36 @@
 
       <!-- ═══════════ 16 · GROUND TRUTH (pptx 30) ═══════════ -->
       <section class="slide vcenter" data-eyebrow="04 · VFDR-Bench &amp; Metrics" data-frags="3" id="gtSlide"
-        data-notes="How five thousand pages got a reference you can score position and style against. [CLICK] Trained annotators author ground-truth FID-HTML for every page — position, style and hierarchy, not just text. [CLICK] A second pass checks the rendered HTML against the source page, with particular care for complex layouts and fine detail. [CLICK] The result: every reference is expert-annotated and scorable on all four axes. If asked how this squares with the thesis text: REPLICA produced a first pass, and every page was then fully reviewed and corrected by trained annotators, so the released references are human-verified. [0:45]">
-        <div class="kicker">Thesis §4.3 · constructing the reference</div>
-        <h2>Ground truth — how <em>5,000 pages</em> were annotated</h2>
+        data-notes="One sentence on where the answer key comes from. To score position and style you need a reference that records them. [CLICK] So for every one of the five thousand pages, [CLICK] annotators built a web-page copy of it in FID-HTML, [CLICK] and checked it by opening it next to the original and fixing it until the two look the same. That is the answer key every system is scored against. If asked about the thesis text: REPLICA produced a first draft, and every page was then reviewed and corrected by hand, so the released references are human-verified. [0:30]">
+        <h2>The answer key — <em>a faithful copy of every page</em></h2>
         <div class="slide-body">
-          <div class="grid3 gtgrid">
-            <div class="card frag" data-frag="1"><span class="num-badge">1</span>
-              <h3>Annotate</h3>
-              <p>Trained annotators author ground-truth <b>FID-HTML</b> for every page — position, style and hierarchy.</p>
+          <div class="gtflow">
+            <div class="gtstep frag" data-frag="1">
+              <div class="gtfig"><svg viewBox="0 0 120 150" aria-hidden="true">
+                  <rect x="6" y="6" width="108" height="138" rx="6" class="pg" />
+                  <rect x="20" y="22" width="60" height="9" rx="3" class="hd" />
+                  <rect x="20" y="42" width="80" height="5" rx="2" class="ln" /><rect x="20" y="54" width="72" height="5" rx="2" class="ln" />
+                  <rect x="20" y="66" width="80" height="5" rx="2" class="ln" /><rect x="20" y="84" width="36" height="40" rx="3" class="im" />
+                  <rect x="62" y="84" width="38" height="5" rx="2" class="ln" /><rect x="62" y="96" width="34" height="5" rx="2" class="ln" />
+                </svg></div>
+              <h3>The original page</h3>
+              <p>one of 5,000</p>
             </div>
-            <div class="card frag" data-frag="2"><span class="num-badge">2</span>
-              <h3>Verify</h3>
-              <p>A second pass checks the <b>rendered HTML against the source</b>, with particular care for complex layouts
-                and fine detail.</p>
+            <div class="gtarrow frag" data-frag="2">&rarr;</div>
+            <div class="gtstep frag" data-frag="2">
+              <div class="gtfig code">&lt;/&gt;</div>
+              <h3>Rebuilt as FID-HTML</h3>
+              <p>a web-page copy: every block placed and styled as on the page</p>
             </div>
-            <div class="card accent frag" data-frag="3"><span class="num-badge gold">3</span>
-              <h3>Result</h3>
-              <p><b>100 %</b> expert-annotated references, scorable on <b>all four axes</b>.</p>
+            <div class="gtarrow frag" data-frag="3">&rarr;</div>
+            <div class="gtstep accent frag" data-frag="3">
+              <div class="gtfig match">=</div>
+              <h3>Checked side by side</h3>
+              <p>fixed by hand until it looks the same as the original</p>
             </div>
           </div>
-          <div class="takeaway frag" data-frag="3">You cannot score position or style against a Markdown reference — so the
-            reference had to be <b>FID-HTML</b>.</div>
+          <div class="takeaway frag" data-frag="3">Existing benchmarks keep only the words (Markdown), so position and style can't
+            be scored. <b>Our answer key keeps how the page looks.</b></div>
         </div>
       </section>
 
@@ -5684,33 +5775,27 @@
 
       <!-- ═══════════ 19 · HUMAN AGREEMENT (thesis Table 4.3) ═══════════ -->
       <section class="slide vcenter" data-eyebrow="04 · VFDR-Bench &amp; Metrics" data-frags="2" id="humanSlide"
-        data-notes="New metrics need one more check: do they agree with people? Seven expert annotators — backgrounds in document design, typography and layout analysis — ranked reconstructions of a hundred documents from five systems. We correlate their rankings with each metric. [CLICK] Pearson correlation: 0.87 for VFS, 0.82 for GPS, 0.85 for LPS, and 0.89 for the overall score. [CLICK] And it is not one friendly annotator carrying the average: per annotator, every proposed metric is above 0.8 for every one of the seven, and the overall score aligns best. [1:00]">
-        <div class="kicker">Thesis Table 4.3 · metric–human alignment</div>
-        <h2>Do these metrics match <em>human perception</em>?</h2>
+        data-notes="GPS, LPS and VFS are new, so before trusting them we checked them against people. Text and structure use metrics the field already accepts, so they did not need this. The test: seven experts in document design, typography and layout took a hundred pages; each page had been rebuilt by five different systems, and for each page they ordered the five rebuilds from most to least faithful. Our metric orders the same five rebuilds. If the metric sees what people see, the two orderings agree. [CLICK] They do: correlation 0.87 for VFS, 0.82 for GPS, 0.85 for LPS and 0.89 for the overall score, where 1 would mean identical orderings. [CLICK] And it is not one friendly annotator: every metric is above 0.8 for every one of the seven — the per-annotator table is in the backups. [1:00]">
+        <div class="kicker">Thesis §4.4.6 · checking the new metrics against people</div>
+        <h2>Do our new metrics <em>agree with people</em>?</h2>
         <div class="slide-body">
-          <p class="lede">Seven expert annotators (document design, typography, layout analysis) ranked reconstructions of
-            <b>100 documents</b> from <b>five systems</b>; Pearson correlation of their rankings with each metric.</p>
+          <div class="hsteps">
+            <div class="hstep"><span class="num-badge">1</span><p><b>100 pages</b>, each rebuilt by <b>5 different
+                  systems</b></p></div>
+            <div class="hstep"><span class="num-badge">2</span><p><b>7 experts</b> order the 5 rebuilds of each page,
+                most → least like the original</p></div>
+            <div class="hstep"><span class="num-badge">3</span><p>Each metric orders the same 5 — <b>do the orders
+                  match?</b></p></div>
+          </div>
           <div class="stats frag" data-frag="1">
-            <div class="stat"><div class="v">0.87</div><div class="k">VFS</div></div>
-            <div class="stat"><div class="v">0.82</div><div class="k">GPS</div></div>
-            <div class="stat"><div class="v">0.85</div><div class="k">LPS</div></div>
+            <div class="stat"><div class="v">0.87</div><div class="k">VFS · appearance</div></div>
+            <div class="stat"><div class="v">0.82</div><div class="k">GPS · block position</div></div>
+            <div class="stat"><div class="v">0.85</div><div class="k">LPS · line position</div></div>
             <div class="stat"><div class="v gold">0.89</div><div class="k">Overall</div></div>
           </div>
-          <div class="frag" data-frag="2" style="margin-top:30px;">
-            <div class="rwrap">
-              <table class="rtab graded humantab">
-                <thead><tr class="hd2"><th class="m">Metric</th><th>A1</th><th>A2</th><th>A3</th><th>A4</th><th>A5</th><th>A6</th><th>A7</th><th class="avg">Avg</th></tr></thead>
-                <tbody>
-                  <tr class="row"><td class="m" data-c="0">VFS</td><td data-c="1" class="g3">0.87</td><td data-c="2" class="g3">0.86</td><td data-c="3" class="g3">0.88</td><td data-c="4" class="g3">0.90</td><td data-c="5" class="g3">0.85</td><td data-c="6" class="g3">0.89</td><td data-c="7" class="g3">0.87</td><td data-c="8" class="g3 avg">0.87</td></tr>
-                  <tr class="row"><td class="m" data-c="0">GPS</td><td data-c="1" class="g3">0.82</td><td data-c="2" class="g3">0.80</td><td data-c="3" class="g3">0.83</td><td data-c="4" class="g3">0.84</td><td data-c="5" class="g3">0.81</td><td data-c="6" class="g3">0.85</td><td data-c="7" class="g3">0.82</td><td data-c="8" class="g3 avg">0.82</td></tr>
-                  <tr class="row"><td class="m" data-c="0">LPS</td><td data-c="1" class="g3">0.85</td><td data-c="2" class="g3">0.84</td><td data-c="3" class="g3">0.86</td><td data-c="4" class="g3">0.87</td><td data-c="5" class="g3">0.83</td><td data-c="6" class="g3">0.88</td><td data-c="7" class="g3">0.85</td><td data-c="8" class="g3 avg">0.85</td></tr>
-                  <tr class="row"><td class="m" data-c="0">Overall (OS)</td><td data-c="1" class="g3">0.88</td><td data-c="2" class="g3">0.86</td><td data-c="3" class="g3">0.89</td><td data-c="4" class="g3">0.91</td><td data-c="5" class="g3">0.86</td><td data-c="6" class="g3">0.92</td><td data-c="7" class="g3">0.88</td><td data-c="8" class="g3 avg">0.89</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="takeaway frag" data-frag="2">Every proposed metric exceeds <b>0.8</b> for <b>every annotator</b>; Overall
-            aligns best.</div>
+          <div class="hcap frag" data-frag="1">agreement with the experts' order (Pearson correlation · 1 = identical)</div>
+          <div class="takeaway frag" data-frag="2">Only the <b>new</b> metrics needed this check — text and structure use
+            standard ones. All agree strongly with people: <b>above 0.8 for every one of the 7 experts</b>.</div>
         </div>
       </section>
 
@@ -6527,6 +6612,26 @@
                   <tr class="row"><td class="m">Background-stitch success</td><td class="g3">0.96</td></tr>
               </tbody>
             </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════ BACKUP · HUMAN AGREEMENT PER ANNOTATOR (thesis Table 4.3) ═══════════ -->
+      <section class="slide vcenter backup" data-eyebrow="Backup"
+        data-notes="Backup — thesis Table 4.3 per annotator. Seven experts, a hundred pages, five systems; Pearson correlation between each expert's ordering and the ordering each metric induces. Every cell is above 0.80; the overall score aligns best at 0.89 on average.">
+        <div class="kicker">Backup · thesis Table 4.3</div>
+        <h2>Metric–human agreement, <em>per annotator</em></h2>
+        <div class="slide-body">
+          <div class="rwrap">
+              <table class="rtab graded humantab">
+                <thead><tr class="hd2"><th class="m">Metric</th><th>A1</th><th>A2</th><th>A3</th><th>A4</th><th>A5</th><th>A6</th><th>A7</th><th class="avg">Avg</th></tr></thead>
+                <tbody>
+                  <tr class="row"><td class="m" data-c="0">VFS</td><td data-c="1" class="g3">0.87</td><td data-c="2" class="g3">0.86</td><td data-c="3" class="g3">0.88</td><td data-c="4" class="g3">0.90</td><td data-c="5" class="g3">0.85</td><td data-c="6" class="g3">0.89</td><td data-c="7" class="g3">0.87</td><td data-c="8" class="g3 avg">0.87</td></tr>
+                  <tr class="row"><td class="m" data-c="0">GPS</td><td data-c="1" class="g3">0.82</td><td data-c="2" class="g3">0.80</td><td data-c="3" class="g3">0.83</td><td data-c="4" class="g3">0.84</td><td data-c="5" class="g3">0.81</td><td data-c="6" class="g3">0.85</td><td data-c="7" class="g3">0.82</td><td data-c="8" class="g3 avg">0.82</td></tr>
+                  <tr class="row"><td class="m" data-c="0">LPS</td><td data-c="1" class="g3">0.85</td><td data-c="2" class="g3">0.84</td><td data-c="3" class="g3">0.86</td><td data-c="4" class="g3">0.87</td><td data-c="5" class="g3">0.83</td><td data-c="6" class="g3">0.88</td><td data-c="7" class="g3">0.85</td><td data-c="8" class="g3 avg">0.85</td></tr>
+                  <tr class="row"><td class="m" data-c="0">Overall (OS)</td><td data-c="1" class="g3">0.88</td><td data-c="2" class="g3">0.86</td><td data-c="3" class="g3">0.89</td><td data-c="4" class="g3">0.91</td><td data-c="5" class="g3">0.86</td><td data-c="6" class="g3">0.92</td><td data-c="7" class="g3">0.88</td><td data-c="8" class="g3 avg">0.89</td></tr>
+                </tbody>
+              </table>
           </div>
         </div>
       </section>
