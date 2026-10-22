@@ -5347,27 +5347,9 @@
         <div class="q">Existing pipelines recover portions of text and hierarchy — but which signals do they preserve, and which do they quietly discard?</div>
       </section>
 
-      <!-- ═══════════ 6 · WHERE THE FIELD STANDS (baselines only) ═══════════ -->
-      <section class="slide demo bleed" data-eyebrow="02 · Background" data-embed="teaser" data-nav="1"
-        data-frags="2"
-        data-notes="So how does the field do against that checklist? This is Figure 1A from the paper, running live. On the left the input page; on the right one system at a time. Marker, a strong pipeline tool, linearises three columns into one — the words survive, the page does not. [CLICK] GPT-5 gets the text largely right, then drifts on placement, font attributes and column count. [CLICK] Qwen3-VL-30B, same story. Every one of them ticks text and roughly ticks structure — and every one of them fails geometry and appearance. Notice I am not showing you our system yet. I want the failure to be the thing you remember, because the failure is the same in every case, and it is not a failure of the model. [2:00]">
-        <div class="kicker">Against the checklist</div>
-        <div class="slide-body">
-          <div class="embed"><iframe src="site.html?embed=teaser&part=compare&only=marker,gpt5,qwen"
-              title="Baseline comparison (paper Fig. 1A)"></iframe></div>
-          <div class="axbar">
-            <span class="axb ok">Text <b>&#10003;</b></span>
-            <span class="axb part">Hierarchy <b>~</b></span>
-            <span class="axb no">Geometry <b>&#10007;</b></span>
-            <span class="axb no">Visual <b>&#10007;</b></span>
-            <span class="axnote">— the same two boxes fail for <b>every</b> system</span>
-          </div>
-        </div>
-      </section>
-
       <!-- ═══════════ 07 · A TAXONOMY OF PRIOR WORK (thesis Ch. 2) ═══════════ -->
       <section class="slide vcenter" data-eyebrow="02 · Background" data-frags="4" id="taxSlide"
-        data-notes="Chapter two of the thesis in one slide: four families of prior work, and for each, what it emits — because what it emits is the ceiling. [CLICK] Foundations: OCR engines, layout detectors, document VLMs. Both OCR paradigms optimise text; detectors give coarse blocks with no DOM. Note that REPLICA's own Segment stage builds on this line — DocLayout-YOLO, an IndicDLP ensemble and Hi-SAM. [CLICK] Document-to-markup: Marker, MinerU, Docling, the PDF converters and the end-to-end VLMs. For them linearisation is a design goal; for us it is the failure mode. The capability matrix is thesis Table 4.2 if anyone wants the detail. [CLICK] Physical reconstruction and screenshot-to-HTML. DREAM is pixel-faithful but autoregressive and domain-narrow; screenshot-to-HTML is web-native but distribution-shifted from text-dense documents. REPLICA sits on both axes — logical and physical — in web-native HTML and CSS. [CLICK] And the benchmarks only score text and logical structure, against Markdown references — the field cannot improve what it does not measure. You cannot even extend OmniDocBench: its references are Markdown, so there is no ground truth for position or style. [2:30]">
+        data-notes="Chapter two of the thesis in one slide, before we look at any outputs: four families of prior work, and for each, what it emits — because what it emits is the ceiling. [CLICK] Foundations: OCR engines, layout detectors, document VLMs. Both OCR paradigms optimise text; detectors give coarse blocks with no DOM. Note that REPLICA's own Segment stage builds on this line — DocLayout-YOLO, an IndicDLP ensemble and Hi-SAM. [CLICK] Document-to-markup: Marker, MinerU, Docling, the PDF converters and the end-to-end VLMs. For them linearisation is a design goal; for us it is the failure mode. The capability matrix is thesis Table 4.2 if anyone wants the detail. [CLICK] Physical reconstruction and screenshot-to-HTML. DREAM is pixel-faithful but autoregressive and domain-narrow; screenshot-to-HTML is web-native but distribution-shifted from text-dense documents. REPLICA sits on both axes — logical and physical — in web-native HTML and CSS. [CLICK] And the benchmarks only score text and logical structure, against Markdown references — the field cannot improve what it does not measure. You cannot even extend OmniDocBench: its references are Markdown, so there is no ground truth for position or style. [2:30]">
         <div class="kicker">Thesis Ch. 2 · four families, and what each one emits</div>
         <h2>A taxonomy of <em>prior work</em></h2>
         <div class="slide-body">
@@ -5400,6 +5382,24 @@
           <div class="takeaway frag" data-frag="4">Logical methods recover content &amp; hierarchy; physical methods chase
             pixels in narrow domains. <b>Nobody delivers web-native HTML faithful in content, structure, style and rendered
               appearance.</b></div>
+        </div>
+      </section>
+
+      <!-- ═══════════ 6 · WHERE THE FIELD STANDS (baselines only) ═══════════ -->
+      <section class="slide demo bleed" data-eyebrow="02 · Background" data-embed="teaser" data-nav="1"
+        data-frags="2"
+        data-notes="Now let me show three of those systems on a real page, against that checklist. This is Figure 1A from the paper, running live. On the left the input page; on the right one system at a time. Marker, a strong pipeline tool, linearises three columns into one — the words survive, the page does not. [CLICK] GPT-5 gets the text largely right, then drifts on placement, font attributes and column count. [CLICK] Qwen3-VL-30B, same story. Every one of them ticks text and roughly ticks structure — and every one of them fails geometry and appearance. Notice I am not showing you our system yet. I want the failure to be the thing you remember, because the failure is the same in every case, and it is not a failure of the model. [2:00]">
+        <div class="kicker">Against the checklist</div>
+        <div class="slide-body">
+          <div class="embed"><iframe src="site.html?embed=teaser&part=compare&only=marker,gpt5,qwen"
+              title="Baseline comparison (paper Fig. 1A)"></iframe></div>
+          <div class="axbar">
+            <span class="axb ok">Text <b>&#10003;</b></span>
+            <span class="axb part">Hierarchy <b>~</b></span>
+            <span class="axb no">Geometry <b>&#10007;</b></span>
+            <span class="axb no">Visual <b>&#10007;</b></span>
+            <span class="axnote">— the same two boxes fail for <b>every</b> system</span>
+          </div>
         </div>
       </section>
 

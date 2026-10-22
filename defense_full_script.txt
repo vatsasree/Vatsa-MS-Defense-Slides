@@ -134,35 +134,10 @@ The question here is: what do existing methods keep — and what do they lose?
 
 
 ============================================================
-6 · WHERE THE FIELD STANDS   (~1:30)
+6 · A TAXONOMY OF PRIOR WORK   (~2:00)
 ============================================================
 
-Let us see where existing systems stand. On the left is the input page. On the right, I will show one system at a time, running live.
-
-First, Marker, a strong document-parsing tool. The words survive, but the three columns are flattened into one. The page is lost.
-
-[CLICK]
-
-Next, GPT-5. The text is mostly correct, but the layout drifts — the placement, the fonts, even the number of columns.
-
-[CLICK]
-
-And Qwen3-VL-30B. The same story.
-
-[pause]
-
-These are different architectures and different model sizes, but the failure is the same.
-
-Text is mostly there. Hierarchy is roughly there. Geometry is gone. Visual fidelity is gone.
-
-And that consistency is a clue. Maybe the bottleneck is not the model.
-
-
-============================================================
-7 · A TAXONOMY OF PRIOR WORK   (~2:00)
-============================================================
-
-Here is the related work in one slide. There are four families of methods, and for each one, I show what it outputs — because what a method outputs limits what it can preserve.
+Here is the related work in one slide, before we look at any outputs. There are four families of methods, and for each one, I show what it outputs — because what a method outputs limits what it can preserve.
 
 [CLICK]
 
@@ -183,6 +158,31 @@ And fourth, the benchmarks. They only score text and structure, and their refere
 [pause]
 
 So the field cannot improve what it does not measure.
+
+
+============================================================
+7 · WHERE THE FIELD STANDS   (~1:30)
+============================================================
+
+Now let me show three of these systems on a real page. On the left is the input page. On the right, I will show one system at a time, running live.
+
+First, Marker, a strong document-parsing tool. The words survive, but the three columns are flattened into one. The page is lost.
+
+[CLICK]
+
+Next, GPT-5. The text is mostly correct, but the layout drifts — the placement, the fonts, even the number of columns.
+
+[CLICK]
+
+And Qwen3-VL-30B. The same story.
+
+[pause]
+
+These are different architectures and different model sizes, but the failure is the same.
+
+Text is mostly there. Hierarchy is roughly there. Geometry is gone. Visual fidelity is gone.
+
+And that consistency is a clue. Maybe the bottleneck is not the model.
 
 
 ============================================================
