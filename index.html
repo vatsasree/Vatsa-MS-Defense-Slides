@@ -6484,7 +6484,7 @@
                 display: block;
                 width: 626px;
                 height: 1502px;
-                font-family: "Times New Roman", Times, serif;
+                font-family: Arial, Helvetica, sans-serif;
                 font-size: 16px;
                 color: #000;
                 line-height: normal;
@@ -6505,6 +6505,30 @@
               th {
                 box-sizing: border-box;
               }
+
+              /* Typography matched to the scan (Arial, sizes fitted to the printed text):
+              headings and paragraphs carry fitted inline sizes; the item table is laid
+              out here. Browser default margins on p/h1 are removed so every element
+              sits at its absolute position. */
+              p, h1 { margin: 0; }
+              table.table_2 { border-collapse: collapse; table-layout: fixed; width: 538px; font-size: 16.8px; line-height: 20px; }
+              table.table_2 th, table.table_2 td { box-sizing: border-box; padding: 0; text-indent: 0 !important; white-space: nowrap; vertical-align: top; }
+              table.table_2 tr > :nth-child(1) { width: 330px !important; }
+              table.table_2 tr > :nth-child(2) { width: 30px !important; direction: rtl; text-align: right; }
+              table.table_2 tr > :nth-child(3) { width: 66px !important; text-align: right; padding-right: 1px; }
+              table.table_2 tr > :nth-child(4) { width: 112px !important; text-align: right; padding-right: 3px; }
+              table.table_2 th { font-weight: bold; font-size: 19.2px; }
+              table.table_2 tr.hdr > * { padding-top: 8.5px; height: 37px !important; }
+              table.table_2 tr.hdr > :nth-child(1) { text-align: left; padding-left: 77px; }
+              table.table_2 tr.hdr > :nth-child(2) { padding-right: 28px; }
+              table.table_2 tr.item > *, table.table_2 tr.gen > * { padding-top: 0.5px; line-height: 22px; }
+              table.table_2 tr.item > * { height: 54px !important; }
+              table.table_2 tr.gen > * { padding-top: 0; line-height: 18px; }
+              table.table_2 tr.item > :nth-child(1), table.table_2 tr.gen > :nth-child(1) { text-align: left; padding-left: 44px; white-space: pre; tab-size: 21px; font-size: 18.7px; }
+              table.table_2 tr.item > :nth-child(2), table.table_2 tr.gen > :nth-child(2) { padding-right: 32px; }
+              table.table_2 tr[class^="t-"] > * { padding-top: 7.1px; height: 31px !important; }
+              table.table_2 tr.t-sales > *, table.table_2 tr.t-cash > *, table.table_2 tr.t-change > * { padding-top: 6.1px; }
+              table.table_2 tr[class^="t-"] > :nth-child(1) { text-align: right; padding-right: 6px; font-size: 17.8px; }
 
               .slot,
               .chg {
@@ -6536,219 +6560,213 @@
               }
             </style>
             <div class="rcpt">
-              <div class="header" style="position: absolute; left: 57px; top: 91px; 
+    <div class="header" style="position: absolute; left: 57px; top: 91px; 
              width: 500px; height: 342px;">
-                <div class="logo_9">
-                  <img src="assets/receipt/logo.png"
-                    style="position: absolute; left: 168px; top: 28px; width: 160px; height: 134px;" />
-                </div>
-                <h1 class="title_9"
-                  style="position: absolute; left: 82px; top: 167px; width: 411px; height: 20px; text-indent: 0px; font-size: 25.3828px;">
-                  PREMIO STATIONERY SDN BHD</h1>
-                <p class="sub-header_9"
-                  style="position: absolute; left: 155px; top: 195px; width: 183px; height: 21px; text-indent: 0px; font-size: 18.4766px;">
-                  (Co. No.: 123769-W)</p>
-                <div class="contact-info_9">
-                  <p
-                    style="position: absolute; left: 115px; top: 230px; width: 264px; height: 49px; text-indent: 0px; font-size: 20.8008px;">
-                    GST Reg. No.: 001032994816</p>
-                  <p
-                    style="position: absolute; left: 115px; top: 260px; width: 264px; height: 49px; text-indent: 25px; font-size: 20.8008px;">
-                    No 57, Jalan SS 3/29,
-                  </p>
-                  <p
-                    style="position: absolute; left: 93px; top: 287px; width: 305px; height: 27px; text-indent: 0px; font-size: 24.082px;">
-                    47300 Petaling Jaya, Selangor.</p>
-                </div>
-              </div>
-              <div class="page-number" style="position: absolute; left: 225px; top: 423px; 
+        <div class="logo_9">
+            <img src="assets/receipt/logo.png"
+                style="position: absolute; left: 168px; top: 28px; width: 160px; height: 134px;" />
+        </div>
+        <h1 class="title_9"
+            style="position: absolute; left: 42px; top: 162.5px; width: auto; height: auto; text-indent: 0px; font-size: 26.73px; white-space: nowrap;">
+            PREMIO STATIONERY SDN BHD</h1>
+        <p class="sub-header_9"
+            style="position: absolute; left: 157px; top: 193.1px; width: auto; height: auto; text-indent: 0px; font-size: 19.31px; white-space: nowrap;">
+            (Co. No.: 123769-W)</p>
+        <div class="contact-info_9">
+            <p
+                style="position: absolute; left: 117px; top: 228px; width: auto; height: auto; text-indent: 0px; font-size: 19.19px; white-space: nowrap;">
+                GST Reg. No.: 001032994816</p>
+            <p
+                style="position: absolute; left: 140px; top: 254.5px; width: auto; height: auto; text-indent: 0px; font-size: 21.28px; white-space: nowrap;">
+                No 57, Jalan SS 3/29,
+            </p>
+            <p
+                style="position: absolute; left: 94px; top: 284.7px; width: auto; height: auto; text-indent: 0px; font-size: 21.6px; white-space: nowrap;">
+                47300 Petaling Jaya, Selangor.</p>
+        </div>
+    </div>
+    <div class="page-number" style="position: absolute; left: 225px; top: 423px; 
              width: 158px; height: 33px;">
-                <div class="contact-info_11">
-                  <p
-                    style=" position: absolute; left: 8px; top: 6px; width: 141px; height: 21px; text-indent: 0px; font-size: 18.4766px;">
-                    03-7874 8605</p>
-                </div>
-              </div>
-              <div style="position: absolute; left: 186px; top: 469px; 
+        <div class="contact-info_11">
+            <p
+                style="position: absolute; left: 10px; top: 3.9px; width: auto; height: auto; text-indent: 0px; font-size: 22.19px; white-space: nowrap;">
+                03-7874 8605</p>
+        </div>
+    </div>
+    <div style="position: absolute; left: 186px; top: 469px; 
              width: 251px; height: 34px; text-indent: 11px;">
-                <p
-                  style="position: absolute; left: 41px; top: -10px; width: 230px; height: 20px; text-indent: 0px; font-size: 19.9828px;letter-spacing:0.28em;">
-                  TAX INVOICE</p>
-              </div>
-              <div class="text" style="position: absolute; left: 44px; top: 506px; 
+        <p
+            style="position: absolute; left: 11px; top: 5.8px; width: auto; height: auto; text-indent: 0px; font-size: 24.41px; letter-spacing: 0.28em; white-space: nowrap;">
+            TAX INVOICE</p>
+    </div>
+    <div class="text" style="position: absolute; left: 44px; top: 506px; 
              width: 395px; height: 87px;">
-                <div class="header_1">
-                  <p
-                    style=" position: absolute; left: 5px; top: -13px; width: 386px; height: 19px; text-indent: 0px; font-size: 16.2207px;">
-                    Invoice No</p>
-                  <p
-                    style=" position: absolute; left: 190px; top: -13px; width: 386px; height: 19px; text-indent: 0px; font-size: 16.2207px;">
-                    SS3-154439
-                  </p>
-                  <p
-                    style=" position: absolute; left: 5px; top: 15px; width: 386px; height: 21px; text-indent: 0px; font-size: 18.4766px;">
-                    Date</p>
-                  <p
-                    style=" position: absolute; left: 190px; top: 25px; width: 386px; height: 19px; text-indent: 0px; font-size: 16.2207px;">
-                    20/03/2018 3:20:16 PM
-                  </p>
-                  <p
-                    style=" position: absolute; left: 5px; top: 61px; width: 181px; height: 24px; text-indent: 0px; font-size: 20.8008px;">
-                    Cashier </p>
-                  <p
-                    style=" position: absolute; left: 190px; top: 60px; width: 386px; height: 19px; text-indent: 0px; font-size: 16.2207px;">
-                    IVY
-                  </p>
-                </div>
-              </div>
-              <div class="table" style="position: absolute; left: 21px; top: 627px; 
+        <div class="header_1">
+            <p
+                style="position: absolute; left: 7px; top: -1.5px; width: auto; height: auto; text-indent: 0px; font-size: 21.59px; white-space: nowrap;">
+                Invoice No</p>
+            <p
+                style="position: absolute; left: 148px; top: -0.4px; width: auto; height: auto; text-indent: 0px; font-size: 21.4px; white-space: nowrap;">
+                SS3-154439
+            </p>
+            <p
+                style="position: absolute; left: 7px; top: 31.2px; width: auto; height: auto; text-indent: 0px; font-size: 21.3px; white-space: nowrap;">
+                Date</p>
+            <p
+                style="position: absolute; left: 149px; top: 30.7px; width: auto; height: auto; text-indent: 0px; font-size: 22.89px; white-space: nowrap;">
+                20/03/2018 3:20:16 PM
+            </p>
+            <p
+                style="position: absolute; left: 8px; top: 61.9px; width: auto; height: auto; text-indent: 0px; font-size: 19.15px; white-space: nowrap;">
+                Cashier </p>
+            <p
+                style="position: absolute; left: 149px; top: 61.3px; width: auto; height: auto; text-indent: 0px; font-size: 18.61px; white-space: nowrap;">
+                IVY
+            </p>
+        </div>
+    </div>
+    <div class="table" style="position: absolute; left: 21px; top: 627px; 
              width: 579px; height: 255px;">
-                <div class="table_2">
-                  <table class="table_2">
-                    <tbody>
-                      <tr>
+        <div class="table_2">
+            <table class="table_2">
+                <tbody>
+                    <tr class="hdr">
                         <th style="width: 111px; height: 20px; text-indent: 6px;border-bottom: 2px dotted black;">
-                          Description</th>
+                            Description</th>
                         <th style="width: 41px; height: 24px;border-bottom: 2px dotted black;">Qty</th>
                         <th style="width: 54px; height: 22px;border-bottom: 2px dotted black;">Price</th>
                         <th style="width: 78px; height: 20px;border-bottom: 2px dotted black;">Amount</th>
-                      </tr>
-                      <tr>
+                    </tr>
+                    <tr class="item">
                         <td
-                          style="left: 230px; width: 193px; height: 99px; text-indent: 80px;border-bottom: 2px dotted black;">
-                          1 &#9; SR &#9; ENERGIZER <br>
-                          <span style="margin-left: 115px;">BATTERY AA 4'S</span>
-                        </td>
+                            style="left: 230px; width: 193px; height: 99px; text-indent: 80px;border-bottom: 2px dotted black;">1	SR	ENERGIZER<br><span style="margin-left: 62px;">BATTERY AA 4'S</span></td>
                         <td style="width: 14px; height: 18px; border-bottom: 2px dotted black;">1</td>
                         <td style="width: 52px; height: 23px; border-bottom: 2px dotted black;">13.40</td>
                         <td style="width: 53px; height: 23px; border-bottom: 2px dotted black;">13.40</td>
-                      </tr>
+                    </tr>
 
-                      <tr>
+                    <tr class="t-total">
                         <td style="width: 49px; height: 20px; text-align: right;">Total:</td>
                         <td></td>
                         <td></td>
                         <td style="width: 52px; height: 20px;">13.40</td>
-                      </tr>
-                      <tr>
+                    </tr>
+                    <tr class="t-disc">
                         <td style="width: 77px; height: 19px; text-align: right;">Discount</td>
                         <td></td>
                         <td></td>
                         <td style="width: 42px; height: 21px;border-bottom: 2px dotted black;">0.00</td>
-                      </tr>
-                      <tr>
+                    </tr>
+                    <tr class="t-sales">
                         <td style="width: 310px; height: 23px; text-indent: 76px; text-align: right;">Total Sales
-                          Inclusive GST @6.00%</td>
+                            Inclusive GST @6.00%</td>
                         <td></td>
                         <td></td>
                         <td style="width: 52px; height: 20px;border-bottom: 2px dotted black;">13.40</td>
-                      </tr>
-                      <tr>
+                    </tr>
+                    <tr class="t-cash">
                         <td style="width: 136px; height: 20px; text-indent: 76px; text-align: right;">Cash Received:
                         </td>
                         <td></td>
                         <td></td>
                         <td style="width: 52px; height: 20px;">20.00</td>
-                      </tr>
-                      <tr>
+                    </tr>
+                    <tr class="t-change">
                         <td style="width: 70px; height: 24px; text-align: right;">Change:</td>
                         <td></td>
                         <td></td>
                         <td style="width: 42px; height: 20px;">6.60</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="text" style="position: absolute; left: 242px; top: 879px; 
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="text" style="position: absolute; left: 242px; top: 879px; 
              width: 140px; height: 12px;">
-                <div class="logo_0">
-                  <img src="assets/receipt/separator.png"
-                    style="position: absolute; left: 0px; top: 0px; width: 140px; height: 12px;" />
-                </div>
-              </div>
-              <div class="text" style="position: absolute; left: 49px; top: 894px; 
+        <div class="logo_0">
+            <img src="assets/receipt/separator.png"
+                style="position: absolute; left: 0px; top: 0px; width: 140px; height: 12px;" />
+        </div>
+    </div>
+    <div class="text" style="position: absolute; left: 49px; top: 894px; 
              width: 523px; height: 67px;">
-                <div class="paragraph_7">
-                  <p
-                    style="text-align: center; position: absolute; left: 18px; top: -16px; width: 486px; height: 55px; text-indent: 18px; font-size: 16.1523px;">
-                    Starting 1st April, we will no longer be issuing handwritten<br />invoices. Your service jobs such
-                    as
-                    photocopy and printing are<br />replaced by the order form along with a copy of this receipt.</p>
-                </div>
-              </div>
-              <div class="text" style="position: absolute; left: 30px; top: 968px; 
+        <div class="paragraph_7">
+            <p
+                style="text-align: center; position: absolute; left: 19.9px; top: 6.7px; width: auto; height: auto; text-indent: 0px; font-size: 17.45px; white-space: nowrap; line-height: 18px;">
+                Starting 1st April, we will no longer be issuing handwritten<br />invoices. Your service jobs such as
+                photocopy and printing are<br />replaced by the order form along with a copy of this receipt.</p>
+        </div>
+    </div>
+    <div class="text" style="position: absolute; left: 30px; top: 968px; 
              width: 557px; height: 43px;">
-                <div class="footer_6">
-                  <p
-                    style="position: absolute; left: 52px; top: -16px; width: 533px; height: 19px; text-indent: 0px; font-size: 16.2207px;">
-                    All goods and services are subjected to the 6% GST during checkout.</p>
-                </div>
-              </div>
-              <div class="text" style="position: absolute; left: 32px; top: 1032px; 
+        <div class="footer_6">
+            <p
+                style="position: absolute; left: 14px; top: 3.5px; width: auto; height: auto; text-indent: 0px; font-size: 17.15px; white-space: nowrap;">
+                All goods and services are subjected to the 6% GST during checkout.</p>
+        </div>
+    </div>
+    <div class="text" style="position: absolute; left: 32px; top: 1032px; 
              width: 554px; height: 124px;">
-                <div class="footer_10">
-                  <p
-                    style="text-align: center; position: absolute; left: 12px; top: 6px; width: 529px; height: 113px; text-indent: 16px; font-size: 16.1523px;">
-                    All goods sold are not returnable/refundable. Exchanges are only<br />acceptable within 3 days with
-                    a
-                    proof of receipt.<br />All cartridge &amp; toner sales are final and non-refundable.<br />No cash
-                    refunds for credit card purchases.<br />No refunds or exchanges will be entertained without proof of
-                    receipt.<br />Terms and conditions applied.<br /></p>
-                </div>
-              </div>
-              <div style="position: absolute; left: 173px; top: 1176px; 
+        <div class="footer_10">
+            <p
+                style="text-align: center; position: absolute; left: 14px; top: 5px; width: auto; height: auto; text-indent: 0px; font-size: 17.26px; white-space: nowrap; line-height: 19.2px;">
+                All goods sold are not returnable/refundable. Exchanges are only<br />acceptable within 3 days with a
+                proof of receipt.<br />All cartridge &amp; toner sales are final and non-refundable.<br />No cash
+                refunds for credit card purchases.<br />No refunds or exchanges will be entertained without proof of
+                receipt.<br />Terms and conditions applied.<br /></p>
+        </div>
+    </div>
+    <div style="position: absolute; left: 173px; top: 1176px; 
              width: 22px; height: 11px; ">
-                <img src="assets/receipt/mark.png">
-              </div>
-              <div class="picture" style="position: absolute; left: 83px; top: 1136px; 
+        <img
+            src="assets/receipt/mark.png">
+    </div>
+    <div class="picture" style="position: absolute; left: 83px; top: 1136px; 
              width: 522px; height: 151px;">
-                <div class="table_4">
-                  <p class="table_4"
-                    style="position: absolute; left: 33px; top: 151px; width: 100px; height: 18px; font-size: 16.1523px;">
-                    GST Summary</p>
-                  <p class="table_4"
-                    style="position: absolute; left: 163px; top: 151px; width: 9px; height: 18px; font-size: 11.3672px;">
-                    %
-                  </p>
-                  <p class="table_4"
-                    style="position: absolute; left: 203px; top: 151px; width: 110px; height: 18px; font-size: 16.1523px;">
-                    Amount(RM)</p>
-                  <p class="table_4"
-                    style="position: absolute; left: 344px; top: 151px; width: 40px; height: 18px; font-size: 10.8887px;">
-                    Tax(RM)</p>
-                  <p class="table_4"
-                    style="position: absolute; left: 33px; top: 171px; width: 19px; height: 18px; font-size: 15.8789px;">
-                    SR
-                  </p>
-                  <p class="table_4"
-                    style="position: absolute; left: 163px; top: 171px; width: 30px; height: 18px; text-indent: 2px; font-size: 16.1523px;">
-                    6.00</p>
-                  <p class="table_4"
-                    style="position: absolute; left: 203px; top: 171px; width: 40px; height: 18px; text-indent: 2px; font-size: 16.1523px;">
-                    12.64</p>
-                  <p class="table_4"
-                    style="position: absolute; left: 344px; top: 171px; width: 30px; height: 18px; text-indent: 11px; font-size: 11.0938px;">
-                    0.76</p>
-                </div>
-              </div>
-              <div class="text" style="position: absolute; left: 137px; top: 1336px; 
+        <div class="table_4">
+            <p class="table_4"
+                style="position: absolute; left: -17px; top: 116.7px; width: auto; height: auto; font-size: 18.82px; text-indent: 0px; white-space: nowrap;">
+                GST Summary</p>
+            <p class="table_4"
+                style="position: absolute; left: 158px; top: 117.5px; width: auto; height: auto; font-size: 15.74px; text-indent: 0px; white-space: nowrap;">%
+            </p>
+            <p class="table_4"
+                style="position: absolute; left: 241px; top: 116.5px; width: auto; height: auto; font-size: 18.53px; text-indent: 0px; white-space: nowrap;">
+                Amount(RM)</p>
+            <p class="table_4"
+                style="position: absolute; left: 383px; top: 117.1px; width: auto; height: auto; font-size: 19.32px; text-indent: 0px; white-space: nowrap;">
+                Tax(RM)</p>
+            <p class="table_4"
+                style="position: absolute; left: -17px; top: 148.5px; width: auto; height: auto; font-size: 15.83px; text-indent: 0px; white-space: nowrap;">SR
+            </p>
+            <p class="table_4"
+                style="position: absolute; left: 139px; top: 147.9px; width: auto; height: auto; text-indent: 0px; font-size: 17.98px; white-space: nowrap;">
+                6.00</p>
+            <p class="table_4"
+                style="position: absolute; left: 304px; top: 148.1px; width: auto; height: auto; text-indent: 0px; font-size: 16.78px; white-space: nowrap;">
+                12.64</p>
+            <p class="table_4"
+                style="position: absolute; left: 422px; top: 147.9px; width: auto; height: auto; text-indent: 0px; font-size: 17.98px; white-space: nowrap;">
+                0.76</p>
+        </div>
+    </div>
+    <div class="text" style="position: absolute; left: 137px; top: 1336px; 
              width: 349px; height: 54px;">
-                <div class="footer_8">
-                  <p
-                    style="font-weight: bold; position: absolute; left: 8px; top: 6px; width: 331px; height: 45px; text-indent: 0px; font-size: 19.6387px;">
-                    Thank you for Shopping at PREMIO<br />Have a Nice Day!</p>
-                </div>
-              </div>
-              <div class="text" style="position: absolute; left: 140px; top: 1400px; 
+        <div class="footer_8">
+            <p
+                style="font-weight: bold; position: absolute; left: 9px; top: 3.6px; width: auto; height: auto; text-indent: 0px; font-size: 19.36px; white-space: nowrap; text-align: center; line-height: 23px;">
+                Thank you for Shopping at PREMIO<br />Have a Nice Day!</p>
+        </div>
+    </div>
+    <div class="text" style="position: absolute; left: 140px; top: 1400px; 
              width: 343px; height: 48px;">
-                <div class="footer_5">
-                  <p
-                    style="text-align: center; position: absolute; left: 9px; top: 4px; width: 321px; height: 37px; text-indent: 36px; font-size: 16.1523px;">
-                    For the latest news and updates<br />like us on facebook.com/premiostationery</p>
-                </div>
-              </div>
-            </div>
+        <div class="footer_5">
+            <p
+                style="text-align: center; position: absolute; left: 11px; top: 3.9px; width: auto; height: auto; text-indent: 0px; font-size: 17.28px; white-space: nowrap; line-height: 19px;">
+                For the latest news and updates<br />like us on facebook.com/premiostationery</p>
+        </div>
+    </div>
+</div>
           </template>
         </div>
       </section>
@@ -8359,7 +8377,7 @@
           const tr = document.createElement("tr"); tr.className = "gen";
           const last = i === n - 1 ? "border-bottom: 2px dotted black;" : "";
           tr.innerHTML =
-            '<td class="chg" style="width: 193px; height: ' + Math.floor(H / n - 4) + 'px; text-indent: 6px; white-space: nowrap;' + last + '">' + qty + " &#9; SR &#9; " + name + "</td>" +
+            '<td class="chg" style="height: ' + Math.floor(H / n) + 'px;' + last + '">' + qty + "\tSR\t" + name + "</td>" +
             '<td class="chg" style="width: 14px;' + last + '">' + qty + "</td>" +
             '<td class="chg" style="width: 52px;' + last + '">' + money(price) + "</td>" +
             '<td class="chg" style="width: 53px;' + last + '">' + money(qty * price) + "</td>";
