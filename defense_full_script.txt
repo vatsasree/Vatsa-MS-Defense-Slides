@@ -195,7 +195,9 @@ The problem is often the target representation — the format we ask the model t
 
 [CLICK]
 
-All four have to pass through the output format. Marker writes Markdown. OCR models write plain text. GPT-5 and Qwen write generic HTML.
+The model has to write its answer in some format. Marker writes Markdown. OCR models write plain text. GPT-5 and Qwen write generic HTML.
+
+Whatever the format cannot write down is lost — no matter how good the model is.
 
 [CLICK]
 
