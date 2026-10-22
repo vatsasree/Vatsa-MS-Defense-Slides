@@ -9,6 +9,8 @@ It extends the ICDAR 2026 REPLICA oral deck, re-ordered into chapters
   (`site.html?embed=teaser|fidhtml|demo|downstream`). Its own qualitative section is intentionally
   trimmed (only the four pairs the deck uses are in `static/images/qual/`), so opening `site.html`
   directly shows placeholders there and logs a few harmless 404s.
+- `assets/` — deck-only images; `assets/receipt/` holds the images of the SROIE receipt that the synthetic-generation
+  slide inlines (so that slide also works when `index.html` is opened from disk).
 - `vendor/` — Font Awesome 6.5.2 (`vendor/fa/`) and Inter + JetBrains Mono woff2 (`vendor/fonts/`), for offline use.
 - `static/` — trimmed copy of the website's assets (≈ 224 MB, every file < 100 MB, no LFS).
 

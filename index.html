@@ -4130,7 +4130,7 @@
       align-self: center;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
     }
 
     .ladder-notes .lnh {
@@ -4148,16 +4148,16 @@
       background: #fbe9e7;
       color: #8c2d22;
       border-radius: 10px;
-      padding: 12px 16px 12px 46px;
-      font-size: 19px;
-      line-height: 1.35;
+      padding: 10px 14px 10px 42px;
+      font-size: 18px;
+      line-height: 1.32;
       transition: all .4s;
     }
 
     .lnote::before {
       content: "\2716";
       position: absolute;
-      left: 16px;
+      left: 15px;
       color: var(--red);
       font-weight: 800;
     }
@@ -4521,7 +4521,7 @@
       height: 100%;
     }
 
-    .sr-box iframe {
+    .sr-box .sr-doc {
       position: absolute;
       left: 0;
       top: 0;
@@ -4534,7 +4534,7 @@
       pointer-events: none;
     }
 
-    .sr-box.on iframe {
+    .sr-box.on .sr-doc {
       visibility: visible;
     }
 
@@ -5121,7 +5121,7 @@
 
       <!-- ═══════════ LIVE FIDELITY LADDER ═══════════ -->
       <section class="slide" data-eyebrow="01 · Introduction" data-frags="3" id="ladderSlide"
-        data-notes="So what did we actually lose? Same document, twice. On the left the original page. On the right I rebuild it one layer at a time — this is running live, and at the end the two are literally the same markup. [CLICK] Level zero, text only: every word is present and in order, but it is a wall of prose. You cannot tell the heading from the body, the table has become a run of numbers, the total is indistinguishable from the fine print. Note the shape does not even match — a text stream has no page. This is what OCR and most parsers give you. Look at the four red notes on the right. Every word survived. A person reading the right-hand version could pay a cancelled charge, miss an overdue notice and misread what they owe. Style is data. [CLICK] Level one, add logical structure: now we know this is a heading, this is a table with rows and columns. Markdown-class output. A big win for machines — but still no page geometry, so the shape still does not match. [CLICK] Level two, add physical position: now the page has the same dimensions as the original, the two-column body is back, and the numbers align under their headers. Now you can tell which number belongs to which item. [CLICK] Level three, add visual fidelity: typography, weight, colour, the brand bar — and critically the strikethrough and the OVERDUE stamp. Now the right side is pixel-for-pixel the left side. Only the cancelled line reads as cancelled, and only now does the overdue notice exist at all — and only now do all four turn green. [3:00]">
+        data-notes="So what did we actually lose? Same document, twice. On the left the original page. On the right I rebuild it one layer at a time — this is running live, and at the end the two are literally the same markup. [CLICK] Level zero, text only: every word is present and in order, but it is a wall of prose. You cannot tell the heading from the body, the table has become a run of numbers, the total is indistinguishable from the fine print. Note the shape does not even match — a text stream has no page. This is what OCR and most parsers give you. Look at the red notes on the right. Every word survived. A person reading the right-hand version could pay a cancelled charge, miss an overdue notice and misread what they owe. Style is data. [CLICK] Level one, add logical structure: now we know this is a heading, this is a table with rows and columns. Markdown-class output. A big win for machines — the header, sections, footer and the table are now real groups, so the first two notes turn green — but still no page geometry, so the shape still does not match. [CLICK] Level two, add physical position: now the page has the same dimensions as the original, the two-column body is back, and the numbers align under their headers. Now you can tell which number belongs to which item — the column note turns green. [CLICK] Level three, add visual fidelity: typography, weight, colour, the brand bar — and critically the strikethrough and the OVERDUE stamp. Now the right side is pixel-for-pixel the left side. Only the cancelled line reads as cancelled, and only now does the overdue notice exist at all — and only now do the last three turn green. [3:00]">
         <!-- <h2>Rebuilding a document, <em>one layer at a time</em></h2> -->
         <h2>What is <em>V</em>isually <em>F</em>aithful <em>D</em>ocument <em>R</em>econstruction ? </h2>
         <div class="slide-body">
@@ -5246,9 +5246,11 @@
             <!-- what a text-only rebuild loses; each flips to ✓ at the level that repairs it -->
             <div class="ladder-notes">
               <div class="lnh">What the reader loses</div>
+              <div class="lnote" data-fix="1">No <b>header, sections or footer</b> — one wall of text</div>
+              <div class="lnote" data-fix="1"><b>Table</b> read as a run of numbers — no rows or columns</div>
+              <div class="lnote" data-fix="2">Columns collapsed — which cell goes where?</div>
               <div class="lnote" data-fix="3"><b>OVERDUE</b> stamp lost</div>
               <div class="lnote" data-fix="3"><b>VOID</b> marker lost — reads as an active charge</div>
-              <div class="lnote" data-fix="2">Columns collapsed — which cell goes where?</div>
               <div class="lnote" data-fix="3"><b>TOTAL DUE</b> no longer stands out</div>
             </div>
           </div>
@@ -6313,7 +6315,7 @@
             <div class="sr-arrow">→</div>
             <div class="sr-col">
               <div class="sr-box" id="srTplBox"><div class="synth-empty">—</div>
-                <iframe id="srTpl" src="static/images/qual/X51005621482_corrected.html" title="FID-HTML template"></iframe>
+                <div class="sr-doc" id="srTpl" role="img" aria-label="FID-HTML template"></div>
               </div>
               <div class="cap" id="srTplCap"><b>FID-HTML</b> — rebuilt by REPLICA</div>
             </div>
@@ -6342,11 +6344,242 @@
             <div class="sr-arrow">→</div>
             <div class="sr-col">
               <div class="sr-box" id="srOutBox"><div class="synth-empty">—</div>
-                <iframe id="srOut" src="static/images/qual/X51005621482_corrected.html" title="Synthetic receipt"></iframe>
+                <div class="sr-doc" id="srOut" role="img" aria-label="Synthetic receipt"></div>
               </div>
               <div class="cap"><b>Synthetic</b> — <span id="srCap">a new receipt</span></div>
             </div>
           </div>
+          <!-- REPLICA's FID-HTML for SROIE receipt X51005621482 (static/images/qual/), inlined so the
+               slide can edit it from file:// as well as over http; rendered in a shadow root so the
+               deck's styles and the receipt's never meet -->
+          <template id="srReceipt">
+            <style>
+              :host { all: initial; display: block; width: 626px; height: 1502px;
+                font-family: "Times New Roman", Times, serif; font-size: 16px; color: #000; line-height: normal; }
+              .rcpt { position: relative; width: 624px; height: 1500px; border: 1px solid;
+                background-image: url('assets/receipt/background.png'); background-repeat: no-repeat; }
+              /* the source file has no doctype, so it renders in quirks mode, where a cell's
+                 height includes its padding; match that so rows keep their original height */
+              td, th { box-sizing: border-box; }
+              .slot, .chg { transition: background .3s, outline-color .3s; }
+              :host(.L2) .slot { background: rgba(212,164,55,.5) !important; outline: 3px solid #d4a437; outline-offset: 1px; }
+              :host(.L2) img.slot { opacity: .75; }
+              :host(.HL) .chg { background: rgba(47,158,99,.32) !important; outline: 3px solid #2f9e63; outline-offset: 1px;
+                animation: srPulse 1.2s ease-out 2; }
+              @keyframes srPulse { 50% { outline-color: #7ad3a4; outline-width: 7px; } }
+            </style>
+            <div class="rcpt">
+    <div class="header" style="position: absolute; left: 57px; top: 91px; 
+             width: 500px; height: 342px;">
+        <div class="logo_9">
+            <img src="assets/receipt/logo.png"
+                style="position: absolute; left: 168px; top: 28px; width: 160px; height: 134px;" />
+        </div>
+        <h1 class="title_9"
+            style="position: absolute; left: 82px; top: 167px; width: 411px; height: 20px; text-indent: 0px; font-size: 25.3828px;">
+            PREMIO STATIONERY SDN BHD</h1>
+        <p class="sub-header_9"
+            style="position: absolute; left: 155px; top: 195px; width: 183px; height: 21px; text-indent: 0px; font-size: 18.4766px;">
+            (Co. No.: 123769-W)</p>
+        <div class="contact-info_9">
+            <p
+                style="position: absolute; left: 115px; top: 230px; width: 264px; height: 49px; text-indent: 0px; font-size: 20.8008px;">
+                GST Reg. No.: 001032994816</p>
+            <p
+                style="position: absolute; left: 115px; top: 260px; width: 264px; height: 49px; text-indent: 25px; font-size: 20.8008px;">
+                No 57, Jalan SS 3/29,
+            </p>
+            <p
+                style="position: absolute; left: 93px; top: 287px; width: 305px; height: 27px; text-indent: 0px; font-size: 24.082px;">
+                47300 Petaling Jaya, Selangor.</p>
+        </div>
+    </div>
+    <div class="page-number" style="position: absolute; left: 225px; top: 423px; 
+             width: 158px; height: 33px;">
+        <div class="contact-info_11">
+            <p
+                style=" position: absolute; left: 8px; top: 6px; width: 141px; height: 21px; text-indent: 0px; font-size: 18.4766px;">
+                03-7874 8605</p>
+        </div>
+    </div>
+    <div style="position: absolute; left: 186px; top: 469px; 
+             width: 251px; height: 34px; text-indent: 11px;">
+        <p
+            style="position: absolute; left: 41px; top: -10px; width: 230px; height: 20px; text-indent: 0px; font-size: 19.9828px;letter-spacing:0.28em;">
+            TAX INVOICE</p>
+    </div>
+    <div class="text" style="position: absolute; left: 44px; top: 506px; 
+             width: 395px; height: 87px;">
+        <div class="header_1">
+            <p
+                style=" position: absolute; left: 5px; top: -13px; width: 386px; height: 19px; text-indent: 0px; font-size: 16.2207px;">
+                Invoice No</p>
+            <p
+                style=" position: absolute; left: 190px; top: -13px; width: 386px; height: 19px; text-indent: 0px; font-size: 16.2207px;">
+                SS3-154439
+            </p>
+            <p
+                style=" position: absolute; left: 5px; top: 15px; width: 386px; height: 21px; text-indent: 0px; font-size: 18.4766px;">
+                Date</p>
+            <p
+                style=" position: absolute; left: 190px; top: 25px; width: 386px; height: 19px; text-indent: 0px; font-size: 16.2207px;">
+                20/03/2018 3:20:16 PM
+            </p>
+            <p
+                style=" position: absolute; left: 5px; top: 61px; width: 181px; height: 24px; text-indent: 0px; font-size: 20.8008px;">
+                Cashier </p>
+            <p
+                style=" position: absolute; left: 190px; top: 60px; width: 386px; height: 19px; text-indent: 0px; font-size: 16.2207px;">
+                IVY
+            </p>
+        </div>
+    </div>
+    <div class="table" style="position: absolute; left: 21px; top: 627px; 
+             width: 579px; height: 255px;">
+        <div class="table_2">
+            <table class="table_2">
+                <tbody>
+                    <tr>
+                        <th style="width: 111px; height: 20px; text-indent: 6px;border-bottom: 2px dotted black;">
+                            Description</th>
+                        <th style="width: 41px; height: 24px;border-bottom: 2px dotted black;">Qty</th>
+                        <th style="width: 54px; height: 22px;border-bottom: 2px dotted black;">Price</th>
+                        <th style="width: 78px; height: 20px;border-bottom: 2px dotted black;">Amount</th>
+                    </tr>
+                    <tr>
+                        <td
+                            style="left: 230px; width: 193px; height: 99px; text-indent: 80px;border-bottom: 2px dotted black;">
+                            1 &#9; SR &#9; ENERGIZER <br>
+                            <span style="margin-left: 115px;">BATTERY AA 4'S</span>
+                        </td>
+                        <td style="width: 14px; height: 18px; border-bottom: 2px dotted black;">1</td>
+                        <td style="width: 52px; height: 23px; border-bottom: 2px dotted black;">13.40</td>
+                        <td style="width: 53px; height: 23px; border-bottom: 2px dotted black;">13.40</td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 49px; height: 20px; text-align: right;">Total:</td>
+                        <td></td>
+                        <td></td>
+                        <td style="width: 52px; height: 20px;">13.40</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 77px; height: 19px; text-align: right;">Discount</td>
+                        <td></td>
+                        <td></td>
+                        <td style="width: 42px; height: 21px;border-bottom: 2px dotted black;">0.00</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 310px; height: 23px; text-indent: 76px; text-align: right;">Total Sales
+                            Inclusive GST @6.00%</td>
+                        <td></td>
+                        <td></td>
+                        <td style="width: 52px; height: 20px;border-bottom: 2px dotted black;">13.40</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 136px; height: 20px; text-indent: 76px; text-align: right;">Cash Received:
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td style="width: 52px; height: 20px;">20.00</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 70px; height: 24px; text-align: right;">Change:</td>
+                        <td></td>
+                        <td></td>
+                        <td style="width: 42px; height: 20px;">6.60</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="text" style="position: absolute; left: 242px; top: 879px; 
+             width: 140px; height: 12px;">
+        <div class="logo_0">
+            <img src="assets/receipt/separator.png"
+                style="position: absolute; left: 0px; top: 0px; width: 140px; height: 12px;" />
+        </div>
+    </div>
+    <div class="text" style="position: absolute; left: 49px; top: 894px; 
+             width: 523px; height: 67px;">
+        <div class="paragraph_7">
+            <p
+                style="text-align: center; position: absolute; left: 18px; top: -16px; width: 486px; height: 55px; text-indent: 18px; font-size: 16.1523px;">
+                Starting 1st April, we will no longer be issuing handwritten<br />invoices. Your service jobs such as
+                photocopy and printing are<br />replaced by the order form along with a copy of this receipt.</p>
+        </div>
+    </div>
+    <div class="text" style="position: absolute; left: 30px; top: 968px; 
+             width: 557px; height: 43px;">
+        <div class="footer_6">
+            <p
+                style="position: absolute; left: 52px; top: -16px; width: 533px; height: 19px; text-indent: 0px; font-size: 16.2207px;">
+                All goods and services are subjected to the 6% GST during checkout.</p>
+        </div>
+    </div>
+    <div class="text" style="position: absolute; left: 32px; top: 1032px; 
+             width: 554px; height: 124px;">
+        <div class="footer_10">
+            <p
+                style="text-align: center; position: absolute; left: 12px; top: 6px; width: 529px; height: 113px; text-indent: 16px; font-size: 16.1523px;">
+                All goods sold are not returnable/refundable. Exchanges are only<br />acceptable within 3 days with a
+                proof of receipt.<br />All cartridge &amp; toner sales are final and non-refundable.<br />No cash
+                refunds for credit card purchases.<br />No refunds or exchanges will be entertained without proof of
+                receipt.<br />Terms and conditions applied.<br /></p>
+        </div>
+    </div>
+    <div style="position: absolute; left: 173px; top: 1176px; 
+             width: 22px; height: 11px; ">
+        <img
+            src="assets/receipt/mark.png">
+    </div>
+    <div class="picture" style="position: absolute; left: 83px; top: 1136px; 
+             width: 522px; height: 151px;">
+        <div class="table_4">
+            <p class="table_4"
+                style="position: absolute; left: 33px; top: 151px; width: 100px; height: 18px; font-size: 16.1523px;">
+                GST Summary</p>
+            <p class="table_4"
+                style="position: absolute; left: 163px; top: 151px; width: 9px; height: 18px; font-size: 11.3672px;">%
+            </p>
+            <p class="table_4"
+                style="position: absolute; left: 203px; top: 151px; width: 110px; height: 18px; font-size: 16.1523px;">
+                Amount(RM)</p>
+            <p class="table_4"
+                style="position: absolute; left: 344px; top: 151px; width: 40px; height: 18px; font-size: 10.8887px;">
+                Tax(RM)</p>
+            <p class="table_4"
+                style="position: absolute; left: 33px; top: 171px; width: 19px; height: 18px; font-size: 15.8789px;">SR
+            </p>
+            <p class="table_4"
+                style="position: absolute; left: 163px; top: 171px; width: 30px; height: 18px; text-indent: 2px; font-size: 16.1523px;">
+                6.00</p>
+            <p class="table_4"
+                style="position: absolute; left: 203px; top: 171px; width: 40px; height: 18px; text-indent: 2px; font-size: 16.1523px;">
+                12.64</p>
+            <p class="table_4"
+                style="position: absolute; left: 344px; top: 171px; width: 30px; height: 18px; text-indent: 11px; font-size: 11.0938px;">
+                0.76</p>
+        </div>
+    </div>
+    <div class="text" style="position: absolute; left: 137px; top: 1336px; 
+             width: 349px; height: 54px;">
+        <div class="footer_8">
+            <p
+                style="font-weight: bold; position: absolute; left: 8px; top: 6px; width: 331px; height: 45px; text-indent: 0px; font-size: 19.6387px;">
+                Thank you for Shopping at PREMIO<br />Have a Nice Day!</p>
+        </div>
+    </div>
+    <div class="text" style="position: absolute; left: 140px; top: 1400px; 
+             width: 343px; height: 48px;">
+        <div class="footer_5">
+            <p
+                style="text-align: center; position: absolute; left: 9px; top: 4px; width: 321px; height: 37px; text-indent: 36px; font-size: 16.1523px;">
+                For the latest news and updates<br />like us on facebook.com/premiostationery</p>
+        </div>
+    </div>
+</div>
+          </template>
           <div class="takeaway frag" data-frag="4">A different store, items and totals — yet fonts, layout, spacing and background
             are the original's, because the edits happen in FID-HTML. <b>One real document, unlimited new ones.</b></div>
         </div>
@@ -7658,7 +7891,7 @@
       }
 
       /* ═══════════ SYNTHETIC GENERATION ON A REAL RECEIPT ═══════════
-         Both frames load REPLICA's FID-HTML for a real SROIE receipt. The left one
+         Two shadow roots hold REPLICA's FID-HTML for a real SROIE receipt. The left one
          only has its mutable elements marked; in the right one those elements are
          rewritten from a schema — store, invoice, an item list of any length, and
          totals that add up — while layout, fonts, background and labels are the
@@ -7696,17 +7929,18 @@
           '">' + ini + '</text><rect x="38" y="122" width="84" height="6" rx="3" fill="' + v.ink + '"/></svg>';
         return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
       }
-      const SR_STYLE = ".slot,.chg{transition:background .3s,outline-color .3s}" +
-        "html.L2 .slot{background:rgba(212,164,55,.5) !important;outline:3px solid #d4a437;outline-offset:1px}" +
-        "html.L2 img.slot{opacity:.75}" +
-        "html.HL .chg{background:rgba(47,158,99,.32) !important;outline:3px solid #2f9e63;outline-offset:1px;animation:srPulse 1.2s ease-out 2}" +
-        "@keyframes srPulse{0%{outline-color:#2f9e63;outline-width:3px}50%{outline-color:#7ad3a4;outline-width:7px}100%{outline-color:#2f9e63;outline-width:3px}}";
       let srVar = 0, srShown = -1, srSlotCount = 0;
-      function srPrep(frame) {
-        const d = frame && frame.contentDocument;
-        if (!d || !d.body || !d.querySelector("table.table_2")) return false;
-        if (d.documentElement.dataset.prepped) return true;
-        const st = d.createElement("style"); st.textContent = SR_STYLE; d.head.appendChild(st);
+      // the receipt is inlined (template#srReceipt) rather than iframed: an iframe's
+      // DOM is unreachable when the deck is opened from file://
+      function srRoot(id) {
+        const host = document.getElementById(id), t = document.getElementById("srReceipt");
+        if (!host || !t) return null;
+        if (!host.shadowRoot) host.attachShadow({ mode: "open" }).appendChild(t.content.cloneNode(true));
+        return host.shadowRoot;
+      }
+      function srPrep(id) {
+        const d = srRoot(id); if (!d) return null;
+        if (d.host.dataset.prepped) return d;
         const f = srFields(d);
         let n = 0;
         Object.entries(f).forEach(([k, el]) => {
@@ -7715,13 +7949,12 @@
           el.classList.add("slot"); n++;
         });
         srSlotCount = n;
-        d.documentElement.dataset.prepped = "1";
-        return true;
+        d.host.dataset.prepped = "1";
+        return d;
       }
       function srApply() {
-        const fr = document.getElementById("srOut");
-        if (!srPrep(fr)) return false;
-        const d = fr.contentDocument, f = srFields(d), v = SR_STORES[srVar % SR_STORES.length];
+        const d = srPrep("srOut"); if (!d) return false;
+        const f = srFields(d), v = SR_STORES[srVar % SR_STORES.length];
         const set = (el, html) => { if (!el) return; el.innerHTML = html; el.classList.add("chg"); };
         f.logo.src = srLogo(v); f.logo.classList.add("chg");
         ["store", "coNo", "gst", "addr1", "addr2", "phone", "invoice", "date", "cashier"].forEach(k => set(f[k], v[k]));
@@ -7731,7 +7964,7 @@
         const tpl = f.itemRow; tpl.style.display = "none";
         const H = 99, n = v.items.length;
         v.items.forEach(([qty, name, price], i) => {
-          const tr = d.createElement("tr"); tr.className = "gen";
+          const tr = document.createElement("tr"); tr.className = "gen";
           const last = i === n - 1 ? "border-bottom: 2px dotted black;" : "";
           tr.innerHTML =
             '<td class="chg" style="width: 193px; height: ' + Math.floor(H / n - 4) + 'px; text-indent: 6px; white-space: nowrap;' + last + '">' + qty + " &#9; SR &#9; " + name + "</td>" +
@@ -7742,7 +7975,7 @@
         });
         // pad the new rows so the table is exactly as tall as the template's and the
         // totals below sit where they sit on the real receipt
-        const tplTab = document.getElementById("srTpl").contentDocument.querySelector("table.table_2");
+        const tplTab = srPrep("srTpl").querySelector("table.table_2");
         const gen = d.querySelectorAll("tr.gen td:first-child");
         const diff = tplTab.offsetHeight - d.querySelector("table.table_2").offsetHeight;
         if (gen.length && diff) gen.forEach(td => { td.style.height = (td.offsetHeight + diff / gen.length - 2) + "px"; });
@@ -7764,15 +7997,13 @@
         return true;
       }
       function renderSynthReal() {
-        const tpl = document.getElementById("srTpl"), out = document.getElementById("srOut");
+        const tpl = srPrep("srTpl"), out = srPrep("srOut");
         if (!tpl || !out) return;
-        srPrep(tpl);
         if (frag >= 3 && srShown !== srVar) srApply();
         document.getElementById("srTplBox").classList.toggle("on", frag >= 1);
         document.getElementById("srOutBox").classList.toggle("on", frag >= 3);
-        const td = tpl.contentDocument, od = out.contentDocument;
-        if (td && td.documentElement) td.documentElement.classList.toggle("L2", frag >= 2);
-        if (od && od.documentElement) od.documentElement.classList.toggle("HL", frag === 3);
+        tpl.host.classList.toggle("L2", frag >= 2);
+        out.host.classList.toggle("HL", frag === 3);
         const tcap = document.getElementById("srTplCap");
         if (tcap) tcap.innerHTML = frag >= 2 ? "<b>" + srSlotCount + " mutable slots</b> found in the DOM" : "<b>FID-HTML</b> — rebuilt by REPLICA";
         // beats 0–4 are steps 1–5; the last beat leaves the strip done
@@ -7782,22 +8013,14 @@
           st.classList.toggle("done", i < on);
         });
       }
-      ["srTpl", "srOut"].forEach(id => {
-        const f = document.getElementById(id);
-        if (f) f.addEventListener("load", () => {
-          srPrep(f);
-          if (id === "srOut") srShown = -1;
-          if (slides[cur].id === "synthReal") renderSynthReal();
-        });
-      });
       function srNext() {
         srVar = (srVar + 1) % SR_STORES.length;
         if (frag < 3) { frag = 3; applyFrags(); return; }
         srApply();
         // replay the highlight so the audience sees what changed in the new receipt
-        const od = document.getElementById("srOut").contentDocument;
-        if (od) { od.documentElement.classList.remove("HL"); void od.body.offsetWidth; od.documentElement.classList.add("HL"); }
-        if (frag !== 3) setTimeout(() => { if (frag !== 3 && od) od.documentElement.classList.remove("HL"); }, 2600);
+        const host = document.getElementById("srOut");
+        host.classList.remove("HL"); void host.offsetWidth; host.classList.add("HL");
+        if (frag !== 3) setTimeout(() => { if (frag !== 3) host.classList.remove("HL"); }, 2600);
       }
 
       /* ═══════════ SYNTHETIC DOCUMENT GENERATION ═══════════
