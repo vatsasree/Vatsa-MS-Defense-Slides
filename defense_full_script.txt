@@ -1,0 +1,780 @@
+TOWARDS VISUALLY FAITHFUL DOCUMENT RECONSTRUCTION
+M.S. Thesis Defense — full speaking script
+Tallapragada Shanmukha Sreevatsa · 23 October 2026
+
+How to read this file
+- One section per slide, in the same order as the deck (slide numbers match the counter on screen).
+- [CLICK] means press next once. The text after it is what you say once that click has happened.
+- [pause] is a breath. [PAUSE] is a longer, deliberate stop.
+- Times are planned speaking times. Main talk ≈ 41 minutes.
+- Backup slides (B1–B11) are at the end, as short answers for questions.
+
+
+============================================================
+0 · TITLE — Towards Visually Faithful Document Reconstruction   (~0:45)
+============================================================
+
+Good morning, everyone. My name is Sreevatsa.
+
+Today I will present my M.S. thesis, "Towards Visually Faithful Document Reconstruction". My advisor is Dr. Ravi Kiran Sarvadevabhatla.
+
+The idea in one line: we want to turn scanned pages and PDFs into HTML that does not just read like the original — it looks like it.
+
+[pause]
+
+The thesis has three pieces.
+
+FID-HTML — the representation.
+REPLICA — the method.
+VFDR-Bench — the benchmark and the metrics.
+
+And one thing to keep in mind from the start: this entire talk is itself running in HTML.
+
+
+============================================================
+1 · HOW THIS TALK IS ORGANISED   (~0:35)
+============================================================
+
+The talk has six parts.
+
+First, the problem — and why the appearance of a document matters.
+
+Second, related work — what existing methods keep, and what they lose.
+
+Then my three contributions: FID-HTML, the representation; REPLICA, the system that produces it; and VFDR-Bench, the benchmark that measures it.
+
+And finally, the results, the limitations, and what this work makes possible.
+
+
+============================================================
+2 · DIVIDER — 01 Introduction   (~0:15)
+============================================================
+
+Let us start with the problem.
+
+Reading the words on a page is largely solved. The real question is whether we can keep both what a document says and what it looks like.
+
+
+============================================================
+3 · WHAT IS VISUALLY FAITHFUL DOCUMENT RECONSTRUCTION?   (~2:30)
+============================================================
+
+So what do we mean by "visually faithful"?
+
+On the left is an original invoice. On the right, I will rebuild the same document, one layer at a time. This is running live.
+
+Level zero is text only. Every word is there, and in the right order. But it is a wall of text. You cannot tell the heading from the body. The table has become a list of numbers. The page shape does not even match.
+
+[pause]
+
+Look at the red notes on the right. With only the text, a reader could pay a charge that was cancelled, miss an overdue notice, and misread the total.
+
+So the style is not decoration. Style is data.
+
+[CLICK]
+
+Level one adds logical structure. Now we know what is a heading, what is a section, what is the footer, and what is a table with rows and columns.
+
+That is why the first two notes turn green.
+
+It is better. But it is still not the page.
+
+[CLICK]
+
+Level two adds physical position. Now the page has the right size, the two columns come back, and the numbers line up under their headers.
+
+The column note turns green.
+
+[CLICK]
+
+Level three adds visual fidelity. Typography, colour, font weight, the strikethrough on the cancelled line, and the overdue stamp.
+
+Now the right side looks exactly like the left side, and the last three notes turn green.
+
+[pause]
+
+So the point is simple: a document is more than its text.
+
+
+============================================================
+4 · REQUIREMENTS FOR VISUALLY FAITHFUL DOCUMENT RECONSTRUCTION   (~1:00)
+============================================================
+
+This gives us the requirements for the problem.
+
+[CLICK]
+
+There are four axes.
+
+Text extraction — are the words right?
+Logical structure — is the hierarchy right?
+Physical structure — is everything in the right place?
+Visual fidelity — does it actually look right?
+
+Most existing work focuses on the first two. The last two were never measured, so they were never optimised.
+
+[CLICK]
+
+There are also two practical requirements on the output.
+
+It should be web-native, so it opens anywhere, in any browser.
+
+And it should be machine-readable, so other models can use its structure directly.
+
+These six requirements define the problem for the rest of the thesis.
+
+
+============================================================
+5 · DIVIDER — 02 Background & Related Work   (~0:15)
+============================================================
+
+Next, related work.
+
+The question here is: what do existing methods keep — and what do they lose?
+
+
+============================================================
+6 · WHERE THE FIELD STANDS   (~1:30)
+============================================================
+
+Let us see where existing systems stand. On the left is the input page. On the right, I will show one system at a time, running live.
+
+First, Marker, a strong document-parsing tool. The words survive, but the three columns are flattened into one. The page is lost.
+
+[CLICK]
+
+Next, GPT-5. The text is mostly correct, but the layout drifts — the placement, the fonts, even the number of columns.
+
+[CLICK]
+
+And Qwen3-VL-30B. The same story.
+
+[pause]
+
+These are different architectures and different model sizes, but the failure is the same.
+
+Text is mostly there. Hierarchy is roughly there. Geometry is gone. Visual fidelity is gone.
+
+And that consistency is a clue. Maybe the bottleneck is not the model.
+
+
+============================================================
+7 · A TAXONOMY OF PRIOR WORK   (~2:00)
+============================================================
+
+Here is the related work in one slide. There are four families of methods, and for each one, I show what it outputs — because what a method outputs limits what it can preserve.
+
+[CLICK]
+
+First, the foundations: OCR engines, layout detectors and document vision-language models. They give us text and boxes, but not a full page.
+
+[CLICK]
+
+Second, document-to-markup tools, such as Marker, MinerU and Docling. They output Markdown or simple HTML, and they flatten the page into a single stream.
+
+[CLICK]
+
+Third, physical reconstruction and screenshot-to-HTML methods. They try to preserve appearance, but only in narrow domains, such as scientific papers or simple web pages.
+
+[CLICK]
+
+And fourth, the benchmarks. They only score text and structure, and their references are written in Markdown.
+
+[pause]
+
+So the field cannot improve what it does not measure.
+
+
+============================================================
+8 · LIMITATIONS OF EXISTING DOCUMENT REPRESENTATIONS   (~1:45)
+============================================================
+
+So why does every system lose the same things?
+
+The problem is often the target representation — the format we ask the model to write. A page carries four kinds of information.
+
+[CLICK]
+
+All four have to pass through the output format. Marker writes Markdown. OCR models write plain text. GPT-5 and Qwen write generic HTML.
+
+[CLICK]
+
+And this is where two of the four are lost.
+
+Markdown has nowhere to put an x-y position. Plain text has nowhere to put colour or font style.
+
+Generic HTML can store these things — but it does not require them. And what is optional usually gets left out.
+
+[pause]
+
+So: what a format does not require, a system does not produce.
+
+That observation led us to FID-HTML.
+
+
+============================================================
+9 · DIVIDER — 03 FID-HTML   (~0:15)
+============================================================
+
+This brings me to my first contribution.
+
+If the format is the limit, then we need a better format.
+
+
+============================================================
+10 · THE SAME PAGE, REBUILT   (~0:40)
+============================================================
+
+This is the same page you just saw the other systems fail on.
+
+But now the target format carries all four axes: text, hierarchy, geometry and appearance.
+
+[CLICK]
+
+It is a single HTML file, rendered directly by the browser.
+
+We call this format FID-HTML.
+
+
+============================================================
+11 · SIX ASPECTS OF FID-HTML   (~1:45)
+============================================================
+
+FID-HTML carries six kinds of information. The code on the right is the actual source of the page on the left — it is not a mock-up.
+
+[CLICK]
+
+One: the textual content.
+
+[CLICK]
+
+Two: the hierarchical structure, through nested elements.
+
+[CLICK]
+
+Three: semantic tags, such as lists, tables, rows and cells.
+
+[CLICK]
+
+Four: position — where every block sits on the page.
+
+[CLICK]
+
+Five: styling — font size, colour, bold, italic, underline and strikethrough.
+
+[CLICK]
+
+And six: figures and backgrounds.
+
+[pause]
+
+So the browser sees HTML, and a language model sees text. Both of them see the same document.
+
+
+============================================================
+12 · COMPARISON WITH EXISTING REPRESENTATIONS   (~1:30)
+============================================================
+
+Now let us compare FID-HTML with the existing formats, using the same picture as before.
+
+[CLICK]
+
+Text and hierarchy pass through every format — Markdown, plain text, LaTeX, DocTags, hOCR and generic HTML.
+
+[CLICK]
+
+But geometry and style do not.
+
+Markdown and plain text cannot express them at all. LaTeX, DocTags and hOCR support them only partly. And generic HTML allows styling, but does not require position.
+
+[CLICK]
+
+FID-HTML opens a second path.
+
+[CLICK]
+
+In FID-HTML, geometry and styling are mandatory. Every block has a position, and every piece of text carries its visual style.
+
+So fidelity is no longer something we hope the model remembers. It is part of the format.
+
+
+============================================================
+13 · DIVIDER — 04 REPLICA   (~0:15)
+============================================================
+
+That was the format. My second contribution is the system that produces it — REPLICA.
+
+
+============================================================
+14 · DEFINING AGENTS AND TOOLS   (~1:15)
+============================================================
+
+First, a quick definition of "agentic".
+
+A tool is deterministic. The same input always gives the same output. For example: OCR, layout detection and font fitting.
+
+An agent makes decisions. It can inspect a result, choose, reject, retry or override.
+
+[CLICK]
+
+The picture shows the difference. A tool makes one pass. An agent checks its result, and if it is not good enough, it tries again.
+
+[pause]
+
+Our design rule is simple: use agents where judgment is needed, and tools where a fixed answer is enough.
+
+
+============================================================
+15 · THE AGENTIC FRAMEWORK, STAGE BY STAGE   (~2:30)
+============================================================
+
+REPLICA works in four stages. I will build them up one at a time.
+
+[CLICK]
+
+Stage one: Segment. We find the meaningful parts of the page and build a layout hierarchy.
+
+[CLICK]
+
+Stage two: Localize. Each part is sent to the right specialist — for text, tables, images, forms, lists or equations — and each specialist writes a small piece of HTML.
+
+[CLICK]
+
+Stage three: Assemble. We merge these pieces into one document and work out the reading order.
+
+[CLICK]
+
+Stage four: Refine. We render the HTML, compare it with the original page, fix the styling, and render again.
+
+[pause]
+
+So REPLICA does not generate HTML once. It looks at what it produced, and corrects it.
+
+
+============================================================
+16 · WALKTHROUGH OF THE REPLICA AGENTIC FRAMEWORK   (~3:00)
+============================================================
+(Press Space to play, or click to step through. The slide moves on after the last step.)
+
+Rather than explain the pipeline again, let me show it running.
+
+This is a Telugu newspaper — a deliberately difficult example.
+
+[animation begins]
+
+First, segmentation proposes regions on the page.
+
+Now watch the grouping agent. It does not treat these as separate boxes. It groups the headline, the image and the body text into articles.
+
+[pause while the animation moves]
+
+Next, localization. Different regions go to different specialists, and each one becomes a small piece of FID-HTML.
+
+[pause]
+
+Then assembly. Newspapers are where reading order becomes hard, because column order is not story order. So the reading-order agent works at the level of articles.
+
+[pause]
+
+And finally refinement: render, compare with the original, correct, and render again.
+
+[PAUSE near the final frame]
+
+So what looks like one big problem is really a sequence of much smaller decisions. That decomposition is the core of REPLICA.
+
+
+============================================================
+17 · DIVIDER — 05 VFDR-Bench & Metrics   (~0:20)
+============================================================
+
+My third contribution is about measurement.
+
+We now had a format and a system, but nothing could score them. Every existing benchmark stores its answers as Markdown or plain text, so there is no record of position or style to compare against.
+
+So we built a new benchmark.
+
+
+============================================================
+18 · AGAINST EXISTING BENCHMARKS (Table 4.1)   (~1:15)
+============================================================
+
+This table compares VFDR-Bench with existing document benchmarks.
+
+[CLICK]
+
+First, coverage. VFDR-Bench covers 22 languages across 17 domains.
+
+[CLICK]
+
+Second, the annotation format. Existing benchmarks use Markdown or plain text.
+
+[CLICK]
+
+Third, what each benchmark can score. For physical structure and visual fidelity, the columns are empty for every existing benchmark.
+
+[CLICK]
+
+VFDR-Bench is annotated in FID-HTML, and it is the only benchmark that scores all four axes.
+
+
+============================================================
+19 · VFDR-BENCH — 5,000 DOCUMENTS   (~0:50)
+============================================================
+
+These are real pages from the benchmark.
+
+VFDR-Bench has 5,000 documents, in 22 languages, across 17 domains, all annotated in FID-HTML.
+
+[pause]
+
+It includes newspapers, government records, textbooks and exam papers, financial documents, Indic and archival material, and magazines.
+
+This diversity matters, because reconstruction failures depend heavily on the layout.
+
+
+============================================================
+20 · WHICH METRIC MEASURES WHAT   (~1:45)
+============================================================
+
+The metrics follow the same four axes.
+
+[CLICK]
+
+For text extraction and logical structure, we use standard metrics: character and word recognition rates for text, and tree-edit distance for the structure.
+
+[CLICK]
+
+For the other two axes, we introduce new metrics.
+
+For physical structure, GPS and LPS measure where each block and each line actually landed on the page.
+
+For visual fidelity, VFS asks a vision-language model to compare how the two pages look.
+
+[pause]
+
+Importantly, these new metrics evaluate the rendered page, not just the HTML code.
+
+[CLICK]
+
+The overall score is the average of the four axes, so a system cannot score well by being good at only one.
+
+
+============================================================
+21 · DO THE NEW METRICS AGREE WITH HUMAN EXPERTS?   (~0:50)
+============================================================
+
+Because these metrics are new, we checked whether they agree with people.
+
+Seven experts compared the outputs of five systems on 100 documents. This table shows how well each expert agrees with each metric.
+
+For every expert and every metric, the agreement is above 0.8.
+
+[CLICK]
+
+And the overall score agrees best, at 0.89.
+
+
+============================================================
+22 · THE BENCHMARK IS HARD — 15 EXISTING METHODS   (~1:45)
+============================================================
+
+Now let us see how 15 existing methods perform on VFDR-Bench. I will go one axis at a time. The outlined cell is the best existing method in each column.
+
+[CLICK]
+
+Text extraction is crowded. Many systems are already decent.
+
+[CLICK]
+
+For logical structure, some systems do well.
+
+[CLICK]
+
+For physical structure, the whole field collapses. Almost nothing lands in the right place.
+
+[CLICK]
+
+For visual fidelity, the large models produce good-looking pages. But a page can look plausible and still not be the same page.
+
+[CLICK]
+
+Overall, the best existing system reaches only 0.58.
+
+This is the bar that REPLICA has to clear.
+
+
+============================================================
+23 · DIVIDER — 06 Results   (~0:15)
+============================================================
+
+Now the results.
+
+The main question is: does a structured, agentic design beat simply using a bigger model?
+
+
+============================================================
+24 · QUANTITATIVE RESULTS   (~2:00)
+============================================================
+
+This is the same table you just saw.
+
+[CLICK]
+
+But now with one new row: REPLICA.
+
+[CLICK]
+
+On text extraction, REPLICA is ahead.
+
+[CLICK]
+
+On logical structure, it is ahead as well.
+
+[CLICK]
+
+On physical structure — where the whole field collapsed — REPLICA reaches 0.73 and 0.86.
+
+[CLICK]
+
+On visual fidelity, it reaches 0.93.
+
+[CLICK]
+
+And overall, 0.86, compared with 0.58 for the best existing method.
+
+[pause]
+
+So REPLICA has no weak axis.
+
+
+============================================================
+25 · ABLATION STUDIES   (~1:45)
+============================================================
+
+The ablation study shows where these gains come from.
+
+[CLICK]
+
+Segmentation gives the first big jump. A better hierarchy leads to better geometry.
+
+[CLICK]
+
+Localization gives the second big jump. Sending each part to a specialist beats one single model doing everything — with the same model size.
+
+[CLICK]
+
+And refinement adds the final improvement in visual fidelity: render, compare, and repair.
+
+[pause]
+
+So the main message is this: breaking the problem into structured steps works better than asking one model to solve everything at once.
+
+
+============================================================
+26 · SOURCE SCAN VS LIVE FID-HTML RENDER   (~1:00)
+============================================================
+
+This slide is a simple visual check.
+
+On the left is the original scan. On the right is REPLICA's FID-HTML, rendered live — it is a real web page, not a screenshot.
+
+The first example is a Gujarati government notice with a table.
+
+[CLICK]
+
+Next, a receipt.
+
+[CLICK]
+
+A magazine layout.
+
+[CLICK]
+
+And a scientific paper.
+
+[CLICK]
+
+Across all of them, the columns, the typography and the placement are preserved.
+
+
+============================================================
+27 · LIMITATIONS   (~1:15)
+============================================================
+
+There are four limitations.
+
+First, the system currently works on single pages only.
+
+Second, identifying the exact font family is still difficult.
+
+Third, the refinement loop adds latency, because the page is rendered several times.
+
+And fourth, the data leans towards high-resource scripts, like English and Chinese, and towards clean layouts.
+
+
+============================================================
+28 · WHAT FID-HTML UNLOCKS   (~1:15)
+============================================================
+
+FID-HTML is useful beyond reconstruction.
+
+[CLICK]
+
+It enables layout-preserving translation.
+
+[CLICK]
+
+Document preservation.
+
+[CLICK]
+
+Indexing and search.
+
+[CLICK]
+
+Grounded document understanding.
+
+[CLICK]
+
+Semantic chunking for retrieval systems.
+
+[CLICK]
+
+And position-aware retrieval.
+
+[pause]
+
+All of these work because FID-HTML keeps the link between the content and its place on the page.
+
+
+============================================================
+29 · SYNTHETIC DOCUMENT GENERATION   (~1:45)
+============================================================
+
+One application I want to show in more detail is synthetic document generation.
+
+We start from a real receipt.
+
+[CLICK]
+
+REPLICA converts it into FID-HTML.
+
+[CLICK]
+
+Because it is HTML, we can find the parts that change from one receipt to another — the store name, the address, the items, and the amounts. These are the slots, shown in gold.
+
+[CLICK]
+
+Then we fill these slots with new values. This creates a completely new receipt. Everything that changed is shown in green.
+
+[CLICK]
+
+And this is the final result: a new document, with the same look as the original.
+
+[CLICK]
+
+This is useful where real documents cannot be shared because of privacy — like medical records, bank statements or ID cards.
+
+So from one real document, we can create many new ones for training.
+
+
+============================================================
+30 · SUPERVISION FOR GROUNDED DOCUMENT MODELS   (~1:30)
+============================================================
+
+FID-HTML is structured, but it is still text. That means REPLICA can also be used to generate training data.
+
+[CLICK]
+
+Every page it processes comes with text, structure, position and style — ground truth by construction.
+
+This has already been used in three papers: M3Grounder at CVPR, and DoCoG and DocLayout-VL at ECCV.
+
+[CLICK]
+
+And the loop closes. Better models improve REPLICA, and REPLICA produces better training data.
+
+[CLICK]
+
+One example is GroundingDocQA — 200,000 documents and 2 million question–answer pairs, each grounded to the exact region on the page.
+
+
+============================================================
+31 · CONCLUSION — Represent → Generate → Measure   (~1:00)
+============================================================
+
+To conclude, this thesis makes three contributions.
+
+FID-HTML: a representation in which visual fidelity is explicit.
+
+REPLICA: an agentic framework — Segment, Localize, Assemble and Refine — using agents for judgment and tools for fixed steps.
+
+And VFDR-Bench: a benchmark that finally measures position and visual fidelity.
+
+[pause]
+
+REPLICA reaches 0.93 in visual fidelity and 0.86 overall.
+
+The main lesson is that a structured design can beat simply using a larger model.
+
+
+============================================================
+32 · FUTURE DIRECTIONS   (~0:40)
+============================================================
+
+There are four directions for future work.
+
+Reconstructing multi-page documents.
+
+Letting people edit the FID-HTML interactively.
+
+Using this approach to generate large amounts of training data.
+
+And treating documents as editable, structured web resources.
+
+
+============================================================
+33 · THANK YOU   (Q&A)
+============================================================
+
+And to make that point literally — this talk is HTML.
+
+[PAUSE]
+
+Thank you. I am happy to take any questions.
+
+
+############################################################
+BACKUP SLIDES — short answers for questions
+(press ↓ from the Thank-you slide, or O for the overview)
+############################################################
+
+B1 · Full format comparison (Table 3.1)
+This is the full comparison of formats. HTML can express position and style, but it never requires them. FID-HTML is the only format that supports every column.
+
+B2 · Robustness and reliability
+[CLICK] Across 15 languages and more than 10 document types, REPLICA stays stable — 0.86 overall, 0.93 on English and 0.89 on Chinese. Existing methods drop by up to 20 percent outside English and Chinese.
+[CLICK] Each part of the system is also reliable: routing is 97 percent accurate, the generated HTML is valid 96 percent of the time, and tool calls succeed 99.5 percent of the time.
+
+B3 · Agent and tool reliability (Table 5.3)
+This table shows the reliability of every agent and tool, measured from execution traces. All of them score 0.96 or higher.
+
+B4 · Ground truth
+[CLICK] [CLICK] [CLICK] For each of the 5,000 pages, annotators built an FID-HTML copy and checked it side by side with the original, fixing it until the two looked the same.
+If asked: REPLICA produced a first draft, and every page was then reviewed and corrected by hand.
+
+B5 – B7 · Each stage, formally
+Click through. Segment: digital or scanned, detector ensemble, labeling agent, grouping agent. Localize: the router picks a specialist, six specialists, run in parallel. Assemble and Refine: merge, reading order, then render, compare and repair.
+
+B8 · The complete REPLICA pipeline
+This is the whole pipeline in a single figure, with every agent and tool.
+
+B9 · Synthetic generation on an ID-card template
+The same idea on an identity card. Only the slots change — names in Telugu, Hindi or English. Press S to show another variant.
+
+B10 · M3Grounder data engine
+FID-HTML is converted into pixel masks, at the level of phrases, lines and blocks. This is how GroundingDocQA was built.
+
+B11 · Fine-grained benchmark analysis
+Born-digital documents are easier than scanned ones, and forms, ID documents and receipts are the hardest.
+If asked why GPT-5 is 0.51 in Table 4.4 but 0.58 in Table 5.1: these come from different evaluation runs. The slides use Table 5.1 throughout.
