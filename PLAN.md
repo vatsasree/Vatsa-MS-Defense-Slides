@@ -8,6 +8,20 @@ This document is written for the implementing agent (Opus). Sections: priorities
 
 ---
 
+## Status (22 Oct 2026) — the built deck deviates from this plan in these ways
+
+The deck is built and committed on `main` (`index.html`, 33 main slides + 11 backups). During the build Sreevatsa steered several changes directly, so **where this plan and the deck disagree, the deck wins**:
+
+- **Chapter order is back to the ICDAR storyline:** 03 FID-HTML → 04 REPLICA (agents, stages, walkthrough) → 05 VFDR-Bench & Metrics → 06 Results. The baselines-only table still closes the benchmark chapter and the results chapter opens by adding the REPLICA row. Title roadmap, road-ahead slide, dividers and the conclusion ("Represent → Generate → Measure") follow this order.
+- **Dropped from the main deck, kept as backups:** ground-truth slide (B4), robustness & reliability slide, the per-annotator table, the separate "metrics formally" slide (its definitions were folded into "Which metric measures what"), the identity-card synthetic mock.
+- **Human-agreement slide** is now just the Table 4.3 Pearson table, shown large.
+- **Synthetic document generation** runs on a real SROIE receipt reconstructed by REPLICA: 23 slots, each `S` press generates a complete new receipt with consistent totals and GST; changed cells pulse green.
+- **Results tables** outline the best existing method per column (computed) instead of hand-picked red cells; the conclusion stat row reads 0.93 VFS · 0.86 vs 0.58 overall.
+- **Offline vendoring (Phase 9) is done** (`vendor/`, KaTeX removed from `site.html`).
+- Not done: a full timed run-through (Sreevatsa will pace the talk), creating the GitHub repo and pushing.
+
+---
+
 ## 0. How to read this plan — and what to build first
 
 The defense is **two days** after this plan was written (21 Oct → 23 Oct 2026). Build in priority order and deploy early; everything marked **P0** must be live on Pages before anything **P1** starts.
