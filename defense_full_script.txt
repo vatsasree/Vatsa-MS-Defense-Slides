@@ -4,9 +4,10 @@ Tallapragada Shanmukha Sreevatsa · 23 October 2026
 
 How to read this file
 - One section per slide, in the same order as the deck (slide numbers match the counter on screen).
+- The overview and chapter-divider slides are hidden in the deck; their text is kept at the very end.
 - [CLICK] means press next once. The text after it is what you say once that click has happened.
 - [pause] is a breath. [PAUSE] is a longer, deliberate stop.
-- Times are planned speaking times. Main talk ≈ 41 minutes.
+- Times are planned speaking times. Main talk ≈ 39 minutes.
 - Backup slides (B1–B11) are at the end, as short answers for questions.
 
 
@@ -32,32 +33,10 @@ And one thing to keep in mind from the start: this entire talk is itself running
 
 
 ============================================================
-1 · HOW THIS TALK IS ORGANISED   (~0:35)
-============================================================
-
-The talk has six parts.
-
-First, the problem — and why the appearance of a document matters.
-
-Second, related work — what existing methods keep, and what they lose.
-
-Then my three contributions: FID-HTML, the representation; REPLICA, the system that produces it; and VFDR-Bench, the benchmark that measures it.
-
-And finally, the results, the limitations, and what this work makes possible.
-
-
-============================================================
-2 · DIVIDER — 01 Introduction   (~0:15)
+1 · WHAT IS VISUALLY FAITHFUL DOCUMENT RECONSTRUCTION?   (~2:30)
 ============================================================
 
 Let us start with the problem.
-
-Reading the words on a page is largely solved. The real question is whether we can keep both what a document says and what it looks like.
-
-
-============================================================
-3 · WHAT IS VISUALLY FAITHFUL DOCUMENT RECONSTRUCTION?   (~2:30)
-============================================================
 
 So what do we mean by "visually faithful"?
 
@@ -97,7 +76,7 @@ So the point is simple: a document is more than its text.
 
 
 ============================================================
-4 · REQUIREMENTS FOR VISUALLY FAITHFUL DOCUMENT RECONSTRUCTION   (~1:00)
+2 · REQUIREMENTS FOR VISUALLY FAITHFUL DOCUMENT RECONSTRUCTION   (~1:00)
 ============================================================
 
 This gives us the requirements for the problem.
@@ -125,19 +104,10 @@ These six requirements define the problem for the rest of the thesis.
 
 
 ============================================================
-5 · DIVIDER — 02 Background & Related Work   (~0:15)
+3 · A TAXONOMY OF PRIOR WORK   (~2:00)
 ============================================================
 
-Next, related work.
-
-The question here is: what do existing methods keep — and what do they lose?
-
-
-============================================================
-6 · A TAXONOMY OF PRIOR WORK   (~2:00)
-============================================================
-
-Here is the related work in one slide, before we look at any outputs. There are four families of methods, and for each one, I show what it outputs — because what a method outputs limits what it can preserve.
+Next, related work. Here it is in one slide, before we look at any outputs. There are four families of methods, and for each one, I show what it outputs — because what a method outputs limits what it can preserve.
 
 [CLICK]
 
@@ -161,7 +131,7 @@ So the field cannot improve what it does not measure.
 
 
 ============================================================
-7 · WHERE THE FIELD STANDS   (~1:30)
+4 · WHERE THE FIELD STANDS   (~1:30)
 ============================================================
 
 Now let me show three of these systems on a real page. On the left is the input page. On the right, I will show one system at a time, running live.
@@ -186,7 +156,7 @@ And that consistency is a clue. Maybe the bottleneck is not the model.
 
 
 ============================================================
-8 · LIMITATIONS OF EXISTING DOCUMENT REPRESENTATIONS   (~1:45)
+5 · LIMITATIONS OF EXISTING DOCUMENT REPRESENTATIONS   (~1:45)
 ============================================================
 
 So why does every system lose the same things?
@@ -215,17 +185,10 @@ That observation led us to FID-HTML.
 
 
 ============================================================
-9 · DIVIDER — 03 FID-HTML   (~0:15)
+6 · THE SAME PAGE, REBUILT   (~0:40)
 ============================================================
 
-This brings me to my first contribution.
-
-If the format is the limit, then we need a better format.
-
-
-============================================================
-10 · THE SAME PAGE, REBUILT   (~0:40)
-============================================================
+This brings me to my first contribution, FID-HTML.
 
 This is the same page you just saw the other systems fail on.
 
@@ -239,7 +202,7 @@ We call this format FID-HTML.
 
 
 ============================================================
-11 · SIX ASPECTS OF FID-HTML   (~1:45)
+7 · SIX ASPECTS OF FID-HTML   (~1:45)
 ============================================================
 
 FID-HTML carries six kinds of information. The code on the right is the actual source of the page on the left — it is not a mock-up.
@@ -274,7 +237,7 @@ So the browser sees HTML, and a language model sees text. Both of them see the s
 
 
 ============================================================
-12 · COMPARISON WITH EXISTING REPRESENTATIONS   (~1:30)
+8 · COMPARISON WITH EXISTING REPRESENTATIONS   (~1:30)
 ============================================================
 
 Now let us compare FID-HTML with the existing formats, using the same picture as before.
@@ -301,15 +264,10 @@ So fidelity is no longer something we hope the model remembers. It is part of th
 
 
 ============================================================
-13 · DIVIDER — 04 REPLICA   (~0:15)
+9 · DEFINING AGENTS AND TOOLS   (~1:15)
 ============================================================
 
-That was the format. My second contribution is the system that produces it — REPLICA.
-
-
-============================================================
-14 · DEFINING AGENTS AND TOOLS   (~1:15)
-============================================================
+My second contribution is the system that produces this format — REPLICA.
 
 First, a quick definition of "agentic".
 
@@ -327,7 +285,7 @@ Our design rule is simple: use agents where judgment is needed, and tools where 
 
 
 ============================================================
-15 · THE AGENTIC FRAMEWORK, STAGE BY STAGE   (~2:30)
+10 · THE AGENTIC FRAMEWORK, STAGE BY STAGE   (~2:30)
 ============================================================
 
 REPLICA works in four stages. I will build them up one at a time.
@@ -354,7 +312,7 @@ So REPLICA does not generate HTML once. It looks at what it produced, and correc
 
 
 ============================================================
-16 · WALKTHROUGH OF THE REPLICA AGENTIC FRAMEWORK   (~3:00)
+11 · WALKTHROUGH OF THE REPLICA AGENTIC FRAMEWORK   (~3:00)
 ============================================================
 (Press Space to play, or click to step through. The slide moves on after the last step.)
 
@@ -386,19 +344,10 @@ So what looks like one big problem is really a sequence of much smaller decision
 
 
 ============================================================
-17 · DIVIDER — 05 VFDR-Bench & Metrics   (~0:20)
+12 · AGAINST EXISTING BENCHMARKS (Table 4.1)   (~1:15)
 ============================================================
 
-My third contribution is about measurement.
-
-We now had a format and a system, but nothing could score them. Every existing benchmark stores its answers as Markdown or plain text, so there is no record of position or style to compare against.
-
-So we built a new benchmark.
-
-
-============================================================
-18 · AGAINST EXISTING BENCHMARKS (Table 4.1)   (~1:15)
-============================================================
+My third contribution is about measurement. We now had a format and a system, but nothing could score them. Every existing benchmark stores its answers as Markdown or plain text, so there is no record of position or style to compare against. So we built a new benchmark.
 
 This table compares VFDR-Bench with existing document benchmarks.
 
@@ -420,7 +369,7 @@ VFDR-Bench is annotated in FID-HTML, and it is the only benchmark that scores al
 
 
 ============================================================
-19 · VFDR-BENCH — 5,000 DOCUMENTS   (~0:50)
+13 · VFDR-BENCH — 5,000 DOCUMENTS   (~0:50)
 ============================================================
 
 These are real pages from the benchmark.
@@ -435,7 +384,7 @@ This diversity matters, because reconstruction failures depend heavily on the la
 
 
 ============================================================
-20 · WHICH METRIC MEASURES WHAT   (~1:45)
+14 · WHICH METRIC MEASURES WHAT   (~1:45)
 ============================================================
 
 The metrics follow the same four axes.
@@ -462,7 +411,7 @@ The overall score is the average of the four axes, so a system cannot score well
 
 
 ============================================================
-21 · DO THE NEW METRICS AGREE WITH HUMAN EXPERTS?   (~0:50)
+15 · DO THE NEW METRICS AGREE WITH HUMAN EXPERTS?   (~0:50)
 ============================================================
 
 Because these metrics are new, we checked whether they agree with people.
@@ -477,7 +426,7 @@ And the overall score agrees best, at 0.89.
 
 
 ============================================================
-22 · THE BENCHMARK IS HARD — 15 EXISTING METHODS   (~1:45)
+16 · THE BENCHMARK IS HARD — 15 EXISTING METHODS   (~1:45)
 ============================================================
 
 Now let us see how 15 existing methods perform on VFDR-Bench. I will go one axis at a time. The outlined cell is the best existing method in each column.
@@ -506,17 +455,10 @@ This is the bar that REPLICA has to clear.
 
 
 ============================================================
-23 · DIVIDER — 06 Results   (~0:15)
+17 · QUANTITATIVE RESULTS   (~2:00)
 ============================================================
 
 Now the results.
-
-The main question is: does a structured, agentic design beat simply using a bigger model?
-
-
-============================================================
-24 · QUANTITATIVE RESULTS   (~2:00)
-============================================================
 
 This is the same table you just saw.
 
@@ -550,7 +492,7 @@ So REPLICA has no weak axis.
 
 
 ============================================================
-25 · ABLATION STUDIES   (~1:45)
+18 · ABLATION STUDIES   (~1:45)
 ============================================================
 
 The ablation study shows where these gains come from.
@@ -573,7 +515,7 @@ So the main message is this: breaking the problem into structured steps works be
 
 
 ============================================================
-26 · SOURCE SCAN VS LIVE FID-HTML RENDER   (~1:00)
+19 · SOURCE SCAN VS LIVE FID-HTML RENDER   (~1:00)
 ============================================================
 
 This slide is a simple visual check.
@@ -600,7 +542,7 @@ Across all of them, the columns, the typography and the placement are preserved.
 
 
 ============================================================
-27 · LIMITATIONS   (~1:15)
+20 · LIMITATIONS   (~1:15)
 ============================================================
 
 There are four limitations.
@@ -615,7 +557,7 @@ And fourth, the data leans towards high-resource scripts, like English and Chine
 
 
 ============================================================
-28 · WHAT FID-HTML UNLOCKS   (~1:15)
+21 · WHAT FID-HTML UNLOCKS   (~1:15)
 ============================================================
 
 FID-HTML is useful beyond reconstruction.
@@ -650,7 +592,7 @@ All of these work because FID-HTML keeps the link between the content and its pl
 
 
 ============================================================
-29 · SYNTHETIC DOCUMENT GENERATION   (~1:45)
+22 · SYNTHETIC DOCUMENT GENERATION   (~1:45)
 ============================================================
 
 One application I want to show in more detail is synthetic document generation.
@@ -681,7 +623,7 @@ So from one real document, we can create many new ones for training.
 
 
 ============================================================
-30 · SUPERVISION FOR GROUNDED DOCUMENT MODELS   (~1:30)
+23 · SUPERVISION FOR GROUNDED DOCUMENT MODELS   (~1:30)
 ============================================================
 
 FID-HTML is structured, but it is still text. That means REPLICA can also be used to generate training data.
@@ -702,7 +644,7 @@ One example is GroundingDocQA — 200,000 documents and 2 million question–ans
 
 
 ============================================================
-31 · CONCLUSION — Represent → Generate → Measure   (~1:00)
+24 · CONCLUSION — Represent → Generate → Measure   (~1:00)
 ============================================================
 
 To conclude, this thesis makes three contributions.
@@ -721,7 +663,7 @@ The main lesson is that a structured design can beat simply using a larger model
 
 
 ============================================================
-32 · FUTURE DIRECTIONS   (~0:40)
+25 · FUTURE DIRECTIONS   (~0:40)
 ============================================================
 
 There are four directions for future work.
@@ -736,7 +678,7 @@ And treating documents as editable, structured web resources.
 
 
 ============================================================
-33 · THANK YOU   (Q&A)
+26 · THANK YOU   (Q&A)
 ============================================================
 
 And to make that point literally — this talk is HTML.
@@ -780,3 +722,78 @@ FID-HTML is converted into pixel masks, at the level of phrases, lines and block
 B11 · Fine-grained benchmark analysis
 Born-digital documents are easier than scanned ones, and forms, ID documents and receipts are the hardest.
 If asked why GPT-5 is 0.51 in Table 4.4 but 0.58 in Table 5.1: these come from different evaluation runs. The slides use Table 5.1 throughout.
+
+
+############################################################
+HIDDEN SLIDES — commented out in index.html (kept here in case they come back)
+############################################################
+
+============================================================
+HOW THIS TALK IS ORGANISED   (~0:35)
+============================================================
+
+The talk has six parts.
+
+First, the problem — and why the appearance of a document matters.
+
+Second, related work — what existing methods keep, and what they lose.
+
+Then my three contributions: FID-HTML, the representation; REPLICA, the system that produces it; and VFDR-Bench, the benchmark that measures it.
+
+And finally, the results, the limitations, and what this work makes possible.
+
+
+============================================================
+DIVIDER — 01 Introduction   (~0:15)
+============================================================
+
+Let us start with the problem.
+
+Reading the words on a page is largely solved. The real question is whether we can keep both what a document says and what it looks like.
+
+
+============================================================
+DIVIDER — 02 Background & Related Work   (~0:15)
+============================================================
+
+Next, related work.
+
+The question here is: what do existing methods keep — and what do they lose?
+
+
+============================================================
+DIVIDER — 03 FID-HTML   (~0:15)
+============================================================
+
+This brings me to my first contribution.
+
+If the format is the limit, then we need a better format.
+
+
+============================================================
+DIVIDER — 04 REPLICA   (~0:15)
+============================================================
+
+That was the format. My second contribution is the system that produces it — REPLICA.
+
+
+============================================================
+DIVIDER — 05 VFDR-Bench & Metrics   (~0:20)
+============================================================
+
+My third contribution is about measurement.
+
+We now had a format and a system, but nothing could score them. Every existing benchmark stores its answers as Markdown or plain text, so there is no record of position or style to compare against.
+
+So we built a new benchmark.
+
+
+============================================================
+DIVIDER — 06 Results   (~0:15)
+============================================================
+
+Now the results.
+
+The main question is: does a structured, agentic design beat simply using a bigger model?
+
+
