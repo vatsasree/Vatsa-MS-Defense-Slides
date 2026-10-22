@@ -4230,10 +4230,14 @@
       font-style: normal;
     }
 
+    .humanwrap {
+      flex: 0 0 auto;
+    }
+
     .rtab.humantab td,
     .rtab.humantab th {
-      font-size: 23px;
-      padding: 9px 14px;
+      font-size: 28px;
+      padding: 16px 18px;
     }
 
     .rtab.humantab tr.hd2 th {
@@ -5054,7 +5058,7 @@
 
       <!-- ═══════════ 0 · TITLE ═══════════ -->
       <section class="slide title-slide"
-        data-notes="Good morning. My thesis is titled Towards Visually Faithful Document Reconstruction. The one-line version: turn documents into HTML that looks exactly like the original, not just reads like it. Three contributions, in thesis order: represent — a format, FID-HTML, that can carry what a page looks like; measure — a benchmark, VFDR-Bench, and metrics that can score it; and generate — an agentic framework, REPLICA, that produces it. [1:00]">
+        data-notes="Good morning. My thesis is titled Towards Visually Faithful Document Reconstruction. The one-line version: turn documents into HTML that looks exactly like the original, not just reads like it. Three contributions: represent — a format, FID-HTML, that can carry what a page looks like; generate — an agentic framework, REPLICA, that produces it; and measure — a benchmark, VFDR-Bench, and metrics that can score it. [1:00]">
         <div class="venue-chip">M.S. Thesis Defense <span class="oral">23 October 2026</span></div>
         <div class="affil" style="margin:-18px 0 26px;">IIIT Hyderabad &nbsp;·&nbsp; CVIT</div>
         <h1 class="thesis">Towards Visually Faithful <br>Document Reconstruction</h1>
@@ -5062,9 +5066,9 @@
         <div class="roadmap">
           <span class="rm"><b>Represent</b>FID-HTML</span>
           <span class="rmar">&rarr;</span>
-          <span class="rm"><b>Measure</b>VFDR-Bench + GPS · LPS · VFS</span>
-          <span class="rmar">&rarr;</span>
           <span class="rm"><b>Generate</b>REPLICA</span>
+          <span class="rmar">&rarr;</span>
+          <span class="rm"><b>Measure</b>VFDR-Bench + GPS · LPS · VFS</span>
         </div>
         <div class="authors">
           Tallapragada Shanmukha Sreevatsa
@@ -5079,7 +5083,7 @@
 
       <!-- ═══════════ 01 · THE ROAD AHEAD ═══════════ -->
       <section class="slide vcenter" data-eyebrow="Overview"
-        data-notes="How the talk is organised — it follows the thesis chapter by chapter. First the problem and why appearance matters; then how people have tried and what they miss. Then the three contributions in the order the argument needs them: represent — FID-HTML, the target format; measure — VFDR-Bench and its metrics, because a target with no ruler cannot be optimised; and only then generate — REPLICA, the system that produces it. The last chapter is the evidence, the honest edges, and what this unlocks downstream. [0:50]">
+        data-notes="How the talk is organised — it follows the thesis chapter by chapter. First the problem and why appearance matters; then how people have tried and what they miss. Then the three contributions: represent — FID-HTML, the target format; generate — REPLICA, the system that produces it; and measure — VFDR-Bench and its metrics, because nothing existing could score either. The last chapter is the evidence, the honest edges, and what this unlocks downstream. [0:50]">
         <h2>How this talk is organised</h2>
         <div class="slide-body">
           <div class="roadrows">
@@ -5089,16 +5093,16 @@
                 class="rd">How people have tried, and what they miss</span></div>
             <div class="roadrow"><span class="num-badge">03</span><span class="rn">FID-HTML</span><span class="rd">A
                 representation designed to be faithful</span><span class="rc">represent</span></div>
-            <div class="roadrow"><span class="num-badge">04</span><span class="rn">VFDR-Bench &amp; Metrics</span><span
-                class="rd">A benchmark and metrics that measure fidelity</span><span class="rc">measure</span></div>
-            <div class="roadrow"><span class="num-badge gold">05</span><span class="rn">REPLICA</span><span class="rd">An
+            <div class="roadrow"><span class="num-badge gold">04</span><span class="rn">REPLICA</span><span class="rd">An
                 agentic framework that generates it</span><span class="rc">generate</span></div>
+            <div class="roadrow"><span class="num-badge">05</span><span class="rn">VFDR-Bench &amp; Metrics</span><span
+                class="rd">A benchmark and metrics that measure fidelity</span><span class="rc">measure</span></div>
             <div class="roadrow"><span class="num-badge">06</span><span class="rn">Results, Limitations &amp;
                 Applications</span><span class="rd">Evidence, honest edges, downstream impact</span><span
                 class="rc">results</span></div>
           </div>
-          <div class="takeaway">The order follows the thesis: define the target, measure against it, then build the
-            system that beats existing methods on that measure.</div>
+          <div class="takeaway">Define the target, build the system that produces it, then measure it against every
+            existing method on a benchmark built for that target.</div>
         </div>
       </section>
 
@@ -5670,239 +5674,15 @@
         </div>
       </section>
 
-      <!-- ═══════════ DIVIDER 04 ═══════════ -->
-      <section class="slide section-slide" data-eyebrow="04 · VFDR-Bench &amp; Metrics"
-        data-notes="Chapter four, the second contribution: measure. A target with no ruler cannot be optimised. Every existing benchmark is annotated in Markdown or plain text, so there is no ground truth for position or style — you cannot score what a page looks like against a reference that never recorded it. So before building a system, we built the ruler. [0:20]">
-        <h1>VFDR-Bench &amp; Metrics</h1>
-        <div class="q">We have a target representation. But how do we systematically evaluate whether a reconstruction truly preserves both the semantics and the appearance of the source?</div>
-      </section>
-
-      <!-- ═══════════ 14 · AGAINST EXISTING BENCHMARKS (thesis Table 4.1) ═══════════ -->
-      <section class="slide vcenter" data-eyebrow="04 · VFDR-Bench &amp; Metrics" data-frags="4" id="benchSlide"
-        data-notes="Thesis Table 4.1: VFDR-Bench against the document benchmarks people actually report on. [CLICK] Coverage first — images, languages, domains. Some are large: OCRBench-v2 has ten thousand images, READoc covers twenty-seven languages. I am not claiming most on either alone; the claim is breadth in combination — twenty-two languages across seventeen domains. [CLICK] Now the annotation format, and this is the real constraint. Markdown, plain text, at best LaTeX or generic HTML. A Markdown reference has no slot for where a block sits or what font it is in — so whatever you score against it, it cannot be position or style. [CLICK] Which is exactly what the last four columns show. Text extraction and logical structure, yes. Physical structure and visual fidelity: two empty columns for the whole field. [CLICK] VFDR-Bench: five thousand pages, annotated in FID-HTML, and the only benchmark that scores all four. [1:30]">
-        <div class="kicker">Thesis Table 4.1 · VFDR-Bench against existing benchmarks</div>
-        <h2>Broader coverage — and the <em>only</em> one measuring layout &amp; fidelity</h2>
-        <div class="slide-body">
-          <div class="rwrap">
-            <div class="rfit">
-              <table class="rtab benchtab" id="benchTable"></table>
-            </div>
-          </div>
-          <div class="takeaway frag" data-frag="4">The only document benchmark annotated in <b>FID-HTML</b> — and the
-            only one that scores <b>physical structure</b> and <b>visual fidelity</b>.</div>
-        </div>
-      </section>
-
-      <!-- ═══════════ VFDR-BENCH SAMPLE CAROUSEL ═══════════ -->
-      <section class="slide" data-eyebrow="04 · VFDR-Bench &amp; Metrics" id="vfdrSlide"
-        data-notes="This is what is actually in VFDR-Bench — thirty real pages from the set, grouped by document type, playing on their own. Five thousand documents, twenty-two languages, seventeen domains, and every single one annotated in Fid-HTML by trained annotators, because you cannot score position or style against a Markdown reference. Newspapers and periodicals; government and official records — birth certificates, tenders, memoranda; textbooks and exam papers, including right-to-left scripts; business and finance — statements, invoices with handwriting and rubber stamps; Indic and archival material on aged paper; and magazines and lifestyle layouts. Shift-arrow steps, P pauses, and clicking a page enlarges it. The pages are drawn from IndicDLP, RVL-CDIP, PubLayNet, DocLayNet, M6Doc, IDL, PRImA, D4LA, SROIE, FUNSD, OJ4OCRMT and CCpdf, plus web-scraped pages — over twenty layout categories. [1:30]">
-        <div class="kicker">What is actually in the benchmark &nbsp;·&nbsp;
-          <span class="chint">plays automatically &nbsp;·&nbsp; <b>P</b> pause &nbsp;·&nbsp; <b>&#8679;&larr;
-              &#8679;&rarr;</b> step &nbsp;·&nbsp; click a page to enlarge</span>
-        </div>
-        <h2>VFDR-Bench — <em>5,000 documents</em>, annotated in FID-HTML</h2>
-        <div class="slide-body">
-          <div class="stats caro-stats">
-            <div class="stat">
-              <div class="v">5,000</div>
-              <div class="k">documents</div>
-            </div>
-            <div class="stat">
-              <div class="v">22</div>
-              <div class="k">languages</div>
-            </div>
-            <div class="stat">
-              <div class="v">17</div>
-              <div class="k">domains</div>
-            </div>
-            <div class="stat">
-              <div class="v gold">100%</div>
-              <div class="k">expert human annotated</div>
-            </div>
-          </div>
-          <div class="srcline">Sourced from IndicDLP · RVL-CDIP · PubLayNet · DocLayNet · M6Doc · IDL · PRImA · D4LA · SROIE ·
-            FUNSD · OJ4OCRMT · CCpdf + web-scraped pages &nbsp;·&nbsp; 20+ layout categories</div>
-          <div class="carowrap">
-            <div class="carotabs" id="caroTabs"></div>
-            <div class="carostage" id="caroStage"></div>
-            <div class="carocap" id="caroCap"></div>
-            <div class="carodots" id="caroDots"></div>
-            <div class="carostate on" id="caroState">&#9654; playing</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ═══════════ 16 · GROUND TRUTH (pptx 30) ═══════════ -->
-      <section class="slide vcenter" data-eyebrow="04 · VFDR-Bench &amp; Metrics" data-frags="3" id="gtSlide"
-        data-notes="One sentence on where the answer key comes from. To score position and style you need a reference that records them. [CLICK] So for every one of the five thousand pages, [CLICK] annotators built a web-page copy of it in FID-HTML, [CLICK] and checked it by opening it next to the original and fixing it until the two look the same. That is the answer key every system is scored against. If asked about the thesis text: REPLICA produced a first draft, and every page was then reviewed and corrected by hand, so the released references are human-verified. [0:30]">
-        <h2>The answer key — <em>a faithful copy of every page</em></h2>
-        <div class="slide-body">
-          <div class="gtflow">
-            <div class="gtstep frag" data-frag="1">
-              <div class="gtfig"><svg viewBox="0 0 120 150" aria-hidden="true">
-                  <rect x="6" y="6" width="108" height="138" rx="6" class="pg" />
-                  <rect x="20" y="22" width="60" height="9" rx="3" class="hd" />
-                  <rect x="20" y="42" width="80" height="5" rx="2" class="ln" /><rect x="20" y="54" width="72" height="5" rx="2" class="ln" />
-                  <rect x="20" y="66" width="80" height="5" rx="2" class="ln" /><rect x="20" y="84" width="36" height="40" rx="3" class="im" />
-                  <rect x="62" y="84" width="38" height="5" rx="2" class="ln" /><rect x="62" y="96" width="34" height="5" rx="2" class="ln" />
-                </svg></div>
-              <h3>The original page</h3>
-              <p>one of 5,000</p>
-            </div>
-            <div class="gtarrow frag" data-frag="2">&rarr;</div>
-            <div class="gtstep frag" data-frag="2">
-              <div class="gtfig code">&lt;/&gt;</div>
-              <h3>Rebuilt as FID-HTML</h3>
-              <p>a web-page copy: every block placed and styled as on the page</p>
-            </div>
-            <div class="gtarrow frag" data-frag="3">&rarr;</div>
-            <div class="gtstep accent frag" data-frag="3">
-              <div class="gtfig match">=</div>
-              <h3>Checked side by side</h3>
-              <p>fixed by hand until it looks the same as the original</p>
-            </div>
-          </div>
-          <div class="takeaway frag" data-frag="3">Existing benchmarks keep only the words (Markdown), so position and style can't
-            be scored. <b>Our answer key keeps how the page looks.</b></div>
-        </div>
-      </section>
-
-      <!-- ═══════════ 20 · WHICH METRIC MEASURES WHAT ═══════════ -->
-      <section class="slide vcenter" data-eyebrow="04 · VFDR-Bench &amp; Metrics" data-frags="3"
-        data-notes="Same four axes, one metric family each, defined where it is introduced — this shape is the one to keep in your head, because every result from here on is read on it. [CLICK] The two established axes. Text extraction: the mean of character and word recognition rates. Logical structure: tree edit distance between the two DOM trees — how many node insertions, deletions and substitutions turn one into the other — normalised by tree size, with TEDS for tables and CDM for formulas. Both standard. [CLICK] The two we introduce, and both read the rendered page, not the markup. Physical structure: run the same layout model on the source page and on the rendered HTML; for every block, GPS is the fraction of its true box that the rebuilt block covers, averaged over all blocks. LPS is the same at line level, using Hi-SAM line boxes. Visual fidelity: Gemini 2.5 Pro sees the rendered prediction next to the rendered ground truth and scores layout, fonts, styling, images and overall look. Neither axis had a metric before this work. [CLICK] Overall is the plain mean of the four, so nothing can buy a good score by winning one axis. [2:30]">
-        <!-- <div class="kicker">Reading the scoreboard</div> -->
-        <h2>Which metric measures <em>what</em></h2>
-        <div class="slide-body">
-          <div class="radarwrap">
-            <svg class="mradar" viewBox="150 6 1090 604"
-              aria-label="The four axes of document reconstruction and the metric family on each">
-              <g class="rgrid">
-                <circle cx="620" cy="300" r="190" />
-                <circle cx="620" cy="300" r="142" />
-                <circle cx="620" cy="300" r="95" />
-                <circle cx="620" cy="300" r="48" />
-                <line x1="620" y1="300" x2="620" y2="110" />
-                <line x1="620" y1="300" x2="810" y2="300" />
-                <line x1="620" y1="300" x2="620" y2="490" />
-                <line x1="620" y1="300" x2="430" y2="300" />
-              </g>
-              <g class="rnode">
-                <circle cx="620" cy="110" r="7" class="std" />
-                <circle cx="810" cy="300" r="7" class="std" />
-                <circle cx="620" cy="490" r="7" class="new" />
-                <circle cx="430" cy="300" r="7" class="new" />
-              </g>
-
-              <g class="rlab std frag" data-frag="1">
-                <text x="620" y="66" text-anchor="middle" class="ax">Text Extraction</text>
-                <text x="620" y="90" text-anchor="middle" class="qq">are the words right?</text>
-                <text x="828" y="288" class="ax">Logical Structure</text>
-                <text x="828" y="312" class="qq">is the structure right?</text>
-                <text x="828" y="340" class="mt">NTED &#8595; · TEDS &#8593; · CDM &#8593; <tspan class="chipstd"
-                    dx="9">standard</tspan></text>
-                <text x="620" y="32" text-anchor="middle" class="mt">WRR &#8593; · CRR &#8593; <tspan class="chipstd"
-                    dx="9">standard</tspan></text>
-              </g>
-              <g class="rlab new frag" data-frag="2">
-                <text x="620" y="528" text-anchor="middle" class="ax">Physical Structure</text>
-                <text x="620" y="552" text-anchor="middle" class="qq">is the position right?</text>
-                <text x="620" y="580" text-anchor="middle" class="mt">GPS &#8593; · LPS &#8593; <tspan class="chipnew"
-                    dx="9">NEW</tspan></text>
-                <text x="412" y="288" text-anchor="end" class="ax">Visual Fidelity</text>
-                <text x="412" y="312" text-anchor="end" class="qq">does it look right?</text>
-                <text x="412" y="340" text-anchor="end" class="mt">VFS &#8593; <tspan class="chipnew" dx="9">NEW</tspan>
-                </text>
-              </g>
-              <g class="rcentre frag" data-frag="3">
-                <circle cx="620" cy="300" r="44" />
-                <text x="620" y="295" text-anchor="middle" class="os">OS</text>
-                <text x="620" y="318" text-anchor="middle" class="osn">mean of 4</text>
-              </g>
-            </svg>
-            <div class="radarside">
-              <!-- Each family is defined where it is introduced (thesis §4.4), so the
-                   formal definitions need no slide of their own. -->
-              <div class="rs-card frag" data-frag="1">
-                <h4>Two axes already had metrics</h4>
-                <div class="rs-math"><span class="math">TE = (CRR + WRR) / 2</span>
-                  <span class="rs-why">characters and words recovered</span></div>
-                <div class="rs-math"><span class="math">NTED = TED(T<sub>gt</sub>, T<sub>pred</sub>) / max(|T<sub>gt</sub>|, |T<sub>pred</sub>|)</span>
-                  <span class="rs-why">edits to turn one DOM tree into the other · TEDS for tables, CDM for formulae</span></div>
-              </div>
-              <div class="rs-card gold frag" data-frag="2">
-                <h4>We introduce</h4>
-                <div class="rs-math"><span class="math">GPS = |B<sub>gt</sub> ∩ B<sub>pred</sub>| / |B<sub>gt</sub>|</span>
-                  <span class="rs-why">how much of each block's true box the rebuilt block covers · <b>LPS</b>: the same for every
-                    line</span></div>
-                <div class="rs-math"><span class="math">VFS = Judge(render(pred), render(gt))</span>
-                  <span class="rs-why">a VLM (Gemini 2.5 Pro) compares the two pages: layout, fonts, styling, images</span></div>
-              </div>
-              <div class="rs-card frag" data-frag="3">
-                <h4>Overall</h4>
-                <div class="rs-math"><span class="math">OS = (TE + LS + PS + VF) / 4, &nbsp; PS = (GPS + LPS) / 2</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ═══════════ 19 · HUMAN AGREEMENT (thesis Table 4.3) ═══════════ -->
-      <section class="slide vcenter" data-eyebrow="04 · VFDR-Bench &amp; Metrics" data-frags="2" id="humanSlide"
-        data-notes="GPS, LPS and VFS are new, so before trusting them we checked them against people. Text and structure use metrics the field already accepts, so they did not need this. The test: seven experts in document design, typography and layout took a hundred pages; each page had been rebuilt by five different systems, and for each page they ordered the five rebuilds from most to least faithful. Our metric orders the same five rebuilds. If the metric sees what people see, the two orderings agree. [CLICK] They do: correlation 0.87 for VFS, 0.82 for GPS, 0.85 for LPS and 0.89 for the overall score, where 1 would mean identical orderings. [CLICK] And it is not one friendly annotator: every metric is above 0.8 for every one of the seven — the per-annotator table is in the backups. [1:00]">
-        <div class="kicker">Thesis §4.4.6 · checking the new metrics against people</div>
-        <h2>Do our new metrics <em>agree with people</em>?</h2>
-        <div class="slide-body">
-          <div class="hsteps">
-            <div class="hstep"><span class="num-badge">1</span><p><b>100 pages</b>, each rebuilt by <b>5 different
-                  systems</b></p></div>
-            <div class="hstep"><span class="num-badge">2</span><p><b>7 experts</b> order the 5 rebuilds of each page,
-                most → least like the original</p></div>
-            <div class="hstep"><span class="num-badge">3</span><p>Each metric orders the same 5 — <b>do the orders
-                  match?</b></p></div>
-          </div>
-          <div class="stats frag" data-frag="1">
-            <div class="stat"><div class="v">0.87</div><div class="k">VFS · appearance</div></div>
-            <div class="stat"><div class="v">0.82</div><div class="k">GPS · block position</div></div>
-            <div class="stat"><div class="v">0.85</div><div class="k">LPS · line position</div></div>
-            <div class="stat"><div class="v gold">0.89</div><div class="k">Overall</div></div>
-          </div>
-          <div class="hcap frag" data-frag="1">agreement with the experts' order (Pearson correlation · 1 = identical)</div>
-          <div class="takeaway frag" data-frag="2">Only the <b>new</b> metrics needed this check — text and structure use
-            standard ones. All agree strongly with people: <b>above 0.8 for every one of the 7 experts</b>.</div>
-        </div>
-      </section>
-
-      <!-- ═══════════ 20 · THE BAR TO BEAT (Table 5.1 baselines; second instance of the results table) ═══════════ -->
-      <section class="slide" data-eyebrow="04 · VFDR-Bench &amp; Metrics" data-frags="5" id="baseSlide"
-        data-notes="So we have the ruler. This is what it says about the field: fifteen existing methods — pipeline tools, expert OCR models, general VLMs and screenshot-to-HTML models — all scored on VFDR-Bench with the metrics I just showed you. Same axis walk as before. [CLICK] Text extraction: almost everyone is passable — Marker 0.68 WRR, Qwen and GPT-5 close behind. Largely solved, which is why the field feels finished. [CLICK] Logical structure, tree edit distance, lower is better: the OCR specialists sit near 0.9 because they emit an almost flat stream; GPT-5 is the best at 0.49. [CLICK] Physical structure: the whole field collapses. Best LPS 0.22, best GPS 0.43, most systems under 0.30. Nothing lands where it belongs. [CLICK] Visual fidelity: GPT-5 0.86, Gemini 0.82 — good-looking pages, but with GPS of 0.43 and 0.31 they are not the source page. [CLICK] Graded: the strongest system tops out at 0.58 overall. The benchmark is hard, and it discriminates — and this is the bar REPLICA has to clear. Hold on to this picture; it comes back in chapter six. [2:00]">
-        <div class="kicker">Table 5.1 · 15 existing methods on VFDR-Bench</div>
-        <h2>The benchmark is <em>hard</em>, and it discriminates</h2>
-        <div class="slide-body">
-          <div class="rwrap">
-            <div class="rfit">
-              <table class="rtab" id="baseTable"></table>
-            </div>
-          </div>
-          <div class="rnote">
-            <div class="rbbnote"><i></i>best existing method in this column</div>
-            <div class="rlegend"><span>weakest</span><i style="background:#fdeceb"></i><i
-                style="background:#fdf1dd"></i><i style="background:#eef5ef"></i><i
-                style="background:#dcefe1"></i><span>strongest</span></div>
-          </div>
-          <div class="takeaway frag bartake" data-frag="5">The strongest system tops out at <b>OS 0.58</b>. Text is
-            largely solved; position and style collapse for the whole field. This is the bar REPLICA has to clear.</div>
-        </div>
-      </section>
-
-      <!-- ═══════════ DIVIDER 05 ═══════════ -->
-      <section class="slide section-slide" data-eyebrow="05 · REPLICA"
-        data-notes="Chapter five, the third contribution: generate. We have the target and the ruler — now the system that hits the target. And the part I most want to land: why it is agentic, and what that actually means. [0:15]">
+      <!-- ═══════════ DIVIDER 04 · REPLICA ═══════════ -->
+      <section class="slide section-slide" data-eyebrow="04 · REPLICA"
+        data-notes="Chapter four, the second contribution: generate. We have the target format — now the system that produces it. And the part I most want to land: why it is agentic, and what that actually means. [0:15]">
         <h1>REPLICA</h1>
         <div class="q">How can arbitrary scanned or digital documents be reconstructed into FID-HTML with both semantic correctness and near pixel-level visual fidelity?</div>
       </section>
 
       <!-- ═══════════ 11 · AGENTS VS TOOLS ═══════════ -->
-      <section class="slide vcenter" data-eyebrow="05 · REPLICA" data-frags="1"
+      <section class="slide vcenter" data-eyebrow="04 · REPLICA" data-frags="1"
         data-notes="First the vocabulary, because agentic is an overloaded word. We formalise the system as a coordination between two things. A TOOL is a fixed function: same input, same output, no judgment. A layout detector always returns boxes the same way; reading-order computation, font fitting, background extraction — deterministic, reproducible, cheap. An AGENT reasons: it decides which tool to call, when, and whether the result is good enough — then retries, overrides, reroutes or escalates. In the paper we write script-A for the set of agents and script-T for the set of tools; agents perform semantic reasoning, routing, grouping and generation, while tools execute structured reproducible operations. And the objective is precisely this: given a page image I, produce HTML H such that the RENDER of H aligns with I across all four axes. Note it is R of H — the rendering — not H itself. That single choice is what forces a refine stage to exist at all. [1:30]">
         <!-- <div class="kicker">The vocabulary, precisely</div> -->
         <!-- <h2>Agents <em>reason</em>. Tools <em>execute</em>.</h2> -->
@@ -6006,7 +5786,7 @@
       </section>
 
       <!-- ═══════════ THE AGENTIC FRAMEWORK, STAGE BY STAGE ═══════════ -->
-      <section class="slide" data-eyebrow="05 · REPLICA" data-frags="4" id="stagesSlide"
+      <section class="slide" data-eyebrow="04 · REPLICA" data-frags="4" id="stagesSlide"
         data-notes="So how does that decomposition actually run? Four questions, four stages — and I will build the framework figure up one stage at a time. [CLICK] Stage 1, Segment: how do we divide the document into meaningful components? A document-type tool decides digital or scanned; a detector ensemble — DocLayout-YOLO, IndicDLP-YOLO, Hi-SAM — proposes regions; then two agents take over. The Labeling agent uses Set-of-Mark prompting to assign types and catch mis-segmentation, and the Grouping agent builds the layout graph, resolving caption-figure binding and list nesting. Output: a hierarchical layout tree. [CLICK] Stage 2, Localize: how do we convert each component into HTML? The Router agent picks a specialist from the crop itself, overriding the upstream label when the visual contradicts it. Six specialists — text, table, image, form, list, equation — emit sub-HTML with position and style inline. Tools like OCR and table-structure recognition are called only when needed. Nodes are conditionally independent, so this stage parallelises. [CLICK] Stage 3, Assemble: how do we compose them? A position-aware merge tool works bottom-up over the tree, then the Reading-Order agent linearises semantically — because top-to-bottom sorting fails on multi-column pages. [CLICK] Stage 4, Refine: how do we make it actually look right? Font-size and background tools, and then the Reflection agent renders the HTML, compares it against the source image, and injects CSS until it stabilises. That is the only component that ever sees the final render — and it is why the objective is stated on R of H. [3:00]">
         <h2>The agentic framework, <em>stage by stage</em></h2>
         <div class="slide-body">
@@ -6091,7 +5871,7 @@
       </section>
 
       <!-- ═══════════ 18 · LIVE FRAMEWORK DEMO ═══════════ -->
-      <section class="slide demo bleed full" data-eyebrow="05 · REPLICA · Demo" data-embed="pipeline" data-frags="0"
+      <section class="slide demo bleed full" data-eyebrow="04 · REPLICA · Demo" data-embed="pipeline" data-frags="0"
         data-notes="Rather than describe it further — here is the whole framework running on a real page with every intermediate output: a Telugu newspaper, the layout that argues hardest for agents. Watch the Grouping Agent close a dashed outline around each article — headline, deck, figure, body columns — and the Reading-Order Agent reject raster order for story-major order, because a newspaper has no fixed reading order. Step through with the clicker one beat at a time, or press space to let the whole walkthrough run and space again to pause it. Each beat spotlights the corresponding part of Figure 4 on the left. [3:30]">
         <!-- <div class="kicker">Interactive walkthrough</div> -->
         <h2>Walkthrough of the <em>REPLICA</em> Agentic Framework</h2>
@@ -6101,17 +5881,204 @@
         </div>
       </section>
 
+      <!-- ═══════════ DIVIDER 05 · VFDR-BENCH & METRICS ═══════════ -->
+      <section class="slide section-slide" data-eyebrow="05 · VFDR-Bench &amp; Metrics"
+        data-notes="Chapter five, the third contribution: measure. We have a format and a system that produces it — but nothing could score it. Every existing benchmark is annotated in Markdown or plain text, so there is no ground truth for position or style; you cannot score what a page looks like against a reference that never recorded it. So we built the ruler. [0:20]">
+        <h1>VFDR-Bench &amp; Metrics</h1>
+        <div class="q">We have a target representation and a system that produces it. But how do we systematically evaluate whether a reconstruction truly preserves both the semantics and the appearance of the source?</div>
+      </section>
+
+      <!-- ═══════════ 14 · AGAINST EXISTING BENCHMARKS (thesis Table 4.1) ═══════════ -->
+      <section class="slide vcenter" data-eyebrow="05 · VFDR-Bench &amp; Metrics" data-frags="4" id="benchSlide"
+        data-notes="Thesis Table 4.1: VFDR-Bench against the document benchmarks people actually report on. [CLICK] Coverage first — images, languages, domains. Some are large: OCRBench-v2 has ten thousand images, READoc covers twenty-seven languages. I am not claiming most on either alone; the claim is breadth in combination — twenty-two languages across seventeen domains. [CLICK] Now the annotation format, and this is the real constraint. Markdown, plain text, at best LaTeX or generic HTML. A Markdown reference has no slot for where a block sits or what font it is in — so whatever you score against it, it cannot be position or style. [CLICK] Which is exactly what the last four columns show. Text extraction and logical structure, yes. Physical structure and visual fidelity: two empty columns for the whole field. [CLICK] VFDR-Bench: five thousand pages, annotated in FID-HTML, and the only benchmark that scores all four. [1:30]">
+        <div class="kicker">Thesis Table 4.1 · VFDR-Bench against existing benchmarks</div>
+        <h2>Broader coverage — and the <em>only</em> one measuring layout &amp; fidelity</h2>
+        <div class="slide-body">
+          <div class="rwrap">
+            <div class="rfit">
+              <table class="rtab benchtab" id="benchTable"></table>
+            </div>
+          </div>
+          <div class="takeaway frag" data-frag="4">The only document benchmark annotated in <b>FID-HTML</b> — and the
+            only one that scores <b>physical structure</b> and <b>visual fidelity</b>.</div>
+        </div>
+      </section>
+
+      <!-- ═══════════ VFDR-BENCH SAMPLE CAROUSEL ═══════════ -->
+      <section class="slide" data-eyebrow="05 · VFDR-Bench &amp; Metrics" id="vfdrSlide"
+        data-notes="This is what is actually in VFDR-Bench — thirty real pages from the set, grouped by document type, playing on their own. Five thousand documents, twenty-two languages, seventeen domains, and every single one annotated in Fid-HTML by trained annotators, because you cannot score position or style against a Markdown reference. Newspapers and periodicals; government and official records — birth certificates, tenders, memoranda; textbooks and exam papers, including right-to-left scripts; business and finance — statements, invoices with handwriting and rubber stamps; Indic and archival material on aged paper; and magazines and lifestyle layouts. Shift-arrow steps, P pauses, and clicking a page enlarges it. The pages are drawn from IndicDLP, RVL-CDIP, PubLayNet, DocLayNet, M6Doc, IDL, PRImA, D4LA, SROIE, FUNSD, OJ4OCRMT and CCpdf, plus web-scraped pages — over twenty layout categories. [1:30]">
+        <div class="kicker">What is actually in the benchmark &nbsp;·&nbsp;
+          <span class="chint">plays automatically &nbsp;·&nbsp; <b>P</b> pause &nbsp;·&nbsp; <b>&#8679;&larr;
+              &#8679;&rarr;</b> step &nbsp;·&nbsp; click a page to enlarge</span>
+        </div>
+        <h2>VFDR-Bench — <em>5,000 documents</em>, annotated in FID-HTML</h2>
+        <div class="slide-body">
+          <div class="stats caro-stats">
+            <div class="stat">
+              <div class="v">5,000</div>
+              <div class="k">documents</div>
+            </div>
+            <div class="stat">
+              <div class="v">22</div>
+              <div class="k">languages</div>
+            </div>
+            <div class="stat">
+              <div class="v">17</div>
+              <div class="k">domains</div>
+            </div>
+            <div class="stat">
+              <div class="v gold">100%</div>
+              <div class="k">expert human annotated</div>
+            </div>
+          </div>
+          <div class="srcline">Sourced from IndicDLP · RVL-CDIP · PubLayNet · DocLayNet · M6Doc · IDL · PRImA · D4LA · SROIE ·
+            FUNSD · OJ4OCRMT · CCpdf + web-scraped pages &nbsp;·&nbsp; 20+ layout categories</div>
+          <div class="carowrap">
+            <div class="carotabs" id="caroTabs"></div>
+            <div class="carostage" id="caroStage"></div>
+            <div class="carocap" id="caroCap"></div>
+            <div class="carodots" id="caroDots"></div>
+            <div class="carostate on" id="caroState">&#9654; playing</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════ 20 · WHICH METRIC MEASURES WHAT ═══════════ -->
+      <section class="slide vcenter" data-eyebrow="05 · VFDR-Bench &amp; Metrics" data-frags="3"
+        data-notes="Same four axes, one metric family each, defined where it is introduced — this shape is the one to keep in your head, because every result from here on is read on it. [CLICK] The two established axes. Text extraction: the mean of character and word recognition rates. Logical structure: tree edit distance between the two DOM trees — how many node insertions, deletions and substitutions turn one into the other — normalised by tree size, with TEDS for tables and CDM for formulas. Both standard. [CLICK] The two we introduce, and both read the rendered page, not the markup. Physical structure: run the same layout model on the source page and on the rendered HTML; for every block, GPS is the fraction of its true box that the rebuilt block covers, averaged over all blocks. LPS is the same at line level, using Hi-SAM line boxes. Visual fidelity: Gemini 2.5 Pro sees the rendered prediction next to the rendered ground truth and scores layout, fonts, styling, images and overall look. Neither axis had a metric before this work. [CLICK] Overall is the plain mean of the four, so nothing can buy a good score by winning one axis. [2:30]">
+        <!-- <div class="kicker">Reading the scoreboard</div> -->
+        <h2>Which metric measures <em>what</em></h2>
+        <div class="slide-body">
+          <div class="radarwrap">
+            <svg class="mradar" viewBox="150 6 1090 604"
+              aria-label="The four axes of document reconstruction and the metric family on each">
+              <g class="rgrid">
+                <circle cx="620" cy="300" r="190" />
+                <circle cx="620" cy="300" r="142" />
+                <circle cx="620" cy="300" r="95" />
+                <circle cx="620" cy="300" r="48" />
+                <line x1="620" y1="300" x2="620" y2="110" />
+                <line x1="620" y1="300" x2="810" y2="300" />
+                <line x1="620" y1="300" x2="620" y2="490" />
+                <line x1="620" y1="300" x2="430" y2="300" />
+              </g>
+              <g class="rnode">
+                <circle cx="620" cy="110" r="7" class="std" />
+                <circle cx="810" cy="300" r="7" class="std" />
+                <circle cx="620" cy="490" r="7" class="new" />
+                <circle cx="430" cy="300" r="7" class="new" />
+              </g>
+
+              <g class="rlab std frag" data-frag="1">
+                <text x="620" y="66" text-anchor="middle" class="ax">Text Extraction</text>
+                <text x="620" y="90" text-anchor="middle" class="qq">are the words right?</text>
+                <text x="828" y="288" class="ax">Logical Structure</text>
+                <text x="828" y="312" class="qq">is the structure right?</text>
+                <text x="828" y="340" class="mt">NTED &#8595; · TEDS &#8593; · CDM &#8593; <tspan class="chipstd"
+                    dx="9">standard</tspan></text>
+                <text x="620" y="32" text-anchor="middle" class="mt">WRR &#8593; · CRR &#8593; <tspan class="chipstd"
+                    dx="9">standard</tspan></text>
+              </g>
+              <g class="rlab new frag" data-frag="2">
+                <text x="620" y="528" text-anchor="middle" class="ax">Physical Structure</text>
+                <text x="620" y="552" text-anchor="middle" class="qq">is the position right?</text>
+                <text x="620" y="580" text-anchor="middle" class="mt">GPS &#8593; · LPS &#8593; <tspan class="chipnew"
+                    dx="9">NEW</tspan></text>
+                <text x="412" y="288" text-anchor="end" class="ax">Visual Fidelity</text>
+                <text x="412" y="312" text-anchor="end" class="qq">does it look right?</text>
+                <text x="412" y="340" text-anchor="end" class="mt">VFS &#8593; <tspan class="chipnew" dx="9">NEW</tspan>
+                </text>
+              </g>
+              <g class="rcentre frag" data-frag="3">
+                <circle cx="620" cy="300" r="44" />
+                <text x="620" y="295" text-anchor="middle" class="os">OS</text>
+                <text x="620" y="318" text-anchor="middle" class="osn">mean of 4</text>
+              </g>
+            </svg>
+            <div class="radarside">
+              <!-- Each family is defined where it is introduced (thesis §4.4), so the
+                   formal definitions need no slide of their own. -->
+              <div class="rs-card frag" data-frag="1">
+                <h4>Two axes already had metrics</h4>
+                <div class="rs-math"><span class="math">TE = (CRR + WRR) / 2</span>
+                  <span class="rs-why">characters and words recovered</span></div>
+                <div class="rs-math"><span class="math">NTED = TED(T<sub>gt</sub>, T<sub>pred</sub>) / max(|T<sub>gt</sub>|, |T<sub>pred</sub>|)</span>
+                  <span class="rs-why">edits to turn one DOM tree into the other · TEDS for tables, CDM for formulae</span></div>
+              </div>
+              <div class="rs-card gold frag" data-frag="2">
+                <h4>We introduce</h4>
+                <div class="rs-math"><span class="math">GPS = |B<sub>gt</sub> ∩ B<sub>pred</sub>| / |B<sub>gt</sub>|</span>
+                  <span class="rs-why">how much of each block's true box the rebuilt block covers · <b>LPS</b>: the same for every
+                    line</span></div>
+                <div class="rs-math"><span class="math">VFS = Judge(render(pred), render(gt))</span>
+                  <span class="rs-why">a VLM (Gemini 2.5 Pro) compares the two pages: layout, fonts, styling, images</span></div>
+              </div>
+              <div class="rs-card frag" data-frag="3">
+                <h4>Overall</h4>
+                <div class="rs-math"><span class="math">OS = (TE + LS + PS + VF) / 4, &nbsp; PS = (GPS + LPS) / 2</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════ 19 · HUMAN AGREEMENT (thesis Table 4.3) ═══════════ -->
+      <section class="slide vcenter" data-eyebrow="05 · VFDR-Bench &amp; Metrics" data-frags="1" id="humanSlide"
+        data-notes="GPS, LPS and VFS are new metrics, so we checked that they agree with people. Seven experts in document design, typography and layout were shown, for a hundred pages, the outputs of five systems side by side, and asked which ones look most like the original. Each number here is the Pearson correlation between one expert's judgement and the metric's — 1 would be perfect agreement. Read across a row: every expert, A1 to A7, agrees with every metric at 0.80 or above. Text and structure use standard metrics, so they did not need this check. [CLICK] The averages: 0.87 for VFS, 0.82 for GPS, 0.85 for LPS, and the overall score agrees best, at 0.89. [1:00]">
+        <div class="kicker">Thesis Table 4.3 · 7 expert annotators · 100 documents · 5 systems</div>
+        <h2>Do the new metrics <em>agree with human experts</em>?</h2>
+        <div class="slide-body">
+          <p class="lede">Pearson correlation between each expert's judgement of the reconstructions and each metric
+            (1 = perfect agreement).</p>
+          <div class="rwrap humanwrap">
+            <table class="rtab graded humantab">
+                <thead><tr class="hd2"><th class="m">Metric</th><th>A1</th><th>A2</th><th>A3</th><th>A4</th><th>A5</th><th>A6</th><th>A7</th><th class="avg">Avg</th></tr></thead>
+                <tbody>
+                  <tr class="row"><td class="m" data-c="0">VFS</td><td data-c="1" class="g3">0.87</td><td data-c="2" class="g3">0.86</td><td data-c="3" class="g3">0.88</td><td data-c="4" class="g3">0.90</td><td data-c="5" class="g3">0.85</td><td data-c="6" class="g3">0.89</td><td data-c="7" class="g3">0.87</td><td data-c="8" class="g3 avg">0.87</td></tr>
+                  <tr class="row"><td class="m" data-c="0">GPS</td><td data-c="1" class="g3">0.82</td><td data-c="2" class="g3">0.80</td><td data-c="3" class="g3">0.83</td><td data-c="4" class="g3">0.84</td><td data-c="5" class="g3">0.81</td><td data-c="6" class="g3">0.85</td><td data-c="7" class="g3">0.82</td><td data-c="8" class="g3 avg">0.82</td></tr>
+                  <tr class="row"><td class="m" data-c="0">LPS</td><td data-c="1" class="g3">0.85</td><td data-c="2" class="g3">0.84</td><td data-c="3" class="g3">0.86</td><td data-c="4" class="g3">0.87</td><td data-c="5" class="g3">0.83</td><td data-c="6" class="g3">0.88</td><td data-c="7" class="g3">0.85</td><td data-c="8" class="g3 avg">0.85</td></tr>
+                  <tr class="row"><td class="m" data-c="0">Overall (OS)</td><td data-c="1" class="g3">0.88</td><td data-c="2" class="g3">0.86</td><td data-c="3" class="g3">0.89</td><td data-c="4" class="g3">0.91</td><td data-c="5" class="g3">0.86</td><td data-c="6" class="g3">0.92</td><td data-c="7" class="g3">0.88</td><td data-c="8" class="g3 avg">0.89</td></tr>
+                </tbody>
+              </table>
+          </div>
+          <div class="takeaway frag" data-frag="1">Every new metric agrees with <b>every expert</b> at <b>0.80 or above</b>;
+            the overall score agrees best (<b>0.89</b>).</div>
+        </div>
+      </section>
+
+      <!-- ═══════════ 20 · THE BAR TO BEAT (Table 5.1 baselines; second instance of the results table) ═══════════ -->
+      <section class="slide" data-eyebrow="05 · VFDR-Bench &amp; Metrics" data-frags="5" id="baseSlide"
+        data-notes="So we have the ruler. This is what it says about the field: fifteen existing methods — pipeline tools, expert OCR models, general VLMs and screenshot-to-HTML models — all scored on VFDR-Bench with the metrics I just showed you. Same axis walk as before. [CLICK] Text extraction: almost everyone is passable — Marker 0.68 WRR, Qwen and GPT-5 close behind. Largely solved, which is why the field feels finished. [CLICK] Logical structure, tree edit distance, lower is better: the OCR specialists sit near 0.9 because they emit an almost flat stream; GPT-5 is the best at 0.49. [CLICK] Physical structure: the whole field collapses. Best LPS 0.22, best GPS 0.43, most systems under 0.30. Nothing lands where it belongs. [CLICK] Visual fidelity: GPT-5 0.86, Gemini 0.82 — good-looking pages, but with GPS of 0.43 and 0.31 they are not the source page. [CLICK] Graded: the strongest system tops out at 0.58 overall. The benchmark is hard, and it discriminates — and this is the bar REPLICA has to clear. Hold on to this picture: the next slide adds REPLICA's row. [2:00]">
+        <div class="kicker">Table 5.1 · 15 existing methods on VFDR-Bench</div>
+        <h2>The benchmark is <em>hard</em>, and it discriminates</h2>
+        <div class="slide-body">
+          <div class="rwrap">
+            <div class="rfit">
+              <table class="rtab" id="baseTable"></table>
+            </div>
+          </div>
+          <div class="rnote">
+            <div class="rbbnote"><i></i>best existing method in this column</div>
+            <div class="rlegend"><span>weakest</span><i style="background:#fdeceb"></i><i
+                style="background:#fdf1dd"></i><i style="background:#eef5ef"></i><i
+                style="background:#dcefe1"></i><span>strongest</span></div>
+          </div>
+          <div class="takeaway frag bartake" data-frag="5">The strongest system tops out at <b>OS 0.58</b>. Text is
+            largely solved; position and style collapse for the whole field. This is the bar REPLICA has to clear.</div>
+        </div>
+      </section>
+
       <!-- ═══════════ DIVIDER 06 ═══════════ -->
       <section class="slide section-slide" data-eyebrow="06 · Results"
-        data-notes="Chapter six. The evidence, then the honest edges, then what this unlocks. Everything is measured with the benchmark and metrics from chapter four. [0:15]">
+        data-notes="Chapter six. The evidence, then the honest edges, then what this unlocks. Everything is measured with the benchmark and metrics from chapter five. [0:15]">
         <h1>Results</h1>
         <div class="q">Does structured agentic design actually beat brute-force model scaling on visually faithful reconstruction?</div>
-        <div class="ssub">All numbers that follow are on VFDR-Bench, with the metric suite of Chapter 04.</div>
+        <div class="ssub">All numbers that follow are on VFDR-Bench, with the metric suite of Chapter 05.</div>
       </section>
 
       <!-- ═══════════ 21 · MAIN TABLE (paper Table 2, native & stepped) ═══════════ -->
       <section class="slide" data-eyebrow="06 · Results" data-frags="6" id="resSlide"
-        data-notes="This is the board you saw at the end of chapter four. One row is new. [CLICK] REPLICA. Now the same walk, one axis at a time, and watch where our row turns green. [CLICK] Text extraction: almost everyone is passable — Marker 0.68, Qwen 0.66, GPT-5 0.65. Largely solved, which is why the field feels finished. [CLICK] Logical structure: tree edit distance is passable for the better systems — but nothing about it says WHERE anything is. [CLICK] Now physical structure, and the entire field collapses. Best baseline LPS 0.22, best GPS 0.43, most under 0.30. Nothing lands where it belongs. [CLICK] Visual fidelity: GPT-5 reaches 0.86 and Gemini 0.82 — genuinely good-looking pages — but with GPS of 0.43 and 0.31, those pages are not the source page. [CLICK] And the whole board, graded. REPLICA: 0.73 and 0.86 on position, 0.93 visual fidelity, 0.86 overall. The claim is not that we win a column — it is that there is no weak column. [2:30]">
+        data-notes="This is the board you just saw at the end of chapter five. One row is new. [CLICK] REPLICA. Now the same walk, one axis at a time, and watch where our row turns green. [CLICK] Text extraction: almost everyone is passable — Marker 0.68, Qwen 0.66, GPT-5 0.65. Largely solved, which is why the field feels finished. [CLICK] Logical structure: tree edit distance is passable for the better systems — but nothing about it says WHERE anything is. [CLICK] Now physical structure, and the entire field collapses. Best baseline LPS 0.22, best GPS 0.43, most under 0.30. Nothing lands where it belongs. [CLICK] Visual fidelity: GPT-5 reaches 0.86 and Gemini 0.82 — genuinely good-looking pages — but with GPS of 0.43 and 0.31, those pages are not the source page. [CLICK] And the whole board, graded. REPLICA: 0.73 and 0.86 on position, 0.93 visual fidelity, 0.86 overall. The claim is not that we win a column — it is that there is no weak column. [2:30]">
         <div class="kicker">Measured on VFDR-Bench — all 16 methods &nbsp;·&nbsp;
           <!-- <span class="chint">click a category to expand it</span> -->
         </div>
@@ -6473,23 +6440,23 @@
 
       <!-- ═══════════ 33 · CONCLUSION ═══════════ -->
       <section class="slide vcenter" data-eyebrow="07 · Conclusion" id="concSlide"
-        data-notes="To summarise, in thesis order. Represent: FID-HTML, a web-native representation where position and style are required rather than optional, so fidelity is a property of the format. Measure: VFDR-Bench — five thousand pages, twenty-two languages, seventeen domains, annotated in FID-HTML — with GPS, LPS and VFS, the first metrics to score physical structure and rendered appearance, and they agree with human experts. Generate: REPLICA — Segment, Localize, Assemble, Refine — agents where judgment is needed, tools where determinism is needed — reaching 0.93 visual fidelity and 0.86 overall. Against the strongest existing system, GPT-5 at 0.58 overall, that is 0.86. And the answer to the chapter-six question: every agent in REPLICA runs on an 8-billion-parameter Qwen3-VL; the same model family at 30 billion parameters, used end to end, reaches only 0.47. Structured decomposition beats brute-force scale. [1:00]">
+        data-notes="To summarise. Represent: FID-HTML, a web-native representation where position and style are required rather than optional, so fidelity is a property of the format. Generate: REPLICA — Segment, Localize, Assemble, Refine — agents where judgment is needed, tools where determinism is needed. Measure: VFDR-Bench — five thousand pages, twenty-two languages, seventeen domains, annotated in FID-HTML — with GPS, LPS and VFS, the first metrics to score physical structure and rendered appearance, and they agree with human experts. On it, REPLICA reaches 0.93 visual fidelity and 0.86 overall. Against the strongest existing system, GPT-5 at 0.58 overall, that is 0.86. And the answer to the chapter-six question: every agent in REPLICA runs on an 8-billion-parameter Qwen3-VL; the same model family at 30 billion parameters, used end to end, reaches only 0.47. Structured decomposition beats brute-force scale. [1:00]">
         <div class="kicker">One paradigm, three contributions</div>
-        <h2>Represent → Measure → Generate</h2>
+        <h2>Represent → Generate → Measure</h2>
         <div class="slide-body">
           <div class="grid3" style="flex:0 0 auto;">
             <div class="card"><span class="tag">Represent · Representation</span>
               <h3>FID-HTML</h3>
               <p>A web-native format where position and style are <b>required</b> — fidelity by construction.</p>
             </div>
+            <div class="card accent"><span class="tag">Generate · Method</span>
+              <h3>REPLICA</h3>
+              <p>Agentic framework: <b>Segment → Localize → Assemble → Refine</b>.</p>
+            </div>
             <div class="card"><span class="tag">Measure · Benchmark &amp; Metrics</span>
               <h3>VFDR-Bench<br><span class="h3sub">+ GPS · LPS · VFS</span></h3>
               <p><b>5,000</b> FID-HTML-annotated pages, <b>22</b> languages, <b>17</b> domains; metrics that match human
                 judgement.</p>
-            </div>
-            <div class="card accent"><span class="tag">Generate · Method</span>
-              <h3>REPLICA</h3>
-              <p>Agentic framework: <b>Segment → Localize → Assemble → Refine</b>.</p>
             </div>
           </div>
           <div class="stats" style="margin-top:34px;">
@@ -6653,23 +6620,38 @@
         </div>
       </section>
 
-      <!-- ═══════════ BACKUP · HUMAN AGREEMENT PER ANNOTATOR (thesis Table 4.3) ═══════════ -->
-      <section class="slide vcenter backup" data-eyebrow="Backup"
-        data-notes="Backup — thesis Table 4.3 per annotator. Seven experts, a hundred pages, five systems; Pearson correlation between each expert's ordering and the ordering each metric induces. Every cell is above 0.80; the overall score aligns best at 0.89 on average.">
-        <div class="kicker">Backup · thesis Table 4.3</div>
-        <h2>Metric–human agreement, <em>per annotator</em></h2>
+      <!-- ═══════════ BACKUP · GROUND TRUTH (pptx 30) ═══════════ -->
+      <section class="slide vcenter backup" data-eyebrow="Backup" data-frags="3" id="gtSlide"
+        data-notes="One sentence on where the answer key comes from. To score position and style you need a reference that records them. [CLICK] So for every one of the five thousand pages, [CLICK] annotators built a web-page copy of it in FID-HTML, [CLICK] and checked it by opening it next to the original and fixing it until the two look the same. That is the answer key every system is scored against. If asked about the thesis text: REPLICA produced a first draft, and every page was then reviewed and corrected by hand, so the released references are human-verified. [0:30]">
+        <h2>The answer key — <em>a faithful copy of every page</em></h2>
         <div class="slide-body">
-          <div class="rwrap">
-              <table class="rtab graded humantab">
-                <thead><tr class="hd2"><th class="m">Metric</th><th>A1</th><th>A2</th><th>A3</th><th>A4</th><th>A5</th><th>A6</th><th>A7</th><th class="avg">Avg</th></tr></thead>
-                <tbody>
-                  <tr class="row"><td class="m" data-c="0">VFS</td><td data-c="1" class="g3">0.87</td><td data-c="2" class="g3">0.86</td><td data-c="3" class="g3">0.88</td><td data-c="4" class="g3">0.90</td><td data-c="5" class="g3">0.85</td><td data-c="6" class="g3">0.89</td><td data-c="7" class="g3">0.87</td><td data-c="8" class="g3 avg">0.87</td></tr>
-                  <tr class="row"><td class="m" data-c="0">GPS</td><td data-c="1" class="g3">0.82</td><td data-c="2" class="g3">0.80</td><td data-c="3" class="g3">0.83</td><td data-c="4" class="g3">0.84</td><td data-c="5" class="g3">0.81</td><td data-c="6" class="g3">0.85</td><td data-c="7" class="g3">0.82</td><td data-c="8" class="g3 avg">0.82</td></tr>
-                  <tr class="row"><td class="m" data-c="0">LPS</td><td data-c="1" class="g3">0.85</td><td data-c="2" class="g3">0.84</td><td data-c="3" class="g3">0.86</td><td data-c="4" class="g3">0.87</td><td data-c="5" class="g3">0.83</td><td data-c="6" class="g3">0.88</td><td data-c="7" class="g3">0.85</td><td data-c="8" class="g3 avg">0.85</td></tr>
-                  <tr class="row"><td class="m" data-c="0">Overall (OS)</td><td data-c="1" class="g3">0.88</td><td data-c="2" class="g3">0.86</td><td data-c="3" class="g3">0.89</td><td data-c="4" class="g3">0.91</td><td data-c="5" class="g3">0.86</td><td data-c="6" class="g3">0.92</td><td data-c="7" class="g3">0.88</td><td data-c="8" class="g3 avg">0.89</td></tr>
-                </tbody>
-              </table>
+          <div class="gtflow">
+            <div class="gtstep frag" data-frag="1">
+              <div class="gtfig"><svg viewBox="0 0 120 150" aria-hidden="true">
+                  <rect x="6" y="6" width="108" height="138" rx="6" class="pg" />
+                  <rect x="20" y="22" width="60" height="9" rx="3" class="hd" />
+                  <rect x="20" y="42" width="80" height="5" rx="2" class="ln" /><rect x="20" y="54" width="72" height="5" rx="2" class="ln" />
+                  <rect x="20" y="66" width="80" height="5" rx="2" class="ln" /><rect x="20" y="84" width="36" height="40" rx="3" class="im" />
+                  <rect x="62" y="84" width="38" height="5" rx="2" class="ln" /><rect x="62" y="96" width="34" height="5" rx="2" class="ln" />
+                </svg></div>
+              <h3>The original page</h3>
+              <p>one of 5,000</p>
+            </div>
+            <div class="gtarrow frag" data-frag="2">&rarr;</div>
+            <div class="gtstep frag" data-frag="2">
+              <div class="gtfig code">&lt;/&gt;</div>
+              <h3>Rebuilt as FID-HTML</h3>
+              <p>a web-page copy: every block placed and styled as on the page</p>
+            </div>
+            <div class="gtarrow frag" data-frag="3">&rarr;</div>
+            <div class="gtstep accent frag" data-frag="3">
+              <div class="gtfig match">=</div>
+              <h3>Checked side by side</h3>
+              <p>fixed by hand until it looks the same as the original</p>
+            </div>
           </div>
+          <div class="takeaway frag" data-frag="3">Existing benchmarks keep only the words (Markdown), so position and style can't
+            be scored. <b>Our answer key keeps how the page looks.</b></div>
         </div>
       </section>
 
@@ -6895,7 +6877,7 @@
 
       <!-- ═══════════ BACKUP B8 · FINE-GRAINED BENCHMARK ANALYSIS (thesis Tables 4.5–4.8) ═══════════ -->
       <section class="slide backup" data-eyebrow="Backup"
-        data-notes="Backup — the fine-grained analysis from chapter four, thesis Tables 4.5 to 4.8. Note these come from the chapter-four baseline sweep (Table 4.4's run), not Table 5.1. Position: every method struggles with absolute positioning; most score a little higher on single-column pages, with GPT-5 and Gemini the exceptions. Fidelity: higher on born-digital than scanned for nearly every method, because no baseline restores backgrounds; GOT-OCR and Docling drop about twenty per cent on scans; Marker is best at 0.76 thanks to visual stitching, GPT-5 within four per cent. Languages: Marker and Gemini 2.5 Pro are the most stable; specialists excel in English and drop sharply elsewhere; the Qwen family leads Chinese. Domains: forms, ID documents and receipts are hardest for logical structure.">
+        data-notes="Backup — the fine-grained analysis from thesis chapter four, Tables 4.5 to 4.8. Note these come from the thesis chapter-four baseline sweep (Table 4.4's run), not Table 5.1. Position: every method struggles with absolute positioning; most score a little higher on single-column pages, with GPT-5 and Gemini the exceptions. Fidelity: higher on born-digital than scanned for nearly every method, because no baseline restores backgrounds; GOT-OCR and Docling drop about twenty per cent on scans; Marker is best at 0.76 thanks to visual stitching, GPT-5 within four per cent. Languages: Marker and Gemini 2.5 Pro are the most stable; specialists excel in English and drop sharply elsewhere; the Qwen family leads Chinese. Domains: forms, ID documents and receipts are hardest for logical structure.">
         <div class="kicker">Backup · thesis Tables 4.5–4.8 (chapter-4 baseline sweep)</div>
         <h2>Fine-grained <em>benchmark analysis</em></h2>
         <div class="slide-body">
