@@ -37,6 +37,20 @@ The deck makes no network requests: Font Awesome 6.5.2 and the Inter / JetBrains
 vendored under `vendor/` (≈ 1.4 MB, licences in the file headers), and the unused KaTeX tags were removed
 from `site.html`. Only the "Paper" / dataset links on the project page itself point off-site.
 
+## Speaker script on a second screen
+
+`script.html` is a teleprompter for this deck, one entry per slide (backups included), split at every click.
+Open it from **the same address** as the slides — `https://<user>.github.io/Vatsa-MS-Defense-Slides/script.html`
+next to the Pages URL, or `http://localhost:8099/script.html` next to `http://localhost:8099/` — and put
+each window on its own screen. The two stay in step: a click in either window (clicker, arrow keys, or the
+script's NEXT / BACK) moves both, and the script highlights the block for the current click. The header shows
+"● linked to slides" when the link is live, the talk timer against the planned total (≈ 41 min) and the
+current slide's planned time. Space toggles a slow auto-scroll; − / + change its speed. If a slide is ever
+added or reordered in `index.html` without updating `script.html`, the script shows a red mismatch warning.
+
+Linking uses BroadcastChannel (same origin) with a localStorage fallback; opening both files straight from
+disk may work in Chrome, but serving them over http is the supported setup.
+
 ## Keys
 
 | Key | Action |

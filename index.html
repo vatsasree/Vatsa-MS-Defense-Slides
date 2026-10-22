@@ -7351,6 +7351,7 @@
         if (slides[cur].id === "ablSlide") renderAblation();
         if (slides[cur].id === "synthSlide") renderSynth();
         if (slides[cur].id === "synthReal") renderSynthReal();
+        syncOut();
       }
 
       /* ---------- the live fidelity ladder ---------- */
@@ -8387,6 +8388,45 @@
           leave() { offSlide = true; clearInterval(timer); timer = null; }
         };
       })();
+
+      /* ---------- link with the speaker script (script.html) ----------
+         Open script.html in a second window from the same address and the two stay
+         in step: this deck announces every slide/beat change, and the script's
+         NEXT / BACK (or a clicker aimed at it) arrive here as commands. Broadcast-
+         Channel, with localStorage events as the fallback route; each message has
+         an id so one delivered both ways is handled once. */
+      var syncCh = null, syncSeq = 0, syncSeen = new Set();
+      var syncMe = Math.random().toString(36).slice(2);
+      try { syncCh = new BroadcastChannel("vfdr-defense-sync"); syncCh.onmessage = e => syncIn(e.data); } catch (e) { }
+      window.addEventListener("storage", e => {
+        if (e.key === "vfdr-defense-sync" && e.newValue) { try { syncIn(JSON.parse(e.newValue)); } catch (err) { } }
+      });
+      function syncSend(msg) {
+        msg = Object.assign({ from: syncMe, id: syncMe + ":" + (++syncSeq) }, msg);
+        try { if (syncCh) syncCh.postMessage(msg); } catch (e) { }
+        try { localStorage.setItem("vfdr-defense-sync", JSON.stringify(msg)); } catch (e) { }
+      }
+      function syncOut() {
+        if (typeof syncSeen === "undefined" || !slides[cur]) return;
+        const s = slides[cur];
+        const h = s.querySelector("h1,h2") || s.querySelector(".kicker");
+        syncSend({
+          type: "state", slide: cur, frag: frag, frags: fragCount(cur), main: lastMain,
+          title: (h ? h.textContent : s.dataset.eyebrow || "").replace(/\s+/g, " ").trim()
+        });
+      }
+      function syncIn(m) {
+        if (!m || m.from === syncMe || syncSeen.has(m.id)) return;
+        syncSeen.add(m.id); if (syncSeen.size > 200) syncSeen.clear();
+        if (m.type === "hello") syncOut();
+        if (m.type !== "cmd") return;
+        if (m.cmd === "next") next();
+        else if (m.cmd === "prev") prev();
+        else if (m.cmd === "down") goto(cur + 1, false);
+        else if (m.cmd === "up") goto(cur - 1, false);
+        // walkthrough steps happen inside its iframe and do not re-render; say where we are anyway
+        syncOut();
+      }
 
       /* ---------- keyboard / presenter remote ---------- */
       window.addEventListener("keydown", (e) => {
