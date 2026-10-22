@@ -4501,8 +4501,8 @@
     /* the scan and both FID-HTML pages are 624×1500: one rectangle for all three */
     .sr-box {
       position: relative;
-      width: 270px;
-      height: 649px;
+      width: 312px;
+      height: 750px;
       border: 2px dashed var(--line);
       border-radius: 8px;
       overflow: hidden;
@@ -4528,7 +4528,7 @@
       width: 624px;
       height: 1500px;
       border: 0;
-      transform: scale(.4327);
+      transform: scale(.5);
       transform-origin: top left;
       visibility: hidden;
       pointer-events: none;
@@ -4550,9 +4550,18 @@
       color: var(--gold);
     }
 
-    .sr-mid {
-      width: 360px;
+    .synth-mid.sr-mid {
+      width: 430px;
+      align-self: stretch;
       padding-top: 0;
+    }
+
+    /* the takeaway sits under the schema so the receipts can use the full height */
+    .sr-mid .sr-take {
+      margin-top: auto;
+      margin-bottom: 30px;
+      font-size: 19px;
+      padding: 13px 18px;
     }
 
     .sr-mid .cc-body {
@@ -6342,6 +6351,8 @@
                 <div class="synth-arrow">→ pre-training / fine-tuning data for document VLMs where real corpora are
                   blocked by privacy or law</div>
               </div>
+            <div class="takeaway sr-take frag" data-frag="4">A different store, items and totals — yet fonts, layout, spacing and background
+              are the original's, because the edits happen in FID-HTML. <b>One real document, unlimited new ones.</b></div>
             </div>
             <div class="sr-arrow">→</div>
             <div class="sr-col">
@@ -6582,8 +6593,6 @@
     </div>
 </div>
           </template>
-          <div class="takeaway frag" data-frag="4">A different store, items and totals — yet fonts, layout, spacing and background
-            are the original's, because the edits happen in FID-HTML. <b>One real document, unlimited new ones.</b></div>
         </div>
       </section>
 
