@@ -1,8 +1,8 @@
 # Towards Visually Faithful Document Reconstruction — M.S. Thesis Defense
 
 Slide deck for Tallapragada Shanmukha Sreevatsa's M.S. thesis defense (IIIT Hyderabad · CVIT, 23 October 2026).
-It extends the ICDAR 2026 REPLICA oral deck, re-ordered to the thesis chapters
-(Represent FID-HTML → Measure VFDR-Bench & metrics → Generate REPLICA → Results). `PLAN.md` is the full spec.
+It extends the ICDAR 2026 REPLICA oral deck, re-ordered into chapters
+(FID-HTML → REPLICA → VFDR-Bench & metrics → Results, the ICDAR storyline). `PLAN.md` is the full spec.
 
 - `index.html` — the deck (one file, inline CSS + JS, no build step).
 - `site.html` — copy of the REPLICA project page; the deck iframes four live figures from it
@@ -58,7 +58,7 @@ Presenter remotes send PageUp / PageDown and work out of the box.
 ## Backups
 
 After Thank you: B1 full format comparison (Table 3.1, live) · B2 robustness & reliability (§5.6) ·
-B3 agent & tool reliability, every component (Table 5.3) · B4 metric–human agreement per annotator (Table 4.3) ·
+B3 agent & tool reliability, every component (Table 5.3) · B4 how the ground truth was made ·
 B5–B7 per-stage formalism (Segment, Localize, Assemble + Refine) · B8 the complete REPLICA pipeline figure ·
 B9 synthetic generation on an identity-card mock (`S` cycles variants) · B10 M3Grounder data engine
 (FID-HTML → pixel masks) · B11 fine-grained benchmark analysis (Tables 4.5–4.8).

@@ -4555,6 +4555,11 @@
       padding-top: 0;
     }
 
+    .sr-mid .cc-body {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
     /* ═══════════ SYNTHETIC DOCUMENT GENERATION ═══════════ */
     #synthSlide h2 {
       margin-bottom: 12px;
@@ -6290,7 +6295,7 @@
            qualitative slide shows) → slots found in that DOM → a second copy of
            the same file with only the slot text rewritten. S cycles variants. -->
       <section class="slide" data-eyebrow="06 · Applications" data-frags="5" id="synthReal"
-        data-notes="One application gets its own slide, because it is where this work goes next: synthetic document generation, thesis section 6.3.1 — shown on a real document. On the left, a real receipt from the public SROIE dataset. [CLICK] REPLICA turns it into FID-HTML — this is REPLICA's actual output for this receipt, live, with the background restored and the text rebuilt as HTML. [CLICK] Localize: because it is a DOM, the mutable values — invoice number, date, cashier, the item, the prices, the cash and change, the tax lines — are individual elements we can mark as slots. Everything else is fixed. [CLICK] Fill: a generator fills the slots from a schema — consistent values, so the change and the six per cent GST still add up — and we render a second copy of the same file. [CLICK] Diff: only the slot values changed; fonts, alignment, spacing, the table, the background all survive by construction. [CLICK] This matters where real data is scarce for legal, financial or privacy reasons: medical reports, transcripts, bank statements, payslips, ID cards — pre-training and fine-tuning data for document VLMs. During questions, S generates another receipt live. The identity-card version of this slide is in the backups. [2:00]">
+        data-notes="One application gets its own slide, because it is where this work goes next: synthetic document generation, thesis section 6.3.1 — on a real document. On the left, a real receipt from the public SROIE dataset. [CLICK] REPLICA turns it into FID-HTML — this is REPLICA's actual output for this receipt, live, with the background restored and every piece of text an HTML element. [CLICK] Localize: because it is a DOM, almost everything that varies between receipts is its own element — the store name, company and GST numbers, address, phone, logo, invoice number, date, cashier, the item list, every amount, the GST summary, the footer. Those are the slots, in gold. What stays fixed is the layout, the fonts, the labels, the background and the policy text. [CLICK] Fill: a generator fills the slots from a schema. This is a new receipt — a different store, a different number of items — and everything that changed is highlighted in green. The arithmetic is consistent: line amounts, discount, the six per cent GST and the change all add up. [CLICK] Render: without the highlights, it is simply a new, believable document, with the original's look — because the edits happened in FID-HTML. [CLICK] This matters where real data is scarce for legal, financial or privacy reasons: medical reports, transcripts, bank statements, payslips, ID cards — pre-training and fine-tuning data for document VLMs. During questions, S generates another receipt live. [2:00]">
         <h2>Synthetic document generation — <em>FID-HTML as a template engine</em></h2>
         <div class="slide-body">
           <div class="stage-strip synthstrip" id="srStrip">
@@ -6310,21 +6315,21 @@
               <div class="sr-box" id="srTplBox"><div class="synth-empty">—</div>
                 <iframe id="srTpl" src="static/images/qual/X51005621482_corrected.html" title="FID-HTML template"></iframe>
               </div>
-              <div class="cap"><b>FID-HTML</b> — rebuilt by REPLICA</div>
+              <div class="cap" id="srTplCap"><b>FID-HTML</b> — rebuilt by REPLICA</div>
             </div>
             <div class="sr-arrow">→</div>
             <div class="synth-mid sr-mid">
               <div class="codecard schema frag" data-frag="3">
                 <div class="cc-head">Schema</div>
-                <pre class="cc-body"><span class="a">invoice</span>: SS3-\d{6}
-<span class="a">date</span>:    dd/mm/2018 time
-<span class="a">cashier</span>: name
-<span class="a">item</span>:    brand · product
-<span class="a">price</span>:   RM 5–60
-<span class="a">cash</span>:    ≥ price
-<span class="a">change</span>  = cash − price
-<span class="a">net</span>     = price / 1.06
-<span class="a">tax</span>     = price − net</pre>
+                <pre class="cc-body"><span class="a">store</span>:   name · co. no · GST no
+         address · phone · logo
+<span class="a">invoice</span>: no · date · cashier
+<span class="a">items</span>:   [1–n] qty · product · price
+<span class="a">totals</span>:  Σ amount − discount
+         GST 6% · cash · change
+<span class="a">footer</span>:  thank-you · social
+<span class="s">fixed</span>:   layout · fonts · labels
+         background · policy text</pre>
               </div>
               <div class="synth-uses frag" data-frag="5">
                 <div class="chips"><span class="chip">medical reports</span><span class="chip">academic
@@ -6339,11 +6344,11 @@
               <div class="sr-box" id="srOutBox"><div class="synth-empty">—</div>
                 <iframe id="srOut" src="static/images/qual/X51005621482_corrected.html" title="Synthetic receipt"></iframe>
               </div>
-              <div class="cap"><b>Synthetic</b> — <span id="srCap">same template, new values</span></div>
+              <div class="cap"><b>Synthetic</b> — <span id="srCap">a new receipt</span></div>
             </div>
           </div>
-          <div class="takeaway frag" data-frag="4">Edits happen in FID-HTML, so fonts, alignment, spacing, tables and background
-            survive by construction — <b>one real document, unlimited privacy-safe variants</b>.</div>
+          <div class="takeaway frag" data-frag="4">A different store, items and totals — yet fonts, layout, spacing and background
+            are the original's, because the edits happen in FID-HTML. <b>One real document, unlimited new ones.</b></div>
         </div>
       </section>
 
@@ -7653,65 +7658,108 @@
       }
 
       /* ═══════════ SYNTHETIC GENERATION ON A REAL RECEIPT ═══════════
-         Both frames load REPLICA's FID-HTML for the receipt. Slots are the text
-         nodes holding the mutable values; the right-hand frame only ever has those
-         nodes rewritten, so everything else is the template, unchanged. */
-      // [slot, text in the template, substring match?]
-      const SR_SLOTS = [["invoice", "SS3-154439"], ["date", "20/03/2018 3:20:16 PM"], ["cashier", "IVY"],
-        ["brand", "ENERGIZER", true], ["item", "BATTERY AA 4'S"], ["price", "13.40"], ["cash", "20.00"],
-        ["change", "6.60"], ["net", "12.64"], ["tax", "0.76"]];
-      const SR_BASE = [
-        { brand: "PILOT", item: "GEL PEN 0.7 12'S", price: 28.90, cash: 50, invoice: "SS3-162087", date: "04/05/2018 11:42:09 AM", cashier: "MEI" },
-        { brand: "CASIO", item: "CALCULATOR FX82", price: 54.00, cash: 100, invoice: "SS3-158812", date: "27/04/2018 10:14:37 AM", cashier: "SITI" },
-        { brand: "STABILO", item: "HIGHLIGHTER 6'S", price: 9.80, cash: 10, invoice: "SS3-171530", date: "12/06/2018 6:05:51 PM", cashier: "AMIR" },
-        { brand: "UHU", item: "GLUE STICK 21G", price: 6.50, cash: 20, invoice: "SS3-149906", date: "09/03/2018 9:31:02 AM", cashier: "RAJ" }
+         Both frames load REPLICA's FID-HTML for a real SROIE receipt. The left one
+         only has its mutable elements marked; in the right one those elements are
+         rewritten from a schema — store, invoice, an item list of any length, and
+         totals that add up — while layout, fonts, background and labels are the
+         template's own. S generates the next receipt. */
+      function srFields(d) {
+        const q = (sel, i) => d.querySelectorAll(sel)[i || 0];
+        const rows = d.querySelectorAll("table.table_2 tbody > tr:not(.gen)");
+        return {
+          logo: q(".logo_9 img"), store: q("h1.title_9"), coNo: q("p.sub-header_9"),
+          gst: q(".contact-info_9 p", 0), addr1: q(".contact-info_9 p", 1), addr2: q(".contact-info_9 p", 2),
+          phone: q(".contact-info_11 p"),
+          invoice: q(".header_1 p", 1), date: q(".header_1 p", 3), cashier: q(".header_1 p", 5),
+          itemRow: rows[1],
+          total: rows[2] && rows[2].cells[3], discount: rows[3] && rows[3].cells[3],
+          totalSales: rows[4] && rows[4].cells[3], cash: rows[5] && rows[5].cells[3], change: rows[6] && rows[6].cells[3],
+          gstAmt: q(".table_4 p.table_4", 6), gstTax: q(".table_4 p.table_4", 7),
+          thanks: q(".footer_8 p"), social: q(".footer_5 p")
+        };
+      }
+      const SR_STORES = [
+        { store: "CAHAYA STATIONERY SDN BHD", coNo: "(Co. No.: 884512-K)", gst: "GST Reg. No.: 000917263540", addr1: "No 12, Jalan Bunga Raya 3,", addr2: "43000 Kajang, Selangor.", phone: "03-8736 2210", invoice: "CHY-208114", date: "04/05/2018 11:42:09 AM", cashier: "MEI", short: "CAHAYA", fb: "cahayastationery", ink: "#1e3a5f",
+          items: [[2, "PILOT GEL PEN 0.7", 4.50], [1, "A4 PAPER 80G 500'S", 14.90], [1, "STAPLER NO.10", 8.20]], discount: 0, cash: 50 },
+        { store: "BINTANG PAPERIE SDN BHD", coNo: "(Co. No.: 1021877-A)", gst: "GST Reg. No.: 002216540937", addr1: "Lot 8, Jalan Tun Razak,", addr2: "50400 Kuala Lumpur.", phone: "03-2691 4475", invoice: "BPS-071530", date: "12/02/2018 6:05:51 PM", cashier: "AMIR", short: "BINTANG", fb: "bintangpaperie", ink: "#8a3b12",
+          items: [[1, "CASIO FX-82MS", 54.00], [1, "CLEAR FILE A4", 2.30]], discount: 0, cash: 60 },
+        { store: "SRI MURNI TRADING SDN BHD", coNo: "(Co. No.: 563904-T)", gst: "GST Reg. No.: 001548820736", addr1: "No 3A, Jalan Merdeka,", addr2: "75000 Melaka.", phone: "06-282 9031", invoice: "SMT-162087", date: "27/04/2018 10:14:37 AM", cashier: "SITI", short: "SRI MURNI", fb: "srimurnitrading", ink: "#1f6b4f",
+          items: [[3, "STABILO BOSS 6'S", 9.80], [2, "UHU GLUE 21G", 6.50]], discount: 2.40, cash: 50 },
+        { store: "MERAK OFFICE MART SDN BHD", coNo: "(Co. No.: 745219-P)", gst: "GST Reg. No.: 000683391205", addr1: "No 21, Lebuh Pantai,", addr2: "10300 George Town, Penang.", phone: "04-261 7788", invoice: "MOM-149906", date: "09/03/2018 9:31:02 AM", cashier: "RAJ", short: "MERAK", fb: "merakofficemart", ink: "#5b3f9e",
+          items: [[1, "FABER CASTELL 24'S", 18.50]], discount: 0, cash: 20 }
       ];
-      // derived fields keep the receipt arithmetic true: change, and 6% GST inclusive
-      const SR_VARIANTS = SR_BASE.map(v => {
-        const net = Math.round(v.price / 1.06 * 100) / 100;
-        return Object.assign({}, v, {
-          price: v.price.toFixed(2), cash: v.cash.toFixed(2), change: (v.cash - v.price).toFixed(2),
-          net: net.toFixed(2), tax: (v.price - net).toFixed(2)
-        });
-      });
-      const SR_STYLE = ".slot{transition:background .3s,color .3s,outline-color .3s}" +
-        "html.L2 .slot{outline:2px dashed #d4a437;outline-offset:2px;background:#f7ead0}" +
-        "html.DIFF body *:not(.slot){color:#c9c9c9 !important;border-color:#e2e2e2 !important}" +
-        "html.DIFF img{opacity:.3}" +
-        "html.DIFF .slot.changed{color:#0d5c32 !important;background:#d3efdb;outline:2px solid #2f9e63;outline-offset:1px}";
-      let srVar = 0, srShown = -1;
+      const money = x => (Math.round(x * 100) / 100).toFixed(2);
+      function srLogo(v) {
+        const ini = v.short.split(" ").map(w => w[0]).join("").slice(0, 2);
+        const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 134"><circle cx="80" cy="62" r="54" fill="none" stroke="' + v.ink +
+          '" stroke-width="7"/><text x="80" y="82" text-anchor="middle" font-family="Georgia,serif" font-size="58" font-weight="700" fill="' + v.ink +
+          '">' + ini + '</text><rect x="38" y="122" width="84" height="6" rx="3" fill="' + v.ink + '"/></svg>';
+        return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+      }
+      const SR_STYLE = ".slot,.chg{transition:background .3s,outline-color .3s}" +
+        "html.L2 .slot{background:rgba(212,164,55,.5) !important;outline:3px solid #d4a437;outline-offset:1px}" +
+        "html.L2 img.slot{opacity:.75}" +
+        "html.HL .chg{background:rgba(47,158,99,.32) !important;outline:3px solid #2f9e63;outline-offset:1px;animation:srPulse 1.2s ease-out 2}" +
+        "@keyframes srPulse{0%{outline-color:#2f9e63;outline-width:3px}50%{outline-color:#7ad3a4;outline-width:7px}100%{outline-color:#2f9e63;outline-width:3px}}";
+      let srVar = 0, srShown = -1, srSlotCount = 0;
       function srPrep(frame) {
         const d = frame && frame.contentDocument;
-        if (!d || !d.body || d.documentElement.dataset.prepped) return !!(d && d.documentElement.dataset.prepped);
+        if (!d || !d.body || !d.querySelector("table.table_2")) return false;
+        if (d.documentElement.dataset.prepped) return true;
         const st = d.createElement("style"); st.textContent = SR_STYLE; d.head.appendChild(st);
-        const walker = d.createTreeWalker(d.body, NodeFilter.SHOW_TEXT), nodes = [];
-        while (walker.nextNode()) nodes.push(walker.currentNode);
-        nodes.forEach(n => {
-          const raw = n.nodeValue;
-          for (const [key, pat, sub] of SR_SLOTS) {
-            const at = raw.indexOf(pat);
-            if (at < 0 || (!sub && raw.trim() !== pat)) continue;
-            const span = d.createElement("span");
-            span.className = "slot"; span.dataset.slot = key; span.dataset.orig = pat; span.textContent = pat;
-            const frag = d.createDocumentFragment();
-            frag.append(raw.slice(0, at), span, raw.slice(at + pat.length));
-            n.parentNode.replaceChild(frag, n);
-            break;
-          }
+        const f = srFields(d);
+        let n = 0;
+        Object.entries(f).forEach(([k, el]) => {
+          if (!el) return;
+          if (k === "itemRow") { [...el.cells].forEach(c => { c.classList.add("slot"); n++; }); return; }
+          el.classList.add("slot"); n++;
         });
+        srSlotCount = n;
         d.documentElement.dataset.prepped = "1";
         return true;
       }
-      function srFill() {
-        const f = document.getElementById("srOut");
-        if (!srPrep(f)) return false;
-        const v = SR_VARIANTS[srVar % SR_VARIANTS.length];
-        f.contentDocument.querySelectorAll(".slot").forEach(sl => {
-          sl.textContent = v[sl.dataset.slot];
-          sl.classList.toggle("changed", sl.textContent !== sl.dataset.orig);
+      function srApply() {
+        const fr = document.getElementById("srOut");
+        if (!srPrep(fr)) return false;
+        const d = fr.contentDocument, f = srFields(d), v = SR_STORES[srVar % SR_STORES.length];
+        const set = (el, html) => { if (!el) return; el.innerHTML = html; el.classList.add("chg"); };
+        f.logo.src = srLogo(v); f.logo.classList.add("chg");
+        ["store", "coNo", "gst", "addr1", "addr2", "phone", "invoice", "date", "cashier"].forEach(k => set(f[k], v[k]));
+        // the item list: as many rows as the variant has, sharing the original row's
+        // height so everything below the table stays exactly where it was
+        d.querySelectorAll("tr.gen").forEach(r => r.remove());
+        const tpl = f.itemRow; tpl.style.display = "none";
+        const H = 99, n = v.items.length;
+        v.items.forEach(([qty, name, price], i) => {
+          const tr = d.createElement("tr"); tr.className = "gen";
+          const last = i === n - 1 ? "border-bottom: 2px dotted black;" : "";
+          tr.innerHTML =
+            '<td class="chg" style="width: 193px; height: ' + Math.floor(H / n - 4) + 'px; text-indent: 6px; white-space: nowrap;' + last + '">' + qty + " &#9; SR &#9; " + name + "</td>" +
+            '<td class="chg" style="width: 14px;' + last + '">' + qty + "</td>" +
+            '<td class="chg" style="width: 52px;' + last + '">' + money(price) + "</td>" +
+            '<td class="chg" style="width: 53px;' + last + '">' + money(qty * price) + "</td>";
+          tpl.parentNode.insertBefore(tr, f.total.parentNode);
         });
+        // pad the new rows so the table is exactly as tall as the template's and the
+        // totals below sit where they sit on the real receipt
+        const tplTab = document.getElementById("srTpl").contentDocument.querySelector("table.table_2");
+        const gen = d.querySelectorAll("tr.gen td:first-child");
+        const diff = tplTab.offsetHeight - d.querySelector("table.table_2").offsetHeight;
+        if (gen.length && diff) gen.forEach(td => { td.style.height = (td.offsetHeight + diff / gen.length - 2) + "px"; });
+        for (let k = 0; k < 2; k++) {
+          const left = tplTab.offsetHeight - d.querySelector("table.table_2").offsetHeight;
+          if (Math.abs(left) < 1 || !gen.length) break;
+          gen[0].style.height = (parseFloat(gen[0].style.height) + left) + "px";
+        }
+        const total = v.items.reduce((a, [q, , p]) => a + q * p, 0), sales = total - v.discount;
+        const net = Math.round(sales / 1.06 * 100) / 100;
+        set(f.total, money(total)); set(f.discount, money(v.discount)); set(f.totalSales, money(sales));
+        set(f.cash, money(v.cash)); set(f.change, money(v.cash - sales));
+        set(f.gstAmt, money(net)); set(f.gstTax, money(sales - net));
+        set(f.thanks, "Thank you for Shopping at " + v.short + "<br />Have a Nice Day!");
+        set(f.social, "For the latest news and updates<br />like us on facebook.com/" + v.fb);
         const cap = document.getElementById("srCap");
-        if (cap) cap.textContent = "variant " + (srVar % SR_VARIANTS.length + 1) + " of " + SR_VARIANTS.length;
+        if (cap) cap.textContent = "a new receipt — " + (srVar % SR_STORES.length + 1) + " of " + SR_STORES.length;
         srShown = srVar;
         return true;
       }
@@ -7719,12 +7767,14 @@
         const tpl = document.getElementById("srTpl"), out = document.getElementById("srOut");
         if (!tpl || !out) return;
         srPrep(tpl);
-        if (frag >= 3 && srShown !== srVar) srFill();
+        if (frag >= 3 && srShown !== srVar) srApply();
         document.getElementById("srTplBox").classList.toggle("on", frag >= 1);
         document.getElementById("srOutBox").classList.toggle("on", frag >= 3);
         const td = tpl.contentDocument, od = out.contentDocument;
         if (td && td.documentElement) td.documentElement.classList.toggle("L2", frag >= 2);
-        if (od && od.documentElement) od.documentElement.classList.toggle("DIFF", frag === 4);
+        if (od && od.documentElement) od.documentElement.classList.toggle("HL", frag === 3);
+        const tcap = document.getElementById("srTplCap");
+        if (tcap) tcap.innerHTML = frag >= 2 ? "<b>" + srSlotCount + " mutable slots</b> found in the DOM" : "<b>FID-HTML</b> — rebuilt by REPLICA";
         // beats 0–4 are steps 1–5; the last beat leaves the strip done
         const on = frag < 5 ? frag : 99;
         document.querySelectorAll("#srStrip .st").forEach((st, i) => {
@@ -7741,8 +7791,13 @@
         });
       });
       function srNext() {
-        srVar = (srVar + 1) % SR_VARIANTS.length;
-        if (frag < 3) { frag = 3; applyFrags(); } else { srFill(); renderSynthReal(); }
+        srVar = (srVar + 1) % SR_STORES.length;
+        if (frag < 3) { frag = 3; applyFrags(); return; }
+        srApply();
+        // replay the highlight so the audience sees what changed in the new receipt
+        const od = document.getElementById("srOut").contentDocument;
+        if (od) { od.documentElement.classList.remove("HL"); void od.body.offsetWidth; od.documentElement.classList.add("HL"); }
+        if (frag !== 3) setTimeout(() => { if (frag !== 3 && od) od.documentElement.classList.remove("HL"); }, 2600);
       }
 
       /* ═══════════ SYNTHETIC DOCUMENT GENERATION ═══════════
