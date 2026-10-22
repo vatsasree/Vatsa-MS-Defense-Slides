@@ -323,463 +323,410 @@ const QA = t => `<div class="qa">${t}</div>`;
 const SLIDES = [
 /* ───────────── front matter ───────────── */
 { title:"Towards Visually Faithful Document Reconstruction", match:"Towards Visually", time:"0:45", beats:[
-`<p>Good morning.<br>I’m <strong>Sreevatsa</strong>, and this is my M.S. thesis, advised by <strong>Dr. Ravi Kiran Sarvadevabhatla</strong>.</p>
-<p><strong>Towards Visually Faithful Document Reconstruction.</strong></p>
-<p>One line:<br>turn scanned pages and PDFs into HTML that doesn’t just <em>read</em> like the original —<br><strong>it looks like it.</strong></p>
+`<p>Good morning.<br>I’m Sreevatsa.</p>
+<p>Thesis: <strong>Towards Visually Faithful Document Reconstruction.</strong><br>Advisor: Dr. Ravi Kiran Sarvadevabhatla.</p>
+<p>Documents → HTML that doesn’t just read like the original.<br><strong>It looks like it.</strong></p>
 ${P()}
-<p>Three contributions.</p>
-<p><strong>Represent</strong> — FID-HTML, a format that can carry what a page looks like.<br>
-<strong>Generate</strong> — REPLICA, an agentic framework that produces it.<br>
-<strong>Measure</strong> — VFDR-Bench and new metrics that can score it.</p>
-<p>And one thing to keep in mind: <strong>this entire talk is running in HTML.</strong></p>`]},
+<p>Three pieces.</p>
+<p><strong>FID-HTML</strong> — the representation.<br><strong>REPLICA</strong> — the method.<br><strong>VFDR-Bench</strong> — the benchmark and metrics.</p>
+<p>And: <strong>this entire talk is running in HTML.</strong></p>`]},
 
 { title:"How this talk is organised", match:"How this talk", time:"0:35", beats:[
 `<p>Six parts.</p>
-<p>The problem, and why appearance matters.</p>
-<p>How the field has tried — and what it misses.</p>
-<p>Then the three contributions:<br>
-<strong>FID-HTML</strong> — the target.<br>
-<strong>REPLICA</strong> — the system that produces it.<br>
-<strong>VFDR-Bench</strong> — the ruler, because nothing existing could score either.</p>
-<p>And finally: results, honest limitations, and what this unlocks.</p>`]},
+<p>The problem.</p>
+<p>Related work.</p>
+<p>FID-HTML.<br>REPLICA.<br>VFDR-Bench.</p>
+<p>Results, limitations, applications.</p>`]},
 
 /* ───────────── 01 · Introduction ───────────── */
 { title:"Introduction", match:"Introduction", time:"0:15", beats:[
-`<p>Chapter one.</p>
-<p>Not <em>“can we read a document?”</em> — OCR largely solved that.</p>
-<p>But: can we turn it into something <strong>editable and web-native</strong> that keeps both <strong>what it says</strong> and <strong>what it looks like</strong>?</p>`]},
+`<p>Not just reading a document.</p>
+<p>Keeping <strong>what it says</strong> and <strong>what it looks like</strong>.</p>`]},
 
 { title:"What is Visually Faithful Document Reconstruction?", match:"What is Visually", time:"2:30", beats:[
 `<p>What do we mean by <em>visually faithful</em>?</p>
-<p>Same invoice, twice.<br>Left: the original.<br>Right: rebuilt live, one layer at a time.</p>
-<p><strong>Level zero — text only.</strong></p>
-<p>Every word is there, in order.<br>But it is a wall of prose.</p>
-<p>No heading. The table is a run of numbers. The total looks like fine print.<br>The shape doesn’t even match — a text stream has no page.</p>
-<p>This is what OCR and most parsers give you.</p>
+<p>Same document, rebuilt layer by layer.</p>
+<p>Text only: the words survive.<br>But the document does not.</p>
 ${P()}
-<p>Look at the red notes.<br>A reader of this version could pay a <strong>cancelled</strong> charge, miss an <strong>overdue</strong> notice, misread what they owe.</p>
+<p>Red notes: cancelled charge, overdue notice, total — all lost.</p>
 <p><strong>Style is data.</strong></p>`,
-`<p><strong>Level one — logical structure.</strong></p>
-<p>Now there is a header, sections, a footer, and a real table with rows and columns.</p>
-<p>Markdown-class output. A big win for machines —<br>the first two notes turn green.</p>
-<p>But still no geometry. Still not the page.</p>`,
-`<p><strong>Level two — physical position.</strong></p>
-<p>Same dimensions as the original. The two-column body is back.<br>Numbers align under their headers.</p>
-<p>Now you can tell which number belongs to which item.</p>`,
-`<p><strong>Level three — visual fidelity.</strong></p>
-<p>Typography. Weight. Colour. The brand bar.<br>The <strong>strikethrough</strong> and the <strong>OVERDUE</strong> stamp.</p>
-<p>Now the right side is the left side.</p>
+`<p>Add logical structure.<br>Now we know headings, tables, rows, columns.</p>
+<p>First two notes turn green.</p>
+<p>Better.<br>Still not the page.</p>`,
+`<p>Add physical position.<br>Now geometry comes back.</p>
+<p>Columns line up.</p>`,
+`<p>Finally, visual fidelity.<br>Typography. Colour. Weight. Strikethrough. The overdue stamp.</p>
 ${P()}
-<p>Only now does the cancelled line read as cancelled —<br>and only now do the last three notes turn green.</p>
-<p><strong>A document is more than its text.</strong></p>`]},
+<p>The point is simple:</p>
+<p><strong>a document is more than its text.</strong></p>`]},
 
 { title:"Requirements for Visually Faithful Document Reconstruction", match:"Requirements for", time:"1:00", beats:[
-`<p>So what does a faithful reconstruction have to preserve?</p>`,
-`<p>Four axes.</p>
-<p>Text — <strong>are the words right?</strong></p>
-<p>Hierarchy — <strong>is the structure right?</strong> Reading order, nesting, tables, lists.</p>
-<p>Geometry — <strong>is everything in the right place?</strong></p>
-<p>Visual fidelity — <strong>does it actually look right?</strong></p>
-${P()}
-<p>Prior work optimises the first two.<br>Because no benchmark measured the last two, no system optimised them.</p>`,
-`<p>And two requirements on the format itself.</p>
-<p><strong>Web-native</strong> — opens anywhere, no special viewer.</p>
-<p><strong>Machine-readable</strong> — models can consume the structure directly.</p>
-<p>These six boxes are the thesis’s problem definition.</p>`]},
+`<p>This gives us four axes.</p>`,
+`<p>Text extraction: <strong>are the words right?</strong></p>
+<p>Logical structure: <strong>is the hierarchy right?</strong></p>
+<p>Physical structure: <strong>is everything in the right place?</strong></p>
+<p>Visual fidelity: <strong>does it actually look right?</strong></p>`,
+`<p>And two practical requirements.</p>
+<p><strong>Web-native.</strong></p>
+<p><strong>Machine-readable.</strong></p>
+<p>Those six requirements define the problem.</p>`]},
 
 /* ───────────── 02 · Background ───────────── */
 { title:"Background & Related Work", match:"Background", time:"0:15", beats:[
-`<p>Chapter two.</p>
-<p>Before proposing anything:<br>what does the field keep — and what does it quietly drop?</p>`]},
+`<p>What does the field keep —<br>and what does it drop?</p>`]},
 
 { title:"Where the field stands", match:"Against the checklist", time:"1:30", beats:[
-`<p>How does the field do against that checklist?</p>
-<p>Input page on the left. One system at a time on the right — live.</p>
-<p><strong>Marker</strong>, a strong pipeline tool.<br>Three columns linearised into one.</p>
-<p>The words survive. <strong>The page does not.</strong></p>`,
+`<p>Where do existing systems stand?</p>
+<p><strong>Marker.</strong></p>
+<p>Words survive. Columns don’t.</p>`,
 `<p><strong>GPT-5.</strong></p>
-<p>Text largely right.<br>Then it drifts — placement, font attributes, even the column count.</p>`,
-`<p><strong>Qwen3-VL-30B.</strong> Same story.</p>
+<p>Text mostly right. Layout drifts.</p>`,
+`<p><strong>Qwen3-VL-30B.</strong></p>
 ${P()}
-<p>Text: mostly there. Hierarchy: roughly there.<br>Geometry: gone. Appearance: gone.</p>
-<p>Different architectures, different sizes —<br>the <strong>same</strong> failure.</p>
-<p>And that consistency is a clue: <strong>maybe the bottleneck is not the model.</strong></p>`]},
+<p>Different architectures. Different sizes.<br>Same failure.</p>
+<p>Text: mostly there.<br>Hierarchy: roughly there.<br>Geometry: gone.<br>Visual fidelity: gone.</p>
+<p><strong>Maybe the bottleneck is not the model.</strong></p>`]},
 
 { title:"A taxonomy of prior work", match:"A taxonomy", time:"2:00", beats:[
-`<p>The background chapter in one slide.</p>
-<p>Four families of prior work — and for each, <strong>what it emits</strong>.</p>
-<p>Because what a method emits is its ceiling.</p>`,
-`<p><strong>Foundations</strong> — OCR engines, layout detectors, document VLMs.</p>
-<p>OCR optimises text. Detectors give coarse boxes, no DOM.</p>
-<p>REPLICA’s own Segment stage builds on this line.</p>`,
-`<p><strong>Document-to-markup</strong> — Marker, MinerU, Docling, the end-to-end VLMs.</p>
-<p>For them, linearisation is a design goal.<br>For us, it is the failure mode.</p>`,
-`<p><strong>Physical reconstruction</strong> and screenshot-to-HTML.</p>
-<p>DREAM is pixel-faithful — but narrow, scientific PDFs.<br>Screenshot-to-HTML is web-native — but built for text-light web pages.</p>`,
-`<p>And the <strong>benchmarks</strong>.</p>
-<p>They score text and logical structure only — against Markdown references.</p>
-<p><strong>The field cannot improve what it does not measure.</strong></p>
+`<p>Four families of prior work.</p>
+<p>For each: <strong>what it outputs</strong>.</p>`,
+`<p><strong>Foundations.</strong><br>OCR, layout detection, document VLMs.</p>
+<p>Text and boxes. No page.</p>`,
+`<p><strong>Document → markup.</strong><br>Marker, MinerU, Docling.</p>
+<p>Markdown. Linearised.</p>`,
+`<p><strong>Physical reconstruction.</strong><br>DREAM, screenshot-to-HTML.</p>
+<p>Narrow domains.</p>`,
+`<p><strong>Benchmarks.</strong></p>
+<p>Text and structure only. Markdown references.</p>
 ${P()}
-<p>Nobody delivers web-native HTML that is faithful in content, structure, style <em>and</em> appearance.</p>`]},
+<p><strong>The field cannot improve what it does not measure.</strong></p>`]},
 
 { title:"Limitations of Existing Document Representations", match:"Limitations of Existing", time:"1:45", beats:[
-`<p>So why did every system lose the same two things?</p>
-<p>It is not the model.<br>It is <strong>what we asked the model to write.</strong></p>
-<p>A page carries four axes.</p>`,
-`<p>All four have to pass through one narrow place — <strong>the output format</strong>.</p>
-<p>Marker writes Markdown.<br>OCR models write plain text.<br>GPT-5 and Qwen write generic HTML.</p>`,
-`<p>And that is where two axes die.</p>
-<p>Markdown and plain text have no syntax for a coordinate or a colour.</p>
-<p>HTML <em>has</em> the syntax — but never <strong>requires</strong> it.<br>And what is optional gets left out.</p>
+`<p>The bottleneck is often the <strong>target representation</strong>.</p>
+<p>A page has four axes.</p>`,
+`<p>All of them pass through the output format.</p>
+<p>Markdown. Plain text. Generic HTML.</p>`,
+`<p>Markdown has nowhere to put an x-y coordinate.</p>
+<p>Plain text has nowhere to put colour or typography.</p>
+<p>Generic HTML <em>can</em> — but does not <strong>require</strong> it.</p>
 ${P()}
 <p><strong>What a format does not require, a system does not produce.</strong></p>
-<p>The bottleneck is the target. So we widened the target.</p>`]},
+<p>That observation led us to FID-HTML.</p>`]},
 
 /* ───────────── 03 · FID-HTML ───────────── */
 { title:"FID-HTML", match:"FID-HTML", time:"0:15", beats:[
-`<p>Chapter three — the first contribution: <strong>represent</strong>.</p>
-<p>We just argued the format is the ceiling.<br>So this is the format.</p>`]},
+`<p>The format is the ceiling.</p>
+<p>So — a new format.</p>`]},
 
 { title:"The same page, rebuilt", match:"The same page", time:"0:40", beats:[
-`<p>Same input page you just watched three systems fail on.</p>
-<p>This is what comes out when the format <strong>must</strong> carry position and style.</p>
-<p>Text. Hierarchy. Geometry. Appearance.</p>`,
-`<p>One HTML file.<br>Rendered by your browser.</p>
-<p>We call it <strong>FID-HTML</strong>.</p>`]},
+`<p>Same page.</p>
+<p>But now the target explicitly carries all four axes.</p>
+<p>Text.<br>Hierarchy.<br>Geometry.<br>Appearance.</p>`,
+`<p>One HTML file.</p>
+<p>Rendered directly by the browser.</p>
+<p>We call this <strong>FID-HTML</strong>.</p>`]},
 
 { title:"Six Aspects of FID-HTML", match:"Six Aspects", time:"1:45", beats:[
-`<p>What FID-HTML carries — six things.</p>
-<p>And the code on the right is the <strong>real source</strong> of the page on the left.</p>`,
-`<p><strong>One — textual content</strong>, at word and block level.</p>`,
-`<p><strong>Two — hierarchical structure</strong>, through nested divs.</p>`,
-`<p><strong>Three — semantic tags</strong>: list, table, row, cell — with meaningful class names.</p>`,
-`<p><strong>Four — position</strong>: absolute placement for blocks, relative alignment inside them.</p>`,
-`<p><strong>Five — styling</strong>: size, colour, bold, italic, underline, strikethrough — inline CSS.</p>`,
-`<p><strong>Six — figures and backgrounds</strong>, layered into the DOM with alt-text.</p>
+`<p>FID-HTML carries six things.</p>
+<p>The code on the right is the <strong>actual source</strong> of the page.</p>`,
+`<p>Textual content.</p>`,
+`<p>Hierarchical structure.</p>`,
+`<p>Semantic tags.</p>`,
+`<p>Position.</p>`,
+`<p>Styling.</p>`,
+`<p>Figures and backgrounds.</p>
 ${P()}
-<p>The browser sees HTML. A language model sees text.<br><strong>Both see the document.</strong></p>`]},
+<p>The browser sees HTML.<br>The LLM sees text.<br><strong>Both see the document.</strong></p>`]},
 
 { title:"Comparison with existing representations", match:"Comparison with", time:"1:30", beats:[
-`<p>Same picture as the bottleneck slide — the four things a page carries.</p>`,
-`<p>Every representation the field uses handles the top two.</p>
-<p>Markdown, plain text, LaTeX, DocTags, hOCR, generic HTML —<br>text and hierarchy get through all of them.</p>`,
-`<p>Geometry and style don’t.</p>
-<p>Markdown and text: no syntax for them.<br>LaTeX, DocTags, hOCR: partial.<br>Generic HTML: allowed, never required.</p>`,
-`<p>So we cut a <strong>second door</strong>.</p>
-<p>FID-HTML carries the first two like everyone else.</p>`,
-`<p>And geometry and style are <strong>not just allowed — required</strong>.</p>
-<p>Position on every block. Size, weight and colour on every span.</p>
-<p>Fidelity is no longer something we hope the model remembers.<br><strong>It is part of the contract.</strong></p>`]},
+`<p>Now compare representations directly.</p>`,
+`<p>Text and hierarchy:<br>everyone handles these.</p>`,
+`<p>Markdown and plain text:<br>no geometry, no style.</p>
+<p>LaTeX, DocTags, hOCR:<br>partial support.</p>
+<p>Generic HTML:<br>styling is legal, but position is not required.</p>`,
+`<p>FID-HTML: a second door.</p>`,
+`<p>Geometry and styling are <strong>mandatory</strong>.</p>
+<p>Position on the blocks.<br>Visual attributes inline.</p>
+<p>Fidelity is no longer something we hope the model remembers.</p>
+<p>It is part of the contract.</p>`]},
 
 /* ───────────── 04 · REPLICA ───────────── */
 { title:"REPLICA", match:"REPLICA", time:"0:15", beats:[
-`<p>Chapter four — the second contribution: <strong>generate</strong>.</p>
-<p>We have the target format. Now the system that produces it.</p>
-<p>And what “agentic” actually means here.</p>`]},
+`<p>We have the format.</p>
+<p>Now — the system that produces it.</p>`]},
 
 { title:"Defining Agents and Tools", match:"Defining Agents", time:"1:15", beats:[
-`<p>First, the vocabulary — <em>agentic</em> is an overloaded word.</p>
-<p>A <strong>tool</strong> is a fixed function.<br>Same input, same output, no judgment.<br>Detectors. OCR. Table structure. Font fitting.</p>
-<p>An <strong>agent</strong> reasons.<br>It decides, checks, retries, overrides —<br>it is allowed to disagree with what it was given.</p>`,
-`<p>The difference in one picture.</p>
-<p>A tool makes <strong>one pass</strong> — the same answer every time.</p>
-<p>An agent picks a tool, checks the result —<br>not good enough — and <strong>goes again</strong>.</p>
-<p><strong>Agents where judgment is needed; tools where determinism is enough.</strong></p>
+`<p>A quick definition of <em>agentic</em>.</p>
+<p>A <strong>tool</strong> is deterministic.</p>
+<p>Same input.<br>Same output.</p>
+<p>OCR.<br>Detection.<br>Font fitting.</p>
+<p>An <strong>agent</strong> makes decisions.</p>
+<p>It can inspect.<br>Choose.<br>Reject.<br>Retry.<br>Override.</p>`,
+`<p>Tool: one pass.<br>Agent: checks, and goes again.</p>
 ${P()}
-<p>And the objective: the <strong>render</strong> of our HTML must match the page on all four axes.<br>The render — not the markup. That is why a refine stage has to exist.</p>`]},
+<p><strong>Agents where judgment is needed; tools where determinism is enough.</strong></p>`]},
 
 { title:"The agentic framework, stage by stage", match:"The agentic framework", time:"2:30", beats:[
-`<p>Four questions. Four stages.</p>
-<p>I’ll build the framework up one stage at a time.</p>`,
-`<p><strong>Stage 1 — Segment.</strong><br>How do we divide the page into meaningful parts?</p>
-<p>A detector ensemble proposes regions.<br>The Labeling agent assigns types and catches mis-segmentation.<br>The Grouping agent builds the layout tree.</p>`,
-`<p><strong>Stage 2 — Localize.</strong><br>How do we turn each part into HTML?</p>
-<p>A Router agent picks one of six specialists —<br>text, table, image, form, list, equation —<br>and overrides the label when the crop disagrees.</p>
-<p>Each emits sub-HTML with position and style inline. In parallel.</p>`,
-`<p><strong>Stage 3 — Assemble.</strong></p>
-<p>Merge bottom-up over the tree.<br>Then a Reading-Order agent — because top-to-bottom fails on multi-column pages.</p>`,
-`<p><strong>Stage 4 — Refine.</strong><br>How do we make it actually look right?</p>
-<p>Render. Compare with the source. Patch the CSS. Render again.</p>
+`<p>Four stages.</p>`,
+`<p><strong>Segment.</strong></p>
+<p>Find meaningful components and build a layout hierarchy.</p>`,
+`<p><strong>Localize.</strong></p>
+<p>Route each crop to the right specialist.</p>
+<p>Text. Table. Image. Form. List. Equation.</p>`,
+`<p><strong>Assemble.</strong></p>
+<p>Merge local HTML fragments into one document.</p>
+<p>And infer reading order.</p>`,
+`<p><strong>Refine.</strong></p>
+<p>Render the HTML.<br>Compare it with the source.<br>Patch the CSS.<br>Render again.</p>
 ${P()}
-<p>REPLICA does not generate HTML once.<br><strong>It looks at what it produced.</strong></p>`]},
+<p>REPLICA is not generating HTML once.</p>
+<p>It is <strong>looking at what it produced</strong>.</p>`]},
 
 { title:"Walkthrough of the REPLICA Agentic Framework", match:"Walkthrough", time:"3:00", beats:[
-`<p>Rather than describe it again — let me show it.</p>
-<p>A <strong>Telugu newspaper</strong>. Deliberately difficult.</p>
-${C("step · Segment")}
-<p>Segmentation proposes regions.<br>Watch the Grouping agent close an outline around each <strong>article</strong> — headline, deck, image, body.</p>
-${C("step · Localize")}
-<p>Each region goes to its specialist.<br>The page becomes local FID-HTML fragments.</p>
-${C("step · Assemble")}
-<p>Newspapers are where reading order gets hard.<br>Column order is not story order.<br>The Reading-Order agent reasons at the <strong>article</strong> level.</p>
-${C("step · Refine")}
-<p>Render. Compare. Correct. Re-render.</p>
-${PP("PAUSE near the final frame")}
-<p>What looks like one reconstruction problem is a sequence of much smaller decisions.</p>
+`<p>Rather than explain the pipeline again, let me show it.</p>
+<p>A <strong>Telugu newspaper</strong>.<br>A deliberately difficult example.</p>
+${C("animation begins")}
+<p>Segmentation proposes regions.</p>
+<p>The grouping agent groups headline, deck, image and body into <strong>articles</strong>.</p>
+${P("pause while animation moves")}
+<p>Localization.</p>
+<p>Different regions go to different specialists.</p>
+${P()}
+<p>Assembly.</p>
+<p>Column order is not story order.</p>
+<p>Reading order at the <strong>article level</strong>.</p>
+${P()}
+<p>Refinement.</p>
+<p>Render.<br>Compare.<br>Correct.<br>Re-render.</p>
+${PP("PAUSE near final frame")}
+<p>One reconstruction problem → many small decisions.</p>
 <p><strong>That decomposition is the core of REPLICA.</strong></p>
-${QA("<b>Space</b> in the slides window plays / pauses this walkthrough; the clicker steps it. The script stays on this block until the slide changes.")}`]},
+${QA("<b>Space</b> in the slides window plays / pauses this walkthrough; the clicker steps it.")}`]},
 
 /* ───────────── 05 · VFDR-Bench & Metrics ───────────── */
 { title:"VFDR-Bench & Metrics", match:"VFDR-Bench", time:"0:20", beats:[
-`<p>Chapter five — the third contribution: <strong>measure</strong>.</p>
-<p>We had a format and a system — and <strong>nothing could score them</strong>.</p>
-<p>Every benchmark is annotated in Markdown or plain text.<br>You cannot score what a page looks like against a reference that never recorded it.</p>
-<p>So we built the ruler.</p>`]},
+`<p>A new target needs a new ruler.</p>
+<p>Existing benchmarks: Markdown references.<br>No position. No style.</p>`]},
 
 { title:"Against existing benchmarks — Table 4.1", match:"Broader coverage", time:"1:15", beats:[
-`<p>VFDR-Bench against the benchmarks people actually report on.</p>`,
-`<p><strong>Coverage.</strong></p>
-<p>Some are large: OCRBench-v2 has ten thousand images; READoc has twenty-seven languages.</p>
-<p>Our claim is breadth <em>in combination</em> — <strong>22 languages across 17 domains</strong>.</p>`,
-`<p><strong>Annotation format</strong> — the real constraint.</p>
-<p>Markdown. Plain text. At best LaTeX or generic HTML.</p>
-<p>No slot for where a block sits or what font it is in.</p>`,
-`<p>Which is what the last four columns show.</p>
-<p>Text and structure — yes.</p>
-<p>Physical structure and visual fidelity —<br><strong>two empty columns for the whole field.</strong></p>`,
-`<p><strong>VFDR-Bench.</strong> Five thousand pages, annotated in FID-HTML.</p>
-<p>The only benchmark that scores <strong>all four</strong>.</p>`]},
+`<p>VFDR-Bench vs existing benchmarks.</p>`,
+`<p>Coverage.</p>
+<p><strong>22 languages. 17 domains.</strong></p>`,
+`<p>Annotation format.</p>
+<p>Markdown. Plain text.</p>`,
+`<p>What they can score.</p>
+<p>Position and visual fidelity:<br><strong>empty for everyone.</strong></p>`,
+`<p><strong>VFDR-Bench.</strong></p>
+<p>Annotated in FID-HTML.<br>Scores all four.</p>`]},
 
 { title:"VFDR-Bench — 5,000 documents", match:"VFDR-Bench —", time:"0:50", beats:[
-`<p>This is what is actually in it — real pages, playing on their own.</p>
-<p><strong>5,000 documents. 22 languages. 17 domains.</strong><br>Every one annotated in FID-HTML.</p>
+`<p>VFDR-Bench.</p>
+<p>5,000 documents.</p>
+<p>22 languages.</p>
+<p>17 domains.</p>
+<p>Annotated in FID-HTML.</p>
 ${P()}
-<p>Newspapers. Government records. Textbooks and exam papers — including right-to-left scripts.</p>
-<p>Invoices with handwriting and rubber stamps.<br>Indic and archival pages on aged paper. Magazines.</p>
-<p>The diversity matters because reconstruction failures are <strong>layout-dependent</strong>.</p>
+<p>Newspapers.<br>Government records.<br>Textbooks.<br>Financial documents.<br>Indic and archival material.<br>Magazines.</p>
+<p>The diversity matters because reconstruction failures are extremely layout-dependent.</p>
 ${QA("<b>P</b> pauses the carousel · <b>Shift + arrows</b> step it · click a page to enlarge.")}`]},
 
 { title:"Which metric measures what", match:"Which metric", time:"1:45", beats:[
-`<p>The metrics follow the same four axes.<br>Keep this shape in mind — every result is read on it.</p>`,
-`<p>Two axes already had metrics.</p>
-<p><strong>Text</strong>: the mean of character and word recognition rates.</p>
-<p><strong>Logical structure</strong>: tree edit distance between the two DOM trees, normalised by size.<br>TEDS for tables, CDM for formulas.</p>`,
-`<p>Two we introduce — and both read the <strong>rendered page</strong>, not the markup.</p>
-<p><strong>GPS</strong>: for every block, how much of its true box the rebuilt block covers.<br><strong>LPS</strong>: the same, for every line.</p>
-<p><strong>VFS</strong>: a VLM judge compares the two rendered pages — layout, fonts, styling, images.</p>
-<p>Neither axis had a metric before this work.</p>`,
-`<p><strong>Overall</strong> is the plain mean of the four.</p>
-<p>No system can buy a good score by winning one axis.</p>`]},
+`<p>The metrics follow the same four axes.</p>`,
+`<p>Text extraction: standard character and word recognition.</p>
+<p>Logical structure: standard tree and table metrics.</p>`,
+`<p>Physical structure: we introduce <strong>GPS and LPS</strong>.</p>
+<p>Where did each block and line actually land?</p>
+<p>Visual fidelity: <strong>VFS</strong>.</p>
+<p>Does the rendered output look like the reference?</p>
+${P()}
+<p>These metrics evaluate the <strong>rendered document</strong>.</p>`,
+`<p>Overall: the average of the four.</p>`]},
 
 { title:"Do the new metrics agree with human experts?", match:"Do the new metrics", time:"0:50", beats:[
-`<p>GPS, LPS and VFS are new — so we checked them against people.</p>
-<p>Seven experts in document design, typography and layout.<br>A hundred pages, five systems each.<br>Which reconstruction looks most like the original?</p>
-<p>Each number: correlation between one expert and one metric.<br>One would be perfect agreement.</p>
-<p>Read across any row — <strong>every expert, every metric, 0.80 or above.</strong></p>`,
-`<p>On average: VFS 0.87. GPS 0.82. LPS 0.85.</p>
-<p>And the overall score agrees best — <strong>0.89</strong>.</p>`]},
+`<p>Do the new metrics agree with people?</p>
+<p>7 experts. 100 documents. 5 systems.</p>
+<p>Every expert, every metric: <strong>above 0.8</strong>.</p>`,
+`<p>Overall agrees best: <strong>0.89</strong>.</p>`]},
 
 { title:"The benchmark is hard — 15 existing methods", match:"The benchmark is", time:"1:45", beats:[
-`<p>So, what does the ruler say about the field?</p>
-<p><strong>Fifteen existing methods</strong> — pipeline tools, OCR models, general VLMs, screenshot-to-HTML.</p>
-<p>One axis at a time. The navy outline is the best existing method in each column.</p>`,
-`<p><strong>Text extraction</strong>: mostly passable.<br>Marker leads.</p>
-<p>Largely solved — which is why the field <em>feels</em> finished.</p>`,
-`<p><strong>Logical structure</strong> — lower is better here.</p>
-<p>OCR specialists sit near 0.9: they emit an almost flat stream.<br>GPT-5 is best, at 0.49.</p>`,
-`<p><strong>Physical structure</strong> — the whole field collapses.</p>
-<p>Best LPS 0.22. Best GPS 0.43. Most under 0.30.</p>
-<p><strong>Nothing lands where it belongs.</strong></p>`,
-`<p><strong>Visual fidelity</strong>: GPT-5 0.86, Gemini 0.82 — good-looking pages.</p>
-<p>But with position scores that low, they are <strong>not the source page</strong>.</p>`,
-`<p>Graded: the strongest system tops out at <strong>0.58 overall</strong>.</p>
-<p>The benchmark is hard, and it discriminates.</p>
-<p><strong>This is the bar REPLICA has to clear.</strong></p>`]},
+`<p>15 existing methods.</p>
+<p>One axis at a time.</p>`,
+`<p>Text extraction: crowded.<br>Many systems are decent.</p>`,
+`<p>Logical structure: some are good.</p>`,
+`<p>Physical structure: <strong>the field collapses.</strong></p>`,
+`<p>Visual fidelity: large models look good.</p>
+<p>But a page can look plausible and still not be <strong>the same page</strong>.</p>`,
+`<p>Best overall: <strong>0.58</strong>.</p>
+<p>This is the bar.</p>`]},
 
 /* ───────────── 06 · Results ───────────── */
 { title:"Results", match:"Results", time:"0:15", beats:[
-`<p>Chapter six.</p>
-<p>The evidence. The honest edges. What this unlocks.</p>
-<p>The question: does <strong>structured agentic design</strong> beat brute-force scale?</p>`]},
+`<p>Results.</p>
+<p>Does structure beat scale?</p>`]},
 
 { title:"Quantitative results", match:"Quantitative results", time:"2:00", beats:[
-`<p>The board you just saw.</p>
-<p>One row is new.</p>`,
-`<p><strong>REPLICA.</strong></p>
-<p>Same walk, one axis at a time.<br>Navy: best existing method. Green: where REPLICA leads.</p>`,
-`<p><strong>Text.</strong> 0.88 and 0.93 — ahead, in a column that was already crowded.</p>`,
-`<p><strong>Logical structure.</strong> 0.20 — lower is better — against GPT-5’s 0.49.</p>`,
-`<p><strong>Physical structure</strong> — where the field collapsed.</p>
-<p>REPLICA: <strong>0.73 and 0.86</strong>, against 0.22 and 0.43.</p>`,
-`<p><strong>Visual fidelity: 0.93</strong>, against GPT-5’s 0.86.</p>
-<p>And this time it is the source page.</p>`,
-`<p>The whole board, graded.</p>
-<p><strong>0.86 overall</strong>, against 0.58 for the best existing method.</p>
+`<p>Same table.</p>
+<p>One new row.</p>`,
+`<p><strong>REPLICA.</strong></p>`,
+`<p>Text: ahead.</p>`,
+`<p>Structure: ahead.</p>`,
+`<p>Position: <strong>0.73 and 0.86</strong>.<br>Where the field collapsed.</p>`,
+`<p><strong>0.93 visual fidelity.</strong></p>`,
+`<p>0.86 overall.</p>
 ${P()}
-<p>The claim is not that we win a column.<br><strong>There is no weak column.</strong></p>`]},
+<p>REPLICA has no weak axis.</p>`]},
 
 { title:"Ablation studies", match:"Ablation", time:"1:45", beats:[
-`<p>Where do the gains come from?</p>
-<p>Built up cumulatively, on our own four stages.<br>Navy is overall, gold is visual fidelity, violet is position.</p>
-<p>0.53 at the start. 0.93 at the end.</p>`,
-`<p><strong>Segment</strong>: 0.53 → 0.71. <strong>+18.</strong></p>
-<p>It is the position line that climbs —<br>better segmentation buys geometry.</p>`,
-`<p><strong>Localize</strong>: 0.71 → 0.86. <strong>+15.</strong></p>
-<p>And this is the part that matters:<br>one monolithic generator reaches only 0.76.<br>The other ten points come from routing to six specialists — <strong>at the same model size</strong>.</p>`,
-`<p><strong>Refine</strong>: 0.86 → 0.93. <strong>+7.</strong><br>Visual fidelity reaches 0.97.</p>
+`<p>The ablation explains where the gains come from.</p>`,
+`<p>Segmentation gives a major jump.</p>
+<p>Better hierarchy buys better geometry.</p>`,
+`<p>Localization gives another major jump.</p>
+<p>Routing to specialists beats one monolithic generator <strong>at the same model size</strong>.</p>`,
+`<p>Refinement adds the final visual gain.</p>
+<p>Render. Compare. Repair.</p>
 ${P()}
-<p>The biggest gains: decomposition, and looking at the render.</p>
-<p><strong>Structured decomposition beats asking one model to do everything.</strong></p>`]},
+<p><strong>Structured decomposition beats asking one model to solve everything at once.</strong></p>`]},
 
 { title:"Source scan vs live FID-HTML render", match:"Source scan", time:"1:00", beats:[
-`<p>Spot the difference.</p>
-<p>Left: the source scan.<br>Right: REPLICA’s FID-HTML — <strong>live</strong>. Real DOM, selectable text, inline CSS.</p>
-<p>Both forced into the same rectangle — any size difference would be a real error.</p>
-<p>A <strong>Gujarati government notice</strong> with a table.</p>`,
-`<p>A <strong>dense receipt</strong> — small type, faint scan.</p>`,
-`<p>A <strong>multi-column magazine</strong> spread.</p>`,
-`<p>A <strong>scientific paper</strong> — equations and figures.</p>`,
-`<p>Column boundaries, typography, spatial layout —<br>they survive across very different documents.</p>`]},
+`<p>A sanity check.</p>
+<p>Left: source scan.<br>Right: <strong>live FID-HTML</strong>.</p>
+<p>Real DOM. Selectable text. Inline CSS.</p>
+<p>Gujarati government notice.</p>`,
+`<p>Receipt.</p>`,
+`<p>Magazine layout.</p>`,
+`<p>Scientific paper.</p>`,
+`<p>Column boundaries, typography and placement survive.</p>`]},
 
 { title:"Limitations", match:"Limitations", time:"1:15", beats:[
-`<p>The honest edges. Four of them.</p>
-<p><strong>Single-page.</strong> A table that spans a page break can fragment.</p>
-<p><strong>Font identification.</strong> Bold, italic, colour — recovered. The exact family — not; multilingual font recognition is still open.</p>
-<p><strong>Rendering cost.</strong> The refine loop renders several times — real latency versus one forward pass.</p>
-<p><strong>High-resource skew.</strong> Latin and CJK dominate; Indic, Arabic, Hebrew, handwritten and degraded archives are under-represented.</p>
-${P()}
-<p>That last one is exactly where I would extend this next.</p>`]},
+`<p>Four limitations.</p>
+<p>Currently <strong>single-page</strong>.</p>
+<p>Exact <strong>font family</strong> identification is hard.</p>
+<p>Refinement costs <strong>latency</strong>.</p>
+<p>Coverage leans to <strong>high-resource scripts</strong>.</p>`]},
 
 { title:"What FID-HTML unlocks", match:"What FID-HTML unlocks", time:"1:15", beats:[
-`<p>Now beyond reconstruction.</p>
-<p>Once a document is FID-HTML, several applications become almost immediate.</p>`,
-`<p><strong>Layout-preserving translation</strong> — translate a form and it still looks like that form.</p>`,
-`<p><strong>Document preservation</strong> and archiving.</p>`,
-`<p><strong>Indexing and search.</strong></p>`,
-`<p><strong>Grounded document intelligence</strong> — the nested DOM maps to phrase ⊂ line ⊂ block, so grounding comes for free.</p>`,
-`<p><strong>Semantic chunking for RAG</strong> — chunks follow structure, not character counts.</p>`,
-`<p><strong>Position-aware retrieval</strong> — query by where something sits on the page.</p>
+`<p>Beyond reconstruction.</p>`,
+`<p>Layout-preserving translation.</p>`,
+`<p>Document preservation.</p>`,
+`<p>Indexing and search.</p>`,
+`<p>Grounded document intelligence.</p>`,
+`<p>Semantic chunking for RAG.</p>`,
+`<p>Position-aware retrieval.</p>
 ${P()}
-<p>The common reason: we never threw away the link between <strong>content and place</strong>.</p>`]},
+<p>We have not thrown away the connection between <strong>content and place</strong>.</p>`]},
 
 { title:"Synthetic document generation", match:"Synthetic document", time:"1:45", beats:[
-`<p>One application gets its own slide — because it is where this work goes next.</p>
-<p><strong>Synthetic document generation.</strong></p>
-<p>On the left: a <strong>real receipt</strong>, from the public SROIE dataset.</p>`,
-`<p>REPLICA turns it into <strong>FID-HTML</strong> — its actual output, live.<br>Background restored. Every piece of text an HTML element.</p>`,
-`<p><strong>Localize.</strong></p>
-<p>Because it is a DOM, almost everything that varies between receipts is its own element —<br>store, GST number, address, invoice, date, items, every amount, the footer.</p>
-<p>Those are the <strong>slots</strong>, in gold.<br>Layout, fonts, labels and background stay fixed.</p>`,
-`<p><strong>Fill.</strong></p>
-<p>A generator fills the slots from a schema.</p>
-<p>A <strong>new receipt</strong> — different store, different items.<br>Everything that changed is in green.</p>
-<p>And the arithmetic holds: amounts, discount, GST, change.</p>`,
-`<p><strong>Render.</strong></p>
-<p>Without the highlights — simply a new, believable document,<br>with the original’s look. Because the edits happened in FID-HTML.</p>`,
-`<p>Where does this matter?</p>
-<p>Where real data is blocked by privacy or law —<br>medical reports, transcripts, bank statements, payslips, ID cards.</p>
-<p><strong>One real document, unlimited new ones</strong> — training data for document models.</p>
-${QA("During questions: <b>S</b> in the slides window generates another receipt.")}`]},
+`<p>Synthetic document generation.</p>
+<p>A real receipt.</p>`,
+`<p>REPLICA → FID-HTML.</p>`,
+`<p>Find the slots.</p>
+<p>Name, address, items, amounts…</p>`,
+`<p>Fill them.</p>
+<p>A new receipt. Changes in green.</p>`,
+`<p>Render.</p>
+<p>A new document. Same look.</p>`,
+`<p>Useful where real data is private.</p>
+<p><strong>One real document, many new ones.</strong></p>
+${QA("<b>S</b> in the slides window generates another receipt.")}`]},
 
 { title:"Supervision for grounded document models", match:"Supervision for", time:"1:30", beats:[
-`<p>That is what the representation <em>lets</em> you do.</p>
-<p>This is what it has <strong>already</strong> done.</p>`,
-`<p>REPLICA rebuilds any page as FID-HTML —<br>so every page is <strong>labelled by construction</strong>, at any scale.</p>
-<p><strong>M3Grounder</strong>, CVPR — masks as evidence for grounded answers.<br><strong>DoCoG</strong>, an ECCV oral — grounded reasoning.<br><strong>DocLayout-VL</strong>, ECCV — the page as a tree.</p>
-<p>None of them had to annotate a thing.</p>`,
-`<p>And it runs the other way too.</p>
-<p>Better segmentation, reading order and grounding flow back into REPLICA.</p>
+`<p>FID-HTML is still <strong>text</strong>.</p>
+<p>So REPLICA becomes a <strong>data generator</strong>.</p>`,
+`<p>Every page: text, structure, position, style.<br>Ground truth by construction.</p>
+<p><strong>M3Grounder</strong> — CVPR.<br><strong>DoCoG</strong> — ECCV oral.<br><strong>DocLayout-VL</strong> — ECCV.</p>`,
+`<p>And the loop closes:</p>
+<p>better models improve REPLICA.<br>REPLICA generates better supervision.</p>
 <p><strong>That is the flywheel.</strong></p>`,
-`<p>Concretely: <strong>GroundingDocQA</strong>.</p>
-<p><strong>200,000 documents. 2,000,000 pixel-grounded QA pairs.</strong></p>
-<p>Regions project to precise masks — not boxes.</p>`]},
+`<p>GroundingDocQA.</p>
+<p><strong>200K documents. 2M grounded QA pairs.</strong></p>`]},
 
 /* ───────────── 07 · Conclusion ───────────── */
 { title:"Represent → Generate → Measure", match:"Represent", time:"1:00", beats:[
-`<p>To summarise.</p>
-<p><strong>Represent — FID-HTML.</strong><br>Position and style are required, so fidelity is a property of the format.</p>
-<p><strong>Generate — REPLICA.</strong><br>Segment, Localize, Assemble, Refine. Agents for judgment, tools for determinism.</p>
-<p><strong>Measure — VFDR-Bench.</strong><br>5,000 pages, 22 languages, 17 domains — with metrics that agree with human experts.</p>
+`<p>So, three contributions.</p>
+<p><strong>FID-HTML.</strong><br>A representation in which fidelity is explicit.</p>
+<p><strong>REPLICA.</strong><br>Segment. Localize. Assemble. Refine.<br>Agents for judgment. Tools for determinism.</p>
+<p><strong>VFDR-Bench.</strong><br>A benchmark that measures position and visual fidelity.</p>
 ${P()}
-<p><strong>0.93</strong> visual fidelity. <strong>0.86</strong> overall — against 0.58 for the best existing method.</p>
-<p>And every REPLICA agent runs on an <strong>8-billion</strong>-parameter model;<br>the same family at 30 billion, end to end, reaches 0.47.</p>
-<p><strong>Structured decomposition beats brute-force scale.</strong></p>`]},
+<p>0.93 visual fidelity. 0.86 overall.</p>
+<p><strong>Structure beats scale.</strong></p>`]},
 
 { title:"Future directions", match:"Future directions", time:"0:40", beats:[
-`<p>Where this goes next.</p>
-<p><strong>Multi-page</strong> reconstruction, with document-level memory.</p>
-<p><strong>Human-in-the-loop</strong> editing of FID-HTML that stays valid.</p>
-<p><strong>Large-scale document simulators</strong> — the synthesis engine as training data.</p>
-<p>And documents as <strong>editable, grounded, agent-compatible</strong> web resources.</p>`]},
+`<p>Next.</p>
+<p>Multi-page.</p>
+<p>Human-in-the-loop editing.</p>
+<p>Document simulators.</p>
+<p>Documents as web resources.</p>`]},
 
 { title:"Thank you", match:"Thank you", time:"Q&A", beats:[
-`<p>And to make the point one last time:<br><strong>this talk is HTML.</strong></p>
+`<p><strong>This talk is HTML.</strong></p>
 ${PP()}
-<p><strong>Thank you.</strong></p>
-<p>I’m happy to take questions.</p>
-${QA("Backups: <b>↓</b> from this slide, or <b>O</b> for the overview. B1 format table · B2 robustness · B3 Table 5.3 · B4 ground truth · B5–B7 stage formalism · B8 pipeline figure · B9 ID-card synthesis · B10 M3Grounder · B11 Tables 4.5–4.8.")}`]},
+<p>Thank you.</p>
+${QA("Backups: <b>↓</b> from this slide, or <b>O</b>. B1 format table · B2 robustness · B3 Table 5.3 · B4 ground truth · B5–B7 stage formalism · B8 pipeline figure · B9 ID-card synthesis · B10 M3Grounder · B11 Tables 4.5–4.8.")}`]},
 
-/* ───────────── backups (Q&A crib notes) ───────────── */
+/* ───────────── backups (Q&A pointers) ───────────── */
 { title:"B1 · Full format comparison (Table 3.1)", match:"Comparison with", time:"backup", beats:[
-`<p>The full format ledger, live from the project page.</p>
-<p>Markdown: no slot for position or style.<br>LaTeX: expressive, partial on hierarchy, not web-native.<br>DocTags, hOCR: boxes, partial styling.</p>
-<p>Plain HTML <em>can</em> express fidelity but never <em>requires</em> it.</p>
-<p>FID-HTML is the only row full across every column.</p>`]},
+`<p>Full format table.</p>
+<p>HTML <em>can</em> express fidelity — never <em>requires</em> it.</p>
+<p>FID-HTML: the only full row.</p>`]},
 
 { title:"B2 · Robustness and reliability", match:"Can we trust it", time:"backup", beats:[
-`<p>Does it hold up off the easy distribution — and do the parts do their jobs?</p>`,
-`<p><strong>Across languages and document types.</strong></p>
-<p>OS 0.86 overall; 0.93 English; 0.89 Chinese — across <strong>15 languages</strong> and 10+ document types.</p>
-<p>Baselines drop up to 20 % beyond English and Chinese — GPT-5 0.62 → 0.50.</p>
-${QA("15 languages is the robustness analysis; the benchmark itself has 22.")}`,
-`<p><strong>Trace-based reliability.</strong></p>
-<p>Routing 0.97. Sub-HTML validity 0.96. Tool calls 99.5 %. Reflection +0.06. Reading order 0.98.</p>`]},
+`<p>Does it hold up?</p>`,
+`<p>15 languages, 10+ document types.</p>
+<p>OS 0.86 · English 0.93 · Chinese 0.89.</p>
+<p>Baselines drop up to 20 %.</p>`,
+`<p>Routing 0.97 · Valid HTML 0.96 · Tool calls 99.5 % · Reading order 0.98.</p>`]},
 
 { title:"B3 · Agent & tool reliability (Table 5.3)", match:"Agent & tool", time:"backup", beats:[
-`<p>Every component, from execution traces.</p>
-<p>Segment agent: attribute F1 0.98 / 0.99, hierarchy consistency 0.98.</p>
-<p>Router 0.97. Localize: valid sub-HTML 96 %. Reflection +0.06.</p>
-<p>Tools: calls 99.5 %, reading order 0.98, font fit 97 %, background stitch 96 %.</p>`]},
+`<p>Every component, from traces.</p>
+<p>All 0.96 or above.</p>`]},
 
 { title:"B4 · Ground truth", match:"The answer key", time:"backup", beats:[
-`<p>To score position and style, you need a reference that records them.</p>`,
-`<p>For every one of the five thousand pages —</p>`,
-`<p>annotators built a web-page copy in FID-HTML —</p>`,
-`<p>and checked it side by side with the original, fixing it until the two look the same.</p>
-${QA("If asked about the thesis text: <b>REPLICA produced a first draft; every page was then reviewed and corrected by hand</b>, so the released references are human-verified.")}`]},
+`<p>How the answer key was made.</p>`,
+`<p>5,000 pages.</p>`,
+`<p>Rebuilt in FID-HTML.</p>`,
+`<p>Checked side by side, fixed by hand.</p>
+${QA("If asked: <b>REPLICA made a first draft; every page was then corrected by hand.</b>")}`]},
 
 { title:"B5 · Segment — formal", match:"Segment", time:"backup", beats:[
-`<p>Stage 1, formally.</p>`,
-`<p>A tool decides digital or scanned. Digital: read boxes, spans and fonts from the PDF.</p>`,
-`<p>Scanned: a detector ensemble, fused by IoU merging.</p>`,
-`<p>Those proposals over-segment and miss hierarchy — so the Labeling agent assigns label and attributes,</p>`,
-`<p>and the Grouping agent builds the graph, constrained into a tree.</p>`]},
+`<p>Segment, formally.</p>`,
+`<p>Digital or scanned?</p>`,
+`<p>Detector ensemble.</p>`,
+`<p>Labeling agent.</p>`,
+`<p>Grouping agent → tree.</p>`]},
 
 { title:"B6 · Localize — formal", match:"Localize", time:"backup", beats:[
-`<p>Stage 2, formally.</p>`,
-`<p>Each node arrives as crop, box, upstream label, constraints.</p>`,
-`<p>The Router picks a specialist from the crop — overriding the label when the visual contradicts it.</p>`,
-`<p>Six specialists generate localized HTML.</p>`,
-`<p>Auxiliary tools only when needed. Nodes are independent, so it parallelises.</p>`]},
+`<p>Localize, formally.</p>`,
+`<p>Crop, box, label, constraints.</p>`,
+`<p>Router picks a specialist.</p>`,
+`<p>Six specialists.</p>`,
+`<p>Runs in parallel.</p>`]},
 
 { title:"B7 · Assemble + Refine — formal", match:"Assemble", time:"backup", beats:[
-`<p>Stages 3 and 4.</p>`,
-`<p>Assemble: position-aware merge, bottom-up.</p>`,
-`<p>Reading order: semantic, not raster.</p>`,
-`<p>Refine: render, compare against the source, repair until it stabilises.</p>`]},
+`<p>Assemble and Refine.</p>`,
+`<p>Merge bottom-up.</p>`,
+`<p>Reading order.</p>`,
+`<p>Render, compare, repair.</p>`]},
 
 { title:"B8 · The complete REPLICA pipeline", match:"The complete REPLICA", time:"backup", beats:[
-`<p>The whole system in one figure — Segment, Localize, Assemble, Refine, every agent and tool in place.</p>`]},
+`<p>The whole pipeline in one figure.</p>`]},
 
 { title:"B9 · Synthetic generation — identity-card mock", match:"Synthetic document", time:"backup", beats:[
-`<p>The same idea on an identity-card template — built as HTML, no real person.</p>`,
-`<p>Localize: name, parent, sex, age, ID number, photo become slots.</p>`,
-`<p>Fill from a schema — names in Telugu, Hindi, Latin script.</p>`,
-`<p>Diff: only the slot values changed.</p>`,
-`<p>Use cases where real data is restricted. We inpaint rather than black-bar, so models don’t learn shortcut artefacts.</p>
-${QA("<b>S</b> cycles variants on this slide.")}`]},
+`<p>Same idea on an ID-card template.</p>`,
+`<p>Slots.</p>`,
+`<p>Fill — Telugu, Hindi, Latin.</p>`,
+`<p>Only the slots change.</p>`,
+`<p>Private-data use cases.</p>
+${QA("<b>S</b> cycles variants.")}`]},
 
 { title:"B10 · M3Grounder data engine", match:"FID-HTML as a grounding", time:"backup", beats:[
-`<p>How REPLICA feeds M3Grounder.</p>
-<p>Page → agentic parsing → FID-HTML with positions.<br>An LLM writes question and answer against the FID-HTML.<br>The cited elements become pixel masks.</p>
-<p>That is how GroundingDocQA reaches 200,000 documents and 2,000,000 QA pairs.</p>`]},
+`<p>FID-HTML → masks.</p>
+<p>Phrase ⊂ line ⊂ block.</p>
+<p>That is how GroundingDocQA was built.</p>`]},
 
 { title:"B11 · Fine-grained benchmark analysis", match:"Fine-grained", time:"backup", beats:[
-`<p>Thesis Tables 4.5 – 4.8 — from the chapter-four sweep, not Table 5.1.</p>
-<p>Position: hard for everyone; most score higher on single-column pages.</p>
-<p>Fidelity: higher on born-digital — no baseline restores backgrounds.</p>
-<p>Languages: Marker and Gemini most stable. Domains: forms, IDs, receipts hardest.</p>
-${QA("If asked why GPT-5 is 0.51 in Table 4.4 but 0.58 in Table 5.1: <b>different evaluation runs</b> — the deck uses Table 5.1 throughout.")}`]}
+`<p>Breakdown by layout, scan type, language, domain.</p>
+<p>Born-digital beats scanned.<br>Forms, IDs, receipts are hardest.</p>
+${QA("If asked about GPT-5 0.51 vs 0.58: <b>different evaluation runs</b>; the deck uses Table 5.1.")}`]}
 ];
 
 /* ───────────── state ───────────── */
